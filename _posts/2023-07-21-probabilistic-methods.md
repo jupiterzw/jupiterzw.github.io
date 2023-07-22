@@ -169,7 +169,7 @@ Since $G$ is $k$-uniform, we have $\mathbb{P}[A_e] = 2 \times \frac{1}{2^k} = 2^
 Note that if $e, e' \in E$ are two hyperedges with no vertices in common, then $A_e$ and $A_{e'}$ are independent. 
 Any give hyperedge $e \in E$ contains $k$ vertices, and each such vertices can be contained in $k-1$ hyperedges excluding $e$ itself. Hence each event $A_e$ is independent of all other $A_{e'}$ except for $k(k-1)$ of them.
 
-Applying Lemma 0.8 with $d = k(k-1)$ and $p = 2^{1-k}$, it remains to check if $\text{e}k(k-1)2^{1-k} \leq 1$ holds. The solution to this inequality are $k \geq 8.40096$ or $x \in [-0.145232, 1.34737]$. Since we are given that $k \geq 9$, this inequality holds and implies that $\mathbb{P}[\cap_{e\in E}A^c_e] > 0$ and the $2$-colouring of $G$ exists.◼
+Applying Lemma 0.8 with $d = k(k-1)$ and $p = 2^{1-k}$, it remains to check if $\text{e}k(k-1)2^{1-k} \leq 1$ holds. The solutions to this inequality are $k \geq 8.40096$ or $x \in [-0.145232, 1.34737]$. Since we are given that $k \geq 9$, this inequality holds and implies that $\mathbb{P}[\cap_{e\in E}A^c_e] > 0$ and the $2$-colouring of $G$ exists.◼
 
 You can show that Lemma 0.7 still hodls for $k \geq 4$ [(Henning and Yeo [2013])](https://www.sciencedirect.com/science/article/pii/S0195669813000607), but the case $k = 2$ and $k = 3$ remain open.
 
