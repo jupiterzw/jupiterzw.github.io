@@ -10,7 +10,7 @@ There are, in general, two ways to construct things in mathematics. On the one h
 
 The 'probabilistic method' for proving existence lies somewhere in the middle. We make a random object which with some probability $p$ being the object we want, and the existence of this object follows from by showing $p>0$.
 
-## Graph theory examples
+## Bipartite graphs and stable sets
 ### Basic definitions
 
 >**Definition 0.1 (Graph)**
@@ -55,10 +55,10 @@ where $\mathbb{1}_{xy}$ is the indicator random variable for $\\{x,y\\}$ being c
 Then by the linearity of expectation,
 
 $$
-    E[X] = \sum_{\{x, y\} \in E} E[\mathbb{1}_{xy}] = 2mp(1-p).
+    \mathbb{E}[X] = \sum_{\{x, y\} \in E} \mathbb{E}[\mathbb{1}_{xy}] = 2mp(1-p).
 $$
 
-We now choose $p \in (0,1)$ to maximise this quantity. A bit of calculus finds that $p = \frac{1}{2}$ does the job, resulting in $E[X] = \frac{m}{2}$. Thus, $\mathbb{P}[X = \frac{m}{2}] > 0$ and $X \geq \frac{m}{2}$ for some choice of $V_1$. ✓
+We now choose $p \in (0,1)$ to maximise this quantity. A bit of calculus finds that $p = \frac{1}{2}$ does the job, resulting in $\mathbb{E}[X] = \frac{m}{2}$. Thus, $\mathbb{P}[X = \frac{m}{2}] > 0$ and $X \geq \frac{m}{2}$ for some choice of $V_1$. ✓
 
 **Remark:** One can choose a more subtle probability space to sharpen this bound.
 
@@ -120,4 +120,56 @@ Is it possible to inscribe the cube inside the sphere, such that all vertices of
 ![inscribed cube in a sphere](https://global.discourse-cdn.com/sketchup/original/3X/b/9/b9c64d9acc51392215633dde99bfec331c6159e8.png)
 
 ## Hypergraph colouring
+
+A *colouring* of a graph $G =(V, E)$ is an assignment of $k$ colours to 
+$V$. The colouring is said to be *proper* if, for each edge $e$, the vertices at either end of $e$ are different colours. In this case, the colouring is generally referred to as a *k-colouring* of $G$. Let's generalise this idea to hypergraphs.
+### Basic definitions
+
+In a graph, each edge connects 2 vertices, so $e \in V \times V$. In a *hypergraph* a single edge connects multiple edges, so in this case we have $e \subseteq V$ and $E$ is a subset of the power set of $V$. We call elements of $E$, in this case, *hyperedges*.
+
+![hypergraph](https://www.angioi.com/assets/pics/hypergraphs/graph_vs_hypergraph.png)
+_graph vs hypergraph_
+
+We update our definitions:
+
+- The *degree*, $deg(v)$, of the vertex $v \in V$ is the number of hyperedges which contain $v$. 
+We say that a hypergraph is $k$-regular if each vertex has degree $k$.
+
+- The *order* of an edge, $|e|$, is the number of vertices contained inside this hyperedge. 
+We say that a hypergraph is $k$-uniform if each edge has order $k$.
+
+- The colouring is *proper*, if for each edge *e*, the vertices inside $e$ are not all of the same colour.
+Note that $|e| = 2$ reduces to the definition for graphs.
+
+For finite hypergraphs, $|V| < \infty$, it is clear that if $k = |V|$, then the hypergraph $G$ has a $k$-colouring, where we can simply take each vertex to be a different colour. 
+A more interesting question is, can we find a $k$-colouring of $G$ with fewer colours?
+
+We'll show the following result in this post.
+>**Lemma 0.7**
+Let $k \geq 9$ and let $G = (V, E)$ be a $k$-regular, $k$-uniform hypergraph. Then there exists a $2$-colouring of $G$.
+
+To use probabilistic method as before, one can try colouring each vertex independently clour 1/colour 2 with some probability $p \in (0,1)$. Unfortunately, in this case the probability of getting a $2$-colouring is extremely small and we need a better idea, which comes from the following lemma.
+
+>**Lemma 0.8 (Symmetric Lovász Local Lemma)**
+Let $G = (V,E)$ be a hypergraph.
+Let $p \in (0,1)$ and $d \in \mathbb{N}$. 
+Let $A_1,..., A_n$ be a sequence of events such that $\mathbb{P}[A_i] \leq p$ for all $i$, and each event is independent of all except $d$ of the others.
+If $\text{e}p(d + 1) \leq 1$, then $\mathbb{P}[A_1^c\cap A_2^c \cap ... \cap A_n^c] > 0$.
+
+**Remark:** The constant $\text{e}$ is the Euler's constant which is approximately $2.72$.
+The power of Lemma 0.8 is that no matter how many events $(A_i)_{i=1}^n$ we have, it is possible to avoid all of them from happening. For those who are intersted, I will show the proof of it in the next post as this post is already longer than I expect.
+
+With Lemma 0.8 in hand, we can prove Lemma 0.7 quite easily.
+
+**Proof of Lemma 0.7:**
+Independently colour each vertex $v \in V$ into colour 1 or colour 2 at random with probability $\frac{1}{2}$.
+For each hyperedge in $E$, let $A_e$ be the event that all vertices inside $e$ have the same colour. 
+Since $G$ is $k$-uniform, we have $\mathbb{P}[A_e] = 2 \times \frac{1}{2^k} = 2^{1-k}$ for all $e \in E$.
+
+Note that if $e, e' \in E$ are two hyperedges with no vertices in common, then $A_e$ and $A_{e'}$ are independent. 
+Any give hyperedge $e \in E$ contains $k$ vertices, and each such vertices can be contained in $k-1$ hyperedges excluding $e$ itself. Hence each event $A_e$ is independent of all other $A_{e'}$ except for $k(k-1)$ of them.
+
+Applying Lemma 0.8 with $d = k(k-1)$ and $p = 2^{1-k}$, it remains to check if $\text{e}k(k-1)2^{1-k} \leq 1$ holds. The solution to this inequality are $k \geq 8.40096$ or $x \in [-0.145232, 1.34737]$. Since we are given that $k \geq 9$, this inequality holds and implies that $\mathbb{P}[\cap_{e\in E}A^c_e] > 0$ and the $2$-colouring of $G$ exists.◼
+
+You can show that Lemma 0.7 still hodls for $k \geq 4$ [(Henning and Yeo [2013])](https://www.sciencedirect.com/science/article/pii/S0195669813000607), but the case $k = 2$ and $k = 3$ remain open.
 
