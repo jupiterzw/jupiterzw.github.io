@@ -8,7 +8,7 @@ math: true
 ## Introduction
 There are, in general, two ways to construct things in mathematics. On the one hand, we can construct things explicitly, which tends to be difficult, if we don't know exactly what the target is. On the other hand, we can use an implicit construction, which is to say that we make some equation, show that it has a solution, and this solution is exactly what we want. However, there are certain problems we can't solve using either of the above methods.
 
-The 'probabilistic method' for proving existence lies somewhere in the middle. We make a random object which with some probability $p$ being the object we want, and the existence of this object follows from by showing $p>0$.
+The "probabilistic method" for proving existence lies somewhere in the middle. We make a random object which with some probability $p$ being the object we want, and the existence of this object follows from by showing $p>0$.
 
 ## Bipartite graphs and stable sets
 ### Basic definitions
@@ -151,7 +151,6 @@ Let $k \geq 9$ and let $G = (V, E)$ be a $k$-regular, $k$-uniform hypergraph. Th
 To use probabilistic method as before, one can try colouring each vertex independently clour 1/colour 2 with some probability $p \in (0,1)$. Unfortunately, in this case the probability of getting a $2$-colouring is extremely small and we need a better idea, which comes from the following lemma.
 
 >**Lemma 0.8 (Symmetric Lovász Local Lemma)**
-Let $G = (V,E)$ be a hypergraph.
 Let $p \in (0,1)$ and $d \in \mathbb{N}$. 
 Let $A_1,..., A_n$ be a sequence of events such that $\mathbb{P}[A_i] \leq p$ for all $i$, and each event is independent of all except $d$ of the others.
 If $\text{e}p(d + 1) \leq 1$, then $\mathbb{P}[A_1^c\cap A_2^c \cap ... \cap A_n^c] > 0$.
