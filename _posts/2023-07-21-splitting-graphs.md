@@ -156,7 +156,7 @@ Let $A_1,..., A_n$ be a sequence of events such that $\mathbb{P}[A_i] \leq p$ fo
 If $\text{e}p(d + 1) \leq 1$, then $\mathbb{P}[A_1^c\cap A_2^c \cap ... \cap A_n^c] > 0$.
 
 **Remark:** The constant $\text{e}$ is the Euler's constant which is approximately $2.72$.
-The power of Lemma 0.8 is that no matter how many events $(A_i)_{i=1}^n$ we have, it is possible to avoid all of them from happening. For those who are intersted, I will show the proof of it in the next post as this post is already longer than I expect.
+The power of Lemma 0.8 is that no matter how many events $(A_i)_{i=1}^n$ we have, it is possible to avoid all of them from happening. For those who are intersted, the [proof](https://www.jupiterzw.com/posts/lovasz-local-lemma/#proof-of-lov%C3%A1sz-local-lemma) of it will be in the next post as this post turned out to be a bit longer than I expected.
 
 With Lemma 0.8 in hand, we can prove Lemma 0.7 quite easily.
 

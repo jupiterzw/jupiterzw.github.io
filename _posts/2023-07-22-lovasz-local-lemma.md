@@ -25,6 +25,7 @@ The Lovász Local Lemma, to some extent, resides at the intersection of two cont
 
 The local lemma deals with the case when each bad event is independent with most other
 bad events, but possibly dependent with a small number of other events.
+A prototypical application of this result is the [hypergraph $2$-colouring problem](https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring).
 
 
 ## Basics
