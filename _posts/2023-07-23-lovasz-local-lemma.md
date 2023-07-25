@@ -6,7 +6,7 @@ tags: [graph theory, probability]     # TAG names should always be lowercase
 math: true
 ---
 ## Motivation
-Recently, I came across an interesting [application]((https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring)) of the Lovász Local Lemma, a fundamental technique in the "probabilistic method" and a classic example of a non-constructive approach in combinatorics. Often in applying the probabilistic method, one is trying to show that it is possible to avoid “bad events” $A_1, ..., A_n$ with positive probability, or in other words,
+Recently, I came across an interesting [application](https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring) of the Lovász Local Lemma, a fundamental technique in the "probabilistic method" and a classic example of a non-constructive approach in combinatorics. Often in applying the probabilistic method, one is trying to show that it is possible to avoid “bad events” $A_1, ..., A_n$ with positive probability, or in other words,
 
 $$
 \begin{equation}
