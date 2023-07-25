@@ -13,31 +13,41 @@ The "probabilistic method" for proving existence lies somewhere in the middle. W
 ## Bipartite graphs and stable sets
 ### Basic definitions
 
->**Definition 0.1 (Graph)**
+---
+**Definition 0.1 (Graph)**
 A *graph* is a pair $G = (V, E)$ of sets, with $E \subseteq \binom{V}{2}$. We call elements of $V$ *vertices* and elements of $E$ *edges*.
+
+---
 
 We denote the vertices and edges of a graph $G$ by $V(G)$ and $E(G)$ repectively.
 The *order* of a graph is the number of its vertices $|V|$. 
 The *size* of a graph is the number of edges $|E|$. Given a vertex $v \in V$, the *neighbours* of $v$ are $v'$ such that $\\{v,v'\\} \in E$. 
 The *degree*, $deg(v)$, of vertex $v$ is the number of neighbours of $v$.
 
->**Lemma 0.2**
+---
+**Lemma 0.2**
 For any graph $G = (V,E)$
->
->$$
->    \sum_{v\in V} d(v) = 2|E|.
->$$
+
+$$
+    \sum_{v\in V} d(v) = 2|E|.
+$$
+
 
 *Proof:*  Summing the degree of all vertices is the same as counting each edge twice. ◼
 
->**Definition 0.3 (Bipartite graphs)**
+---
+**Definition 0.3 (Bipartite graphs)**
 A graph $G$ is *bipartite* if $V(G) = A \cup B$ where $A\cap B = \emptyset$ and $E(G) \subseteq \\{ \\{a,b\\} | a \in A, b \in B\\}$.
 
->**Definition 0.4 (Subgraphs)**
+---
+
+**Definition 0.4 (Subgraphs)**
 If $G$ and $H$ are graphs with $V(G) \subseteq V(G)$ and $E(H) \subseteq E(G)$, then $H$ is a *subgraph* of $G$.
 
+---
 ### An example of bipartite graphs
->**Example 0.5**
+---
+**Example 0.5**
 Let $G = (V, E)$ be a graph with $m$ edges. Use the probabilitic method to show that $G$ has a bipartite subgraph containing at least $\frac{m}{2}$ edges.
 
 ![Bipartite graphs examples](https://mathworld.wolfram.com/images/eps-svg/BipartiteGraph_1000.svg)
@@ -62,8 +72,10 @@ We now choose $p \in (0,1)$ to maximise this quantity. A bit of calculus finds t
 
 **Remark:** One can choose a more subtle probability space to sharpen this bound.
 
+---
 ### An example of stable sets
-> **Example 0.6**
+---
+ **Example 0.6**
 A *stable* set $S$ is a subset of $V$ such that no 2 elements of $S$ are neighbours.
 Let $d = \frac{2|E|}{|V|}$ and suppose that $d \geq 1$. Then show that $G$ contains a stable set of vertices with at least $\frac{|V|}{2d}$ elements.
 
@@ -112,6 +124,7 @@ $$
 We now choose $p \in (0,1)$ to maximise this quantity. 
 A bit of calculus finds that $p = \frac{1}{d}$ does the job, resulting in $E[|S| - |Y|] = \frac{n}{2d}$. Thus, $\mathbb{P}[|S| - |Y| = \frac{n}{2d}] > 0$. ✓
 
+---
 ### Exercise
 
 Take a sphere of radius $1$, and a cube of radius $1$. $10\%$ of the surface of the sphere is coloured red and the rest is coloured black.
@@ -145,12 +158,16 @@ For finite hypergraphs, $|V| < \infty$, it is clear that if $k = |V|$, then the 
 A more interesting question is, can we find a $k$-colouring of $G$ with fewer colours?
 
 We'll show the following result in this post.
->**Lemma 0.7**
+
+---
+**Lemma 0.7**
 Let $k \geq 9$ and let $G = (V, E)$ be a $k$-regular, $k$-uniform hypergraph. Then there exists a $2$-colouring of $G$.
 
+---
 To use probabilistic method as before, one can try colouring each vertex independently clour 1/colour 2 with some probability $p \in (0,1)$. Unfortunately, in this case the probability of getting a $2$-colouring is extremely small and we need a better idea, which comes from the following lemma.
 
->**Lemma 0.8 (Symmetric Lovász Local Lemma)**
+---
+**Lemma 0.8 (Symmetric Lovász Local Lemma)**
 Let $p \in (0,1)$ and $d \in \mathbb{N}$. 
 Let $A_1,..., A_n$ be a sequence of events such that $\mathbb{P}[A_i] \leq p$ for all $i$, and each event is independent of all except $d$ of the others.
 If $\text{e}p(d + 1) \leq 1$, then $\mathbb{P}[A_1^c\cap A_2^c \cap ... \cap A_n^c] > 0$.
@@ -159,6 +176,8 @@ If $\text{e}p(d + 1) \leq 1$, then $\mathbb{P}[A_1^c\cap A_2^c \cap ... \cap A_n
 The power of Lemma 0.8 is that no matter how many events $(A_i)_{i=1}^n$ we have, it is possible to avoid all of them from happening. For those who are intersted, the [proof](https://www.jupiterzw.com/posts/lovasz-local-lemma/#proof-of-lov%C3%A1sz-local-lemma) of it will be in the next post as this post turned out to be a bit longer than I expected.
 
 With Lemma 0.8 in hand, we can prove Lemma 0.7 quite easily.
+
+---
 
 **Proof of Lemma 0.7:**
 Independently colour each vertex $v \in V$ into colour 1 or colour 2 at random with probability $\frac{1}{2}$.

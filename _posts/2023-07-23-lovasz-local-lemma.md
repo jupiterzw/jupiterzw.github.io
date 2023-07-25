@@ -6,7 +6,7 @@ tags: [graph theory, probability]     # TAG names should always be lowercase
 math: true
 ---
 ## Motivation
-We are going to discuss the Lovász Local Lemma, a fundamental technique in the "probabilistic method" and a classic example of a non-constructive approach in combinatorics. It allows us to establish the existence of a specific object without explicitly revealing its form or structure. Often in applying the probabilistic method, one is trying to show that it is possible to avoid “bad events” $A_1, ..., A_n$ with positive probability, or in other words,
+Recently, I came across an interesting [application]((https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring)) of the Lovász Local Lemma, a fundamental technique in the "probabilistic method" and a classic example of a non-constructive approach in combinatorics. Often in applying the probabilistic method, one is trying to show that it is possible to avoid “bad events” $A_1, ..., A_n$ with positive probability, or in other words,
 
 $$
 \begin{equation}
@@ -24,29 +24,33 @@ The Lovász Local Lemma, to some extent, resides at the intersection of two cont
 - If we have an arbitrary number of mutually independent events $(A_i)_{i = 1}^n$ and $\mathbb{P}[A_i] < 1~\forall i$, then (*) holds.
 
 The local lemma deals with the case when each bad event is independent with most other
-bad events, but possibly dependent with a small number of other events.
-A prototypical application of this result is the [hypergraph $2$-colouring problem](https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring).
+bad events, but possibly dependent with a small number $d$ of other events.
+<!-- A prototypical application of this result is the [hypergraph $2$-colouring problem](https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring). -->
 
 
 ## Basics
 Here are some basic definitions.
 
->**Definition 0.1 (Probability Space)**
+---
+**Definition 0.1 (Probability Space)**
 A *probability space* is a pair $(\Omega, \mathbb{P})$, where $\Omega$ is a finite set of *elementary events* (e.g. {Heads, Tails} or {1,2,3,4,5,6}) and $\mathbb{P}:\Omega \to [0,1]$ such that $\mathbb{P}[\emptyset] = 0$ and  $\sum_{\omega \in \Omega} \mathbb{P}[\omega] = 1$.
 
->**Definition 0.2 (Event)**
+---
+**Definition 0.2 (Event)**
 Any subset $A \subseteq \Omega$ is called an *event* and we define its probability to be $\mathbb{P}[A] = \sum_{\omega \in A}\mathbb{P}[\omega]$.
 
->**Lemma 0.3 (The Probabilistic Method)**
+---
+**Lemma 0.3 (The Probabilistic Method)**
  If $(\Omega, \mathbb{P})$ is a probability space and $A⊆\Omega$ is an event satisfying $\mathbb{P}[A]>0$ then $A \ne ∅$.
 
  *Proof:*
  (Contrapositive) If $A=∅$, then $\mathbb{P}[A]=0$. ◼
 
- >**Lemma 0.4 (The union bound)**
+ ---
+ **Lemma 0.4 (The union bound)**
  Let $(\Omega, \mathbb{P})$ be a finite probability space and $A_1, ..., A_n \subseteq \Omega$, then
- >
- >$$
+
+ $$
     \mathbb{P}\left[\bigcup^{n}_{i = 1}A_i\right] \leq \sum_{i = 1}^n \mathbb{P}[A_i].
  $$
 
@@ -63,7 +67,8 @@ which completes the proof. ◼
 
 The symmetric version is stated as follows:
 
->**Lemma 0.5 (Symmetric Lovász Local Lemma)**
+---
+**Lemma 0.5 (Symmetric Lovász Local Lemma)**
 Let $p \in (0,1)$ and $d \in \mathbb{N}$. 
 Let $A_1,..., A_n$ be a sequence of events such that $\mathbb{P}[A_i] \leq p$ for all $i$, and each event is independent of all except $d$ of the others.
 If $\text{e}p(d + 1) \leq 1$, where $\text{e}=2.71828...$ is Euler’s number, then $\mathbb{P}[A_1^c\cap A_2^c \cap ... \cap A_n^c] > 0$.
@@ -72,33 +77,38 @@ If $\text{e}p(d + 1) \leq 1$, where $\text{e}=2.71828...$ is Euler’s number, t
 
 *Proof strategy:* We show a stronger, “asymmetric” version, and use it to prove the symmetric version.
 
+---
+
 ### Asymmetric Lováz Local Lemma: statement and proof
 
 Here is a useful definition we need.
 
->**Definition 0.6 (Dependency Graph)**
+---
+**Definition 0.6 (Dependency Graph)**
 For all integers $n > 0$, define $[n]:=\\{1, ..., n\\}$.
 A graph $G = (V, E)$ is a *dependency graph* on events $A_1, ..., A_n$ if $V = [n]$ and each event $A_i$ is mutually independent of its non-neighbours $\\{A_j: j \ne i, \\{i, j\\} \notin E\\}$.
 
 We now state the asymmetric Lováz Local Lemma.
 
->**Lemma 0.7 (Asymmetric Lováz Local Lemma)**
+---
+**Lemma 0.7 (Asymmetric Lováz Local Lemma)**
 Suppose $G$ is a dependecy graph for events $A_1, ...,A_n$ and $\exists~x_1, ..., x_n \in (0,1)$ such that
->
->$$
+
+$$
     \begin{equation}
         \mathbb{P}[A_i] \leq x_i \prod_{\{i,j\} \in E}(1-x_j), ~~~\forall i \in [n].
     \end{equation}
 $$
->
->Then
->
->$$
+
+Then
+
+$$
     \begin{equation}
         \mathbb{P}\left[\bigcap_{i=1}^n A_i^c \right] \geq  \prod_{i = 1}^n(1-x_i) > 0.
     \end{equation}
 $$
 
+---
 Before proving Lemma 0.7, let us see why it implies Lemma 0.5. 
 Set $x_i = \frac{1}{d+1} < 1$ for all $i$. 
 Then
@@ -116,6 +126,7 @@ $$
 
 It follows by Lemma 0.7 that $\mathbb{P}\left[\bigcap_{i=1}^n A_i^c \right] > 0.$ Now we prove Lemma 0.7. 
 
+---
 *Proof of Lemma 0.7:*
 Given $S \subseteq [n]$, define
 
@@ -197,3 +208,5 @@ $$
  $$
 
  This proves $(†)$ and completes the proof of Lemma 0.7. ◼
+
+ 
