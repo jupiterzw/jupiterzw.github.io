@@ -4,6 +4,7 @@ date: 2023-07-10 08:00
 categories: [Posts, Machine Learning]
 tags: [calculus, ml]     # TAG names should always be lowercase
 math: true
+image: https://mlcorner.com/wp-content/uploads/2020/09/image-8.png
 ---
 
 ## Introduction
@@ -19,9 +20,11 @@ $$
 where $\hat{y}$ represents the predicted values, $y$ represents the true labels, and $m$ is the number of training examples. It is straightforward to prove that this is a convex cost function and we can use gradient descent to find its global minimum. However, for logistic regression, using MSE results in a non-convex cost function with other local minima.
 
 To preserve the convex nature of the cost function, we instead use the following cost function:
+
 $$
 J(\mathbf{w}, b) = \frac{1}{m} \sum^m_{i=1}[-y^{(i)} \log(f_{\mathbf{w}, b}(\mathbf{x}^{(i)})) - (1-y^{(i)}) \log(1 - f_{\mathbf{w}, b}(\mathbf{x}^{(i)}))],
 $$
+
 where $f_{\mathbf{w}, b}(\mathbf{x}^{(i)}) = \frac{1}{1 + e^ {-(\mathbf{w} \cdot \mathbf{x} + b)}}$ is the sigmoid function.
 To use gradient descent to optimise, we need to find the derivatives of the logistic cost which are required in the backward propagation.
 
@@ -63,7 +66,8 @@ $$
 $$
 
 ## Gradient descent for logistic regression
-The gradient descent process can be performed as follows\\
+The gradient descent process can be performed as follows
+
 $$
 \begin{align*}
 \textbf{repeat} \{\\
