@@ -4,6 +4,7 @@ date: 2023-07-24 21:35
 categories: [Posts, Mathematics]
 tags: [algebraic number theory]     # TAG names should always be lowercase
 math: true
+image: https://media.wired.com/photos/595481de8e8cc150fa8ec1f3/master/pass/Conway_1k.jpg
 ---
 Let's play a game with integer sequences. Observe the following sequence:
 

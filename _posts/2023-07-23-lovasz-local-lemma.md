@@ -4,6 +4,7 @@ date: 2023-07-23 10:23
 categories: [Posts, Mathematics]
 tags: [graph theory, probability]     # TAG names should always be lowercase
 math: true
+image: https://wolffund.org.il/wp-content/uploads/2018/12/Laszlo-Lovasz-Wolf-Prize-in-Mathematics-1999.jpg
 ---
 ## Motivation
 Recently, I came across an interesting [application](https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring) of the Lovász Local Lemma, a fundamental technique in the "probabilistic method" and a classic example of a non-constructive approach in combinatorics. Often in applying the probabilistic method, one is trying to show that it is possible to avoid “bad events” $A_1, ..., A_n$ with positive probability, or in other words,
