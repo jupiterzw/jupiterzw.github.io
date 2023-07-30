@@ -4,7 +4,7 @@ date: 2023-07-10 08:00
 categories: [Posts, Machine Learning]
 tags: [calculus, ml]     # TAG names should always be lowercase
 math: true
-image: /assets/img/feature/log_gd.png
+image: /assets/img/feature/log_gd.jpg
 ---
 
 ## Introduction
