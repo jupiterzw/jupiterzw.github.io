@@ -455,6 +455,7 @@ def L_model_backward(AL, Y, caches):
 To update the parameters of the model, we use the basic version of gradient descent: 
 
 $$ W^{[l]} = W^{[l]} - \alpha \text{ } dW^{[l]}, $$
+
 $$ b^{[l]} = b^{[l]} - \alpha \text{ } db^{[l]}, $$
 
 where $\alpha$ is the learning rate. 
