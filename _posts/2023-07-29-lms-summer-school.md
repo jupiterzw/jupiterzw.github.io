@@ -50,8 +50,8 @@ _Professor Carmen Molina-Paris talking about invasion reproduction number_
 ![lms](/assets/img/lms_img/IMG_2528.JPG)
 _Dr Vandita Patelss talking about Fermat's Last Theorem_
 
-![lms](/assets/img/lms_img/IMG_2557.JPG)
-_Professor Alexander Veselov introducing Bernoulli numbers_
+<!-- ![lms](/assets/img/lms_img/IMG_2557.JPG)
+_Professor Alexander Veselov introducing Bernoulli numbers_ -->
 
 ![lms](/assets/img/lms_img/IMG_2453.JPG)
 _Dr Gary Verth talking about maths for studying the sun_

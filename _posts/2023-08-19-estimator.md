@@ -6,3 +6,4 @@ tags: [calculus, ml]     # TAG names should always be lowercase
 math: true
 image: /assets/img/feature/log_gd.jpg
 ---
+
