@@ -3,16 +3,14 @@
 icon: fas fa-info-circle
 order: 4
 ---
+My name is Zhiyu Wang (Peter). I am currently an undergraduate mathematics student at University College London. My academic interests lie in machine learning and theoretical neuroscience, fields which I believe provide important insights into understanding intelligence.
 
-Undergrad [maths](http://www.homepages.ucl.ac.uk/~ucahmto/pathways.html) student at UCL. Interested in spectral theory, probability, and recently discovered the fun of algebraic geometry and its connection with String theory. Been learning some physics and machine learning when maths made me cry. 
+Though I currently lack the time for formal study, I enjoy exploring the foundations of mathematics. By far, my favourite theorem is Gödel's First Incompleteness Theorem. I hope to one day fully comprehend its intricacies and go over some pivotal areas that shaped the foundations of mathematics, including Category Theory, Model Theory, Forcing and the Continuum Hypothesis, and Large Cardinals. Of course, that's assuming I don't get distracted by new movies or funny cat videos on the internet:)
 
-Interests
-
-* proficient on piano and chess
-* student of potography
-* keen 2077 and MC player
-
-By the way, if you are curious about how to read my name "Zhiyu", it is pronuned as Peter.
+Leisure
+* Proficient at piano and chess
+* Photography enthusiast
+* Avid fan of Cyberpunk 2077 and Minecraft
 
 ![3am maths](https://cdn.verbub.com/images/my-blanket-when-i-try-to-find-the-long-side-at-3-285428.jpg){: w="200" h="200" }
 _maths in nature:)_
