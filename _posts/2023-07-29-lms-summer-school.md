@@ -7,9 +7,9 @@ math: true
 image: /assets/img/lms_img/IMG_2519.JPG
 ---
 
-As the days stretch on, my thoughts often wander back to the cherished moments spent at the Hicks Building LT7 at University of Sheffield, where everyone can unapologetically show his or her love of mathematics. The chalk-dusted blackboard stood as a canvas for ideas to flourish, as theorems and symbols sprawled like intricate artworks. I think I will forever remember the sense of belonging that enveloped me as I stepped into this room. 
+As the days stretch on, my thoughts often wander back to the cherished moments spent at the Hicks Building at University of Sheffield, where everyone can unapologetically show the love of mathematics. The chalk-dusted blackboard stood as a canvas for ideas to flourish, as theorems and symbols sprawled like intricate artworks. I think I will forever remember the sense of belonging that enveloped me as I stepped into this room. 
 
-I took some pictures during those days – snapshots frozen in time, capturing the essence of what made Hicks Building LT7 so special.
+I took some pictures during those days – snapshots frozen in time, capturing the essence of what made Hicks Building so special.
 
 ## Mini Courses
 

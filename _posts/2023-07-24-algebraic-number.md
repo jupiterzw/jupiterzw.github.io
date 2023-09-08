@@ -201,7 +201,7 @@ One can verify the following properties of the look-and-say sequences by using i
 
 ### $92$ Elements
 
-Conway discovered that each term in the look-and-say sequences can be break up into smaller, atomic ones, in the sence that each term in the look-and-say sequences is a concatenation of $92$ non-interacting subsequences. 
+Conway discovered that each term in the look-and-say sequences can be broken up into smaller, atomic ones, in the sence that each term in the look-and-say sequences is a concatenation of $92$ non-interacting subsequences. 
 Conway named them after the $92$ elements in the periodic table from hydrogen $22$ to uranium $3$ with the longest atomic subsequence being rhenium: $111312211312113221133211322112211213322113$.
 To be more specific, let us summarise these $92$ atomic subsequences in lexicographical order in the table below.
 
