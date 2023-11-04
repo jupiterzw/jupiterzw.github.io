@@ -405,7 +405,7 @@ Now we implement backpropagation for the *[LINEAR->RELU] $\times$ (L-1) -> LINEA
 
 Recall that when we implemented the `L_model_forward` function, at each iteration, we stored a cache which contains (X,W,b, and z). In the back propagation module, we use those variables to compute the gradients. Therefore, in the `L_model_backward` function, we iterate through all the hidden layers backward, starting from layer $L$. On each step, we use the cached values for layer $l$ to backpropagate through layer $l$. The figure below shows the backward pass. 
 
-![](/assets/img/binary_classification/mn_backward.png)
+![backward](/assets/img/binary_classification/mn_backward.png)
 
 ```python
 def L_model_backward(AL, Y, caches):
