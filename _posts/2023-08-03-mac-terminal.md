@@ -4,7 +4,7 @@ date: 2023-08-03 22:43
 categories: [Posts, MacOS]
 tags: [terminal, mac]     # TAG names should always be lowercase
 math: true
-image: /assets/img/mac_terminal.png
+image: /assets/img/feature/mac_terminal.png
 ---
 
 I recently leveled up my Mac terminal for convenience and fun. Here is how I did it.
