@@ -4,7 +4,7 @@ date: 2023-07-28 09:58
 categories: [Posts, Mathematics]
 tags: [experience]     # TAG names should always be lowercase
 math: true
-image: /assets/img/feature/IMG_2519.JPG
+image: /assets/img/feature/IMG_2519.png
 ---
 
 As the days stretch on, my thoughts often wander back to the cherished moments spent at the Hicks Building at University of Sheffield, where everyone can unapologetically show the love of mathematics. The chalk-dusted blackboard stood as a canvas for ideas to flourish, as theorems and symbols sprawled like intricate artworks. I think I will forever remember the sense of belonging that enveloped me as I stepped into this room. 
