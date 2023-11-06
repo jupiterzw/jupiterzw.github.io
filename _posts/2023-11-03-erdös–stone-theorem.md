@@ -270,14 +270,14 @@ $$
 Suppose, for the sake of contradiction, that (10) fails to hold. Then $\exists \epsilon'$ such that
 
 $$
-    \pi(K_r(t)) > 1- \frac{1}{r-1} + 3\epsilon.
+    \pi(K_r(t)) > 1- \frac{1}{r-1} + 3\epsilon'.
 $$
 
 By the definition of limits, for sufficiently large $n$, we have
 
 $$
 \begin{align}
-    \text{ex}(n, K_r(t)) > (1-\frac{1}{r-1} + 2\epsilon){n \choose 2}.
+    \text{ex}(n, K_r(t)) > (1-\frac{1}{r-1} + 2\epsilon'){n \choose 2}.
 \end{align}
 $$
 
@@ -286,10 +286,10 @@ where $n_0(r,t,\epsilon')$ is defined by lemma 1.0, and
 $G$ be a 
 $K_r(t)$-free graph of order 
 $n$ and at least of size 
-$(1-\frac{1}{r-1} + 2\epsilon){n \choose 2}$, which exists by (11). By lemma 0.9, $G$ contains a subgraph 
+$(1-\frac{1}{r-1} + 2\epsilon'){n \choose 2}$, which exists by (11). By lemma 0.9, $G$ contains a subgraph 
 $G'$ of order 
 $n' \geq \sqrt{\epsilon'}n \geq n_0(r,t,\epsilon')$ and with minimum degree 
-$\delta(G') \geq (1 - \frac{1}{r-1} + \epsilon)n'$ by noting that 
+$\delta(G') \geq (1 - \frac{1}{r-1} + \epsilon')n'$ by noting that 
 $c = \epsilon'$. Finally, by lemma 1.0, 
 $G'$ contains a copy of 
 $K_r(t)$, and 
