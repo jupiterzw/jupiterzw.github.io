@@ -1,6 +1,6 @@
 ---
 title: Vector Identities
-date: 2023-11-03 13:55
+date: 2023-11-07 19:43
 categories: [Posts, Mathematics]
 tags: [vector calculus]     # TAG names should always be lowercase
 math: true
