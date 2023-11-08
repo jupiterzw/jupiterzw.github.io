@@ -486,6 +486,4 @@ def update_parameters(params, grads, learning_rate):
 
     return parameters
 ```
-We are done! Let's see an application of classifying cat vs non-cat images.
-
-## Cat vs Non-cat Images
+We are done! You can see an application of classifying cat vs non-cat images in this [github repo](https://github.com/jupiterzw/binary-classification-nn-from-scratch).
