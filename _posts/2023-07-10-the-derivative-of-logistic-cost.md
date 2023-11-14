@@ -55,14 +55,14 @@ $$
 \begin{align*}
 \frac{\partial J}{\partial w_j} &= -\frac{1}{m} \sum^m_{i=1} \left[  \frac{y^{(i)}}{f_{\mathbf{w}, b}(\mathbf{x}^{(i)}) }  x_j^{(i)} f_{\mathbf{w}, b}(\mathbf{x}^{(i)}) \left(1- f_{\mathbf{w}, b}(\mathbf{x}^{(i)})\right) +    \frac{1 - y^{(i)}}{1 - f_{\mathbf{w}, b}(\mathbf{x}^{(i)}) }  x_j^{(i)} f_{\mathbf{w}, b}(\mathbf{x}^{(i)}) \left(f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - 1)\right) \right]\\
 & = \frac{1}{m} \sum^m_{i = 1} \left[  y^{(i)}  \left(1- f_{\mathbf{w}, b}(\mathbf{x}^{(i)})\right) +    (1 - y^{(i)})  \left(f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - 1)\right) \right]x_j^{(i)}\\
-& = \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)} \right) x_j^{(i)}.
+& = \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)}) \right) x_j^{(i)}.
 \end{align*}
 $$
 
 In a similar manner, 
 
 $$
-\frac{\partial J}{\partial b} = \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)} \right).
+\frac{\partial J}{\partial b} = \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)}) \right).
 $$
 
 ## Gradient descent for logistic regression
@@ -71,8 +71,8 @@ The gradient descent process can be performed as follows
 $$
 \begin{align*}
 \textbf{repeat} \{\\
-w_j &= w_j - \alpha \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)} \right) x_j^{(i)}\\
-b &= b - \alpha \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)} \right)\\
+w_j &= w_j - \alpha \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)}) \right) x_j^{(i)}\\
+b &= b - \alpha \frac{1}{m} \sum^m_{i = 1} \left(  f_{\mathbf{w}, b}(\mathbf{x}^{(i)} - y^{(i)}) \right)\\
 \} &\textbf{simultaneous updates}
 \end{align*}
 $$
