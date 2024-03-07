@@ -4,7 +4,7 @@ date: 2023-07-21 18:30
 categories: [Posts, Mathematics]
 tags: [graph theory, probability]     # TAG names should always be lowercase
 math: true
-image: /assets/img/feature/splitting_graph.png
+image: /assets/img/2023-07-21-splitting-graphs/Split_graph.png
 ---
 ## Introduction
 There are, in general, two ways to construct things in mathematics. On the one hand, we can construct things explicitly, which tends to be difficult, if we don't know exactly what the target is. On the other hand, we can use an implicit construction, which is to say that we make some equation, show that it has a solution, and this solution is exactly what we want. However, there are certain problems we can't solve using either of the above methods.

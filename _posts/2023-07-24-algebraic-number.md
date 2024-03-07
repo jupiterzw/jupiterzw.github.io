@@ -4,7 +4,7 @@ date: 2023-07-24 21:35
 categories: [Posts, Mathematics]
 tags: [algebraic number theory]     # TAG names should always be lowercase
 math: true
-image: /assets/img/feature/look_and_say.png
+image: /assets/img/2023-07-24-algebraic-number/look_and_say.png
 ---
 Let's play a game with integer sequences. Observe the following sequence:
 
@@ -299,3 +299,5 @@ To be more specific, let us summarise these $92$ atomic subsequences in lexicogr
 |      90|                312211322212221121123222113|      27|                     (36)|         |
 |      91|                312211322212221121123222112|      27|                     (35)|         |
 |      92|                                      32112|       5|                     (37)|         |
+
+Later when I feel productive...

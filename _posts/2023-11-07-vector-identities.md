@@ -4,7 +4,7 @@ date: 2023-11-07 19:43
 categories: [Posts, Mathematics]
 tags: [vector calculus]     # TAG names should always be lowercase
 math: true
-image: /assets/img/feature/vector_id.png
+image: /assets/img/2023-11-07-vector-identities/vector_id.png
 ---
 
 ## Introduction

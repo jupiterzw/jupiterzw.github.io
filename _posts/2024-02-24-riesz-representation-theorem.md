@@ -4,7 +4,7 @@ date: 2024-02-24 12:01
 categories: [Posts, Mathematics]
 tags: [functional analysis]     # TAG names should always be lowercase
 math: true
-image: /assets/img/feature/riesz.png
+image: /assets/img/2024-02-24-riesz-representation-theorem/riesz.png
 ---
 
 ## Introduction
