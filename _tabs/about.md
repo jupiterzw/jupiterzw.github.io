@@ -3,9 +3,7 @@
 icon: fas fa-info-circle
 order: 4
 ---
-My name is Zhiyu Wang (Peter). I am currently an undergraduate mathematics student at University College London. My academic interests lie in machine learning and theoretical neuroscience, fields which I believe provide important insights into understanding intelligence.
-
-In my spare time, I enjoy exploring the foundations of mathematics. By far, my favourite theorem is Gödel's First Incompleteness Theorem. Though currently lacking the time for formal study, I hope to one day fully comprehend its intricacies and delve into some pivotal areas that shaped the foundations of mathematics, including Category Theory, Model Theory, Forcing and the Continuum Hypothesis, and Large Cardinals.
+My name is Zhiyu Wang (Peter). I am currently an undergraduate mathematics student at University College London. My academic interests lie in *statistical machine learning* and *theoretical neuroscience*, fields which I believe provide important insights into understanding intelligence. I am also interested in *Analysis & PDEs* and *Foundations of mathematics*.
 
 Leisure
 * Proficient at piano and chess
