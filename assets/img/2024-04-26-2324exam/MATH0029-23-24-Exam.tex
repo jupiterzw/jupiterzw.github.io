@@ -1,0 +1,88 @@
+\documentclass[11pt]{article}
+% \usepackage{pm_exam_24}
+
+\begin{document}
+% \begin{titlepage}
+%  \begin{tikzpicture}[remember picture, overlay]
+%     \node[opacity=0.3, inner sep=0pt] at (current page.center){
+%         \includegraphics[width=\paperwidth,height=\paperheight]{IMG_4798.PNG}
+%     };
+%  \end{tikzpicture}
+%  \centering
+
+%  % Title with large font size and rules
+%  \rule{\textwidth}{1.6pt}\\[-3mm]
+%  \rule{\textwidth}{0.4pt}\\[5mm]
+% {\Huge \textbf{ \fontsize{12mm}{12mm} MATH0029 Graph Theory Mock Exam}}\\[5mm]
+%  \rule{\textwidth}{0.4pt}\\[-3mm]
+%  \rule{\textwidth}{1.6pt}\\[2cm]
+
+%  % Course, Lecturer, and Scribe Information
+%  \vfill
+
+%  % Bottom Information
+%  \textbf{To AX $\heartsuit$}
+% \end{titlepage}
+
+% Contents
+\newpage
+\pagenumbering{gobble}
+\section*{Question 1}
+
+\begin{enumerate}
+    \item[(a)] (\textbf{3 marks}) Let $G$ be a graph and $k \geq 1$ an integer. What does it mean to say that (i) $G$ is \textit{$k$-colourable}; (ii) $G$ has \textit{chromatic number} $\chi(G) = k$.
+    \item[(b)] (\textbf{4 marks}) Give an example of a triangle-free graph $G$ with $\chi(G) = 3$. 
+    \item[(c)] (\textbf{7 marks}) Prove that if $G$ has maximum degree $\Delta(G)$, then $\chi(G) \leq \Delta(G) + 1$.
+    \item[(d)] (\textbf{11 marks}) Prove that if $G$ is a graph with $m$ edges, then $G$ contains a $3$-colourable subgraph with at least $\lceil 2m / 3\rceil$ edges.
+\end{enumerate}
+
+\section*{Question 2}
+
+\begin{enumerate}
+    \item[(a)] (\textbf{2 marks}) Define $\text{ex}(n, H)$, where $H$ is a graph and $n \geqslant 1$ is an integer.
+    \item[(b)] (\textbf{5 marks}) Define the Turán graph $T_r(n)$. How many edges are there in $T_4(11)$?
+    \item[(c)] (\textbf{8 marks}) Given a graph $H$ define $\pi(H)$, the Turán density of $H$, and prove that $\pi(H)$ is well-defined.
+    \item[(d)] (\textbf{10 marks}) Show that if $G$ is a $K_3$-free graph of order $2n$ with $ n^2 -t$ edges, for some $t \geqslant 0$, then $G$ contains a bipartite subgraph with at least $n^2-2 t$ edges.
+\end{enumerate}
+
+\section*{Question 3}
+
+\begin{enumerate}
+    \item[(a)] (\textbf{3 marks}) What does it mean to say that a family of sets is (i) an \textit{antichain}; (ii) a \textit{chain}.
+    \item[(b)] (\textbf{5 marks}) Prove that if $n \geqslant 1$ is an integer and $\mathcal{C}$ is an chain in $\mathcal{P}([n])$, then
+    \[
+    |\mathcal{C}| \leqslant
+    n+1
+    .
+    \]
+    \item[(c)] (\textbf{7 marks}) Give a symmetric chain decomposition of $\mathcal{P}([4])$.
+    \item[(d)] (\textbf{3 marks}) State Sperner's Theorem.
+    \item[(e)] (\textbf{7 marks}) Let $X=\left\{x_1, x_2, x_3, x_4, x_5\right\} \subseteq [1, \infty)$. Let us call $\alpha \in \mathbb{R}$ an $X$-sum if there exists $A \subseteq X$ such that $\sum_{a \in A} a= \alpha$. Prove that if $\alpha_1, \ldots, \alpha_{11}$ are 11 distinct $X$-sums, then there exists $i, j$ such that $\left|a_i-a_j\right| \geqslant 1$. 
+\end{enumerate}
+
+
+\section*{Question 4}
+
+\begin{enumerate}
+    \item[(a)] (\textbf{10 marks}) Let $s, t \geqslant 2$ be integers. Define the Ramsey number $R(s, t)$ and prove that it satisfies
+    \[
+    R(s, t) \leqslant 
+    {s+t-2 \choose
+    s-1}
+    .
+    \]
+    \item[(b)] (\textbf{5 marks}) Let $R_k(3)$ be the smallest integer $n$ such that any colouring of the edges of $K_n$ with $k$ colours contains a monochromatic $K_3$. Using the fact that $R(3,3)=6$ or otherwise show that $R_3(3) \leqslant 17$.
+    \item[(c)] (\textbf{10 marks}) Prove that if $n \geqslant s$ satisfy
+    \[
+    {n \choose s} < 4^{{s \choose 2} - 1},
+    \]
+    then $R_4(s)>n$.
+\end{enumerate}
+
+
+
+
+
+
+
+\end{document}
