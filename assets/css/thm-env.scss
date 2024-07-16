@@ -1,0 +1,82 @@
+// Theorem Environment
+// This file contains 4 customized callout boxes: definition, theorem (proposition, lemma, corollary), example.
+
+@mixin colorbox($border-color, $icon-color, $icon-content, $bg-color, $fa-style: 'solid') {
+    border-left: .2rem solid $border-color;
+    border-radius: 0.25rem;
+    color: var(--text-color);
+    padding: .6rem 1rem .6rem 1.5rem;
+    box-shadow: var(--language-border-color) 1px 1px 2px 1px;
+    position: relative;
+    margin-bottom: 1rem;
+  
+    > div.title::before {
+      content: $icon-content;
+      color: $icon-color;
+      font: var(--fa-font-#{$fa-style});
+      text-align: center;
+      width: 3rem;
+      position: absolute;
+      left: .2rem;
+      margin-top: .4rem;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+    }
+  
+    > div.title {
+      background-color: $bg-color;
+      color: $icon-color;
+      padding: .5rem .6rem .5rem 3rem; 
+      margin: -.6rem -1rem .6rem -1.5rem;
+      font-weight: 600;
+    }
+    
+    > p:last-child{
+        margin-bottom: 0;
+    }
+}
+  
+
+// Green
+.defn {
+    @include colorbox(
+        var(--prompt-tip-icon-color),
+        var(--prompt-tip-icon-color),
+        "\f249", // sticky note
+        var(--prompt-tip-bg),
+        'regular'
+    );
+    }
+
+
+// Blue
+.ex {
+@include colorbox(
+    var(--prompt-info-icon-color),
+    var(--prompt-info-icon-color),
+    "\f0ca", // list
+    var(--prompt-info-bg)
+);
+}
+
+
+// Yellow
+.thm {
+@include colorbox(
+    var(--prompt-warning-icon-color),
+    var(--prompt-warning-icon-color),
+    "\f304", // pen
+    var(--prompt-warning-bg)
+);
+}
+
+
+// Black
+.rmk {
+@include colorbox(
+    #808080,
+    #808080,
+    "\f5b7", // signature
+    #353535
+);
+}
