@@ -3,7 +3,7 @@
 icon: fas fa-info-circle
 order: 4
 ---
-My name is Zhiyu Wang (Peter). I am currently a master student in  mathematics at University of Oxofrd. Prior to that, I received BSc in Mathematics from University College London. My academic interests lie in *statistical and computational learning theory*, *Theories of Deep Learning*, as well as *theoretical neuroscience*, fields which I believe provide important insights into understanding intelligence. I am also interested in *Rough Path Theory* and *Stochastic Analysis*.
+My name is Zhiyu Wang (Peter). I am currently a master student in  mathematics at University of Oxofrd. Prior to that, I received BSc in Mathematics from University College London. My academic interests lie in *Statistical and Computational Learning Theory*, *Theories of Deep Learning*, as well as *Theoretical Neuroscience*, fields which I believe provide important insights into understanding intelligence. I am also interested in *Rough Path Theory* and *Stochastic Analysis*.
 
 Research
 - [Asymptotic Analysis for Scattering off One-Dimensional Compactly Supported Weak Potentials](/assets/img/Scattering.pdf)
