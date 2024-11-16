@@ -1,5 +1,5 @@
 ---
-title: Riesz's $\ell^p$ Representation Theorem
+title: Riesz's Representation Theorem
 date: 2024-02-24 12:01
 categories: [Posts, Mathematics]
 tags: [functional analysis]     # TAG names should always be lowercase
