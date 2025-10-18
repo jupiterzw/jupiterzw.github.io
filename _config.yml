@@ -163,6 +163,8 @@ defaults:
       swcache: true
 
 sass:
+  load_paths:
+    - node_modules
   style: compressed
 
 compress_html:
