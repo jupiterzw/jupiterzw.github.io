@@ -65,7 +65,7 @@ Let $A$ and $B$ be finite sets. Then
     $\left|\bigcup_{i=1}^n A_i\right| \leq \sum_{i=1}^n\left|A_i\right|.$
 </div>
 
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 <div class="rmk" markdown="1">
 <div class="title"> Remark 1.2 </div>
@@ -126,7 +126,7 @@ Let $1 \leq k \leq n$ be integers and $X$ be a set of size $n$. Then
 7.  $\|\mathscr{P}(X)\|=2^n$.
 </div>
 
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ## 2 Graphs
@@ -202,7 +202,7 @@ $$
 $$
 </div>
 
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 <div class="thm" markdown="1">
@@ -210,7 +210,7 @@ $$
 In any graph, the number of vertices of odd degree is even.
 </div>
 
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 2.2 Examples of graphs
@@ -351,7 +351,7 @@ from $v$ to $w$ in $G$. Then $\sim$ is an equivalence relation.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 definition
@@ -374,7 +374,7 @@ $G$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 lemma
@@ -385,7 +385,7 @@ in $G$ for each $1 \leq i \leq t$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 2.5 Euler circuits
@@ -407,7 +407,7 @@ has even degree.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 2.6 Bipartite graphs
@@ -424,7 +424,7 @@ A graph is bipartite iff it contains no odd cycle.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 2.7 Graph colouring
@@ -483,7 +483,7 @@ If $G$ is a graph, then $$\chi(G) \leq \Delta(G)+1$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ## 3 The probabilistic method
@@ -510,7 +510,7 @@ $A \neq \emptyset$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 Note that $A \cup B$ and $A \cap B$ denote the events \" $A$ or $B$ \"
@@ -524,7 +524,7 @@ $$\mathbf{P}\left[\bigcup_{i=1}^n A_i\right] \leq \sum_{i=1}^n \mathbf{P}\left[A
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 definition
@@ -566,7 +566,7 @@ $$X\left(\omega_1\right) \leq \mathbf{E}[X] \leq X\left(\omega_2\right).$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 lemma
@@ -576,7 +576,7 @@ $$\mathbf{E}\left[\sum_{i=1}^n X_i\right]=\sum_{i=1}^n \mathbf{E}\left[X_i\right
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 Note that linearity of expectation has nothing to do with independence
@@ -603,7 +603,7 @@ bipartite subgraph with at least $\lceil e / 2\rceil$ edges.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 3.2 Random graphs
@@ -649,7 +649,7 @@ and $g(G) \geq l$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 lemma
@@ -658,7 +658,7 @@ $$\chi(G) \geq \frac{n}{\alpha(G)}.$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 lemma
@@ -668,7 +668,7 @@ $$\mathbf{E}\left[X_t\right]=\frac{n(n-1)(n-2) \cdots(n-t+1)}{2 t} p^t .$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 lemma
@@ -677,7 +677,7 @@ $$\mathbf{P}[X \geq \lambda] \leq \frac{\mathbf{E}[X]}{\lambda} .$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ## 4 Extremal graph theory
@@ -729,7 +729,7 @@ $G$ contains a Hamilton cycle.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 Note that Dirac's theorem follows immediately from the following result.
@@ -740,7 +740,7 @@ pair of non-adjacent vertices $u, v \in V(G)$, then $G$ is Hamiltonian.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 4.2 Forbidden subgraphs: Mantel's theorem
@@ -775,7 +775,7 @@ $\chi(H)>\chi(G)$, then $G$ is $H$-free.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 theorem
@@ -784,7 +784,7 @@ $\operatorname{ex}(n, K_3)=\left\lfloor n^2 / 4\right\rfloor$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 4.3 Forbidden subgraphs: Turán's theorem
@@ -847,7 +847,7 @@ $$t_r(n)=t_r(n-r)+(r-1)(n-r)+ {r \choose 2}.$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 theorem
@@ -856,7 +856,7 @@ order $n$, then $|E(G)| \leq t_r(n)$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 theorem
@@ -866,7 +866,7 @@ isomorphic to $T_r(n)$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 4.4 Digression: double counting
@@ -877,7 +877,7 @@ $$\sum_{a \in A} d(a)=\sum_{b \in B} d(b) .$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 We have already seen examples of such arguments but we have not
@@ -901,7 +901,7 @@ are equal.
 
 definition
 The **Turán density** of a graph $F$ is the number
-$$\pi(F)=\lim _{n \rightarrow \infty} \frac{\operatorname{ex}(n, F)}{{n \choose 2}} .$$
+{% raw %}$$\pi(F)=\lim _{n \rightarrow \infty} \frac{\operatorname{ex}(n, F)}{{n \choose 2}} .$${% endraw %}
 
 
 lemma
@@ -910,7 +910,7 @@ $\pi\left(K_{r+1}\right)=$ $1-1 / r$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 4.6 Bipartite forbidden subgraphs
@@ -937,7 +937,7 @@ $\pi\left(K_{r, s}\right)=0$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 corollary
@@ -947,7 +947,7 @@ unit distance.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 4.7 Erdös-Stone: the fundamental theorem of extremal graph theory
@@ -971,12 +971,12 @@ $\chi(H)=r$, then $$\pi(H)=1-\frac{1}{r-1} .$$
 
 proof
 *Proof of [\[thm4.23\]](#thm4.23){reference-type="eqref"
-reference="thm4.23"} $\implies$.* Omitted. ◻
+reference="thm4.23"} $\implies$.* Omitted. ◻
 
 
 proof
 *Proof of [\[thm4.23\]](#thm4.23){reference-type="eqref"
-reference="thm4.23"} $\Longleftarrow$ .* Omitted. ◻
+reference="thm4.23"} $\Longleftarrow$ .* Omitted. ◻
 
 
 lemma
@@ -988,7 +988,7 @@ $\delta\left(G^{\prime}\right) \geq c n^{\prime}$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 theorem
@@ -1000,7 +1000,7 @@ contains a copy of $K_r(t)$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 4.8 Stability
@@ -1017,7 +1017,7 @@ $\chi(H) \leq r$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ## 5 Families of sets: chains, antichains, and intersection problems
@@ -1069,7 +1069,7 @@ $$|\mathscr{A} \cap \mathscr{C}| \leq 1.$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 How large can a chain $\mathscr{C} \subseteq \mathscr{P}([n])$ be?
@@ -1080,7 +1080,7 @@ is a chain, then $|\mathscr{C}| \leq n+1$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 A little thought tells us that an obvious candidate for the largest
@@ -1114,12 +1114,12 @@ $\mathscr{P}([n])$ can be partitioned into symmetric chains.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 proof
 *Proof of [\[thm5.7\]](#thm5.7){reference-type="eqref"
-reference="thm5.7"}.* Omitted. ◻
+reference="thm5.7"}.* Omitted. ◻
 
 
 ### 5.2 LYM-inequality
@@ -1127,7 +1127,7 @@ reference="thm5.7"}.* Omitted. ◻
 theorem
 (Lubell, Yamamoto, Meshalkin 1954). If
 $\mathscr{A} \subseteq \mathscr{P}([n])$ is an antichain, then
-$$\sum_{A \in \mathscr{A}} \frac{1}{{n \choose |A|}} \leq 1.$$
+{% raw %}$$\sum_{A \in \mathscr{A}} \frac{1}{{n \choose |A|}} \leq 1.$${% endraw %}
 
 
 remark
@@ -1135,7 +1135,7 @@ Note that $2$ terms ${ n \choose |A_1|}, { n \choose |A_2|}$ in this
 summation is the same if $|A_1| = |A_2|$. For $0 \leq k \leq n$, let
 $a_k = |\mathscr{A} \cap {[n] \choose k} |$ denote the number of size
 $k$ sets in $\mathscr{A}$, then equivalenly,
-$$\left(\sum_{A \in \mathscr{A}} \frac{1}{{n \choose |A|}} = \right) \quad \sum_{k=0}^n \frac{a_k}{{n \choose k}} \leq 1.$$
+{% raw %}$$\left(\sum_{A \in \mathscr{A}} \frac{1}{{n \choose |A|}} = \right) \quad \sum_{k=0}^n \frac{a_k}{{n \choose k}} \leq 1.$$${% endraw %}
 We are simply gathering same terms.
 
 
@@ -1145,11 +1145,11 @@ all of the layers, the sum of that proportion $\leq 1$.
 
 
 proof
-*Proof by counting.* Omitted. ◻
+*Proof by counting.* Omitted. ◻
 
 
 proof
-*Proof by the probabilistic method.* Omitted. ◻
+*Proof by the probabilistic method.* Omitted. ◻
 
 
 ### 5.3 Intersecting families
@@ -1174,7 +1174,7 @@ $2^{n-1}$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 If $\mathscr{A} \subseteq {[n] \choose k}$ is intersecting, how large
@@ -1207,7 +1207,7 @@ bound we find for $n = 2k$ case.
 
 proof
 *Proof by using cyclic permutations due to G.O.H. Katona 1972.*
-Omitted. ◻
+Omitted. ◻
 
 
 ### 5.4 Compressions (not lectured 2023 and non-examinable)
@@ -1227,7 +1227,7 @@ independent vectors in a vector space of dimension $d$, then $t \leq d$.
 
 proof
 *Proof.* This is part of the Steinitz Exchange Lemma (see [1st Year
-Algebra 1](https://www.ucl.ac.uk/~ucahmto/0005_2023/Ch4.S9.html)). ◻
+Algebra 1](https://www.ucl.ac.uk/~ucahmto/0005_2023/Ch4.S9.html)). ◻
 
 
 definition
@@ -1289,7 +1289,7 @@ then $m \leq n$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 A more interesting application is the following result known as Fisher's
@@ -1302,7 +1302,7 @@ $A \neq B$, then $|\mathscr{A}| \leq n$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 5.6 $L$-intersecting families
@@ -1372,7 +1372,7 @@ then $\left\{q_1, \ldots, q_m\right\}$ are linearly independent.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 Having introduced all of the necessary algebra, we now introduce one
@@ -1392,7 +1392,7 @@ $$|\mathscr{A}| \leq \sum_{r=0}^s {n \choose r} .$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ## 6 Ramsey theory
@@ -1466,7 +1466,7 @@ $R(3,3) = 6$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 proposition
@@ -1474,7 +1474,7 @@ $R(3,4) = 9$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 theorem
@@ -1485,7 +1485,7 @@ smallest such $n$, then $$R(s, t) \leq {s+t-2 \choose s-1}.$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 proposition
@@ -1493,7 +1493,7 @@ $R(4,4) = 18$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 theorem
@@ -1515,7 +1515,7 @@ $R(s, s)>n$. In particular, $R(s, s)>2^{s / 2}$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 definition
@@ -1544,7 +1544,7 @@ defined.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 6.3 Ramsey theory in the integers
@@ -1556,7 +1556,7 @@ integer $n \geq 3$.
 
 proof
 *Proof.* The proof of Fermat's Last Theorem is unfortunately slightly
-too long to fit in these notes. ◻
+too long to fit in these notes. ◻
 
 
 Instead we will consider the question of solutions to the Fermat
@@ -1594,7 +1594,7 @@ $u, v, w$ of the same colour such that $u+v=w$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 lemma
@@ -1603,12 +1603,12 @@ units $\bmod$ $p$, is a cyclic group.
 
 
 proof
-*Proof.* See 2nd year Algebra 4 notes or Number theory notes. ◻
+*Proof.* See 2nd year Algebra 4 notes or Number theory notes. ◻
 
 
 proof
 *Proof of [\[thm6.13\]](#thm6.13){reference-type="eqref"
-reference="thm6.13"}.* Omitted. ◻
+reference="thm6.13"}.* Omitted. ◻
 
 
 theorem
@@ -1617,7 +1617,7 @@ set $A \subseteq \mathbb{N}$ such that $K_A$ is monochromatic.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ### 6.4 Van der Waerden's theorem
@@ -1636,7 +1636,7 @@ progression of length $t$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 ## 7 Inequalities
@@ -1647,7 +1647,7 @@ $$\frac{(n-k+1)^k}{k !} \leq {n \choose k} \leq \frac{n^k}{k !} .$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 definition
@@ -1665,7 +1665,7 @@ particular if $f^{\prime \prime}(x)>0$, then $f$ is convex.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 definition
@@ -1681,7 +1681,7 @@ $\mathbb{R}$.
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 One inequality to rule them all\...
@@ -1694,7 +1694,7 @@ $$\varphi\left(\sum_{i=1}^n \lambda_i x_i\right) \leq \sum_{i=1}^n \lambda_i \va
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 corollary
@@ -1703,7 +1703,7 @@ $$\frac{1}{n}\left(\sum_{i=1}^n x_i\right)^2 \leq \sum_{i=1}^n x_i^2 .$$
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
 
 
 corollary
@@ -1713,5 +1713,5 @@ $${\sum_{i=1}^n x_i \choose k}
 
 
 proof
-*Proof.* Omitted. ◻
+*Proof.* Omitted. ◻
  -->
