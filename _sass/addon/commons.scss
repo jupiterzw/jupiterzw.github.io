@@ -1,25 +1,30 @@
+@use 'variables' as *;
+@use 'module' as *;
+@use '../colors/typography-light';
+@use '../colors/typography-dark';
+
 /* The common styles */
 
 html {
   @media (prefers-color-scheme: light) {
     &:not([data-mode]),
     &[data-mode='light'] {
-      @include light-scheme;
+      @include typography-light.light-scheme;
     }
 
     &[data-mode='dark'] {
-      @include dark-scheme;
+      @include typography-dark.dark-scheme;
     }
   }
 
   @media (prefers-color-scheme: dark) {
     &:not([data-mode]),
     &[data-mode='dark'] {
-      @include dark-scheme;
+      @include typography-dark.dark-scheme;
     }
 
     &[data-mode='light'] {
-      @include light-scheme;
+      @include typography-light.light-scheme;
     }
   }
 

@@ -1,11 +1,10 @@
 ---
 ---
 
-@import 'main
+@use 'main
 {%- if jekyll.environment == 'production' -%}
   .bundle
 {%- endif -%}
 ';
 
-
-@import "thm-env.scss"; 
+@use "thm-env"; 
