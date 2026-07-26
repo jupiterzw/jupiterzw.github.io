@@ -10,7 +10,11 @@
 *.{cmd,[cC][mM][dD]} text eol=crlf
 *.{bat,[bB][aA][tT]} text eol=crlf
 
-# Denote all files that are truly binary and should not be modified.
-*.png binary
-*.jpg binary
+# Denote binary assets explicitly, including uppercase camera extensions.
+*.[gG][iI][fF] binary
+*.[jJ][pP][eE][gG] binary
+*.[jJ][pP][gG] binary
+*.[mM][oO][vV] binary
+*.[pP][dD][fF] binary
+*.[pP][nN][gG] binary
 *.ico binary

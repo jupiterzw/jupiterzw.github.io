@@ -1,16 +1,11 @@
 {
   "name": "jupiterzw.github.io",
   "version": "1.0.0",
+  "private": true,
   "description": "My personal blog",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Zhiyu Wang",
   "license": "MIT",
-  "dependencies": {
-    "bootstrap": "^5.3.3",
-    "@popperjs/core": "^2.11.8",
-    "jquery": "^3.7.1"
+  "devDependencies": {
+    "bootstrap": "5.3.8"
   }
 }
