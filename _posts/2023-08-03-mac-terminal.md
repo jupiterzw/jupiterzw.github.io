@@ -6,28 +6,48 @@ tags: [terminal, mac]     # TAG names should always be lowercase
 math: true
 image: /assets/img/2023-08-03-mac-terminal/mac_terminal.png
 ---
+Ryan is so handsome!!!!!!!!
+## Shell VS. Shell Emulator
 
-I recently leveled up my Mac terminal for convenience and fun. Here is how I did it.
+| **Aspect**          | **Shell**                                                                 | **Shell Emulator**                                                                                          |
+|----------------------|---------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------|
+| **Definition**       | A native command-line interpreter that directly interacts with the OS kernel. | A program that mimics shell behaviour within another environment or runtime.                                |
+| **Examples**         | Bash, Zsh, PowerShell                                                     | Web-based terminals, VS Code’s integrated terminal, Python `subprocess` shell simulation                    |
+| **System Access**    | Direct access to OS processes, file system, and environment variables.     | Indirect access—depends on an underlying real shell or sandboxed execution.                                 |
+| **Purpose**          | Executes system commands and scripts natively.                            | Provides shell-like functionality for convenience, portability, or isolation.                              |
+| **Dependency**       | Runs directly on the operating system.                                    | Requires a host environment (e.g., browser, IDE, or interpreter) to function.                              |
 
-## Install Homebrew
-In your command line, type the following:
+[iTerm2](https://iterm2.com/) is an advanced **shell emulator** for macOS. It extends the default terminal app by providing a powerful interface for interacting with Unix shells such as bash, zsh, or fish.
+
+| **Aspect** | **Description** |
+|-------------|-----------------|
+| **Type** | Terminal emulator (not a shell itself). |
+| **Purpose** | Provides a graphical interface to run command-line shells and processes on macOS. |
+| **Key Features** | - Split panes and tabs<br>- Hotkey window<br>- Search and autocomplete<br>- Shell integration and trigger automation<br>- Inline image and file previews<br>- Extensive customisation (themes, key bindings, profiles) |
+| **Difference from Shell** | iTerm2 doesn’t interpret commands—it passes them to the shell (e.g., zsh or bash) running inside it. |
+| **Typical Use** | Used by developers and power users for productivity, scripting, and managing multiple terminal sessions. |
+
+
+## Installation
+
+### Install [Homebrew](https://brew.sh/)
 ```zsh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
-## Add Homebrew To Path
-After installing, you will see these prompts at the end tells you how to add homebrew to path:
+
+After installing, add homebrew to path (assume it's not already in your path):
 ```zsh
 echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> /Users/[username]/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)"
 ```
-Remember to replace ”[username]” with your actual username.
+Remember to replace [username] with your actual username.
 
-## Install iTerm2
+### Install [iTerm2](https://iterm2.com/)
 ```zsh
 brew install --cask iterm2
 ```
 
-## Install Git
+### Install Git (if you don't have one)
 ```zsh
 brew install git
 ```
@@ -100,7 +120,6 @@ source ~/.zshrc
 ```
 
 I'll update the plugin section once I find useful ones.
-
 
 
 
