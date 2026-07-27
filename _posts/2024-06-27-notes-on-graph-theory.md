@@ -4,7 +4,7 @@ date: 2024-06-24 22:01
 categories: [Posts, Mathematics]
 tags: [graph theory]     # TAG names should always be lowercase
 math: true
-image: false
+image: /assets/img/2024-06-27-math0029-note/cover.png
 published: true
 ---
 

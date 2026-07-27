@@ -4,7 +4,7 @@ date: 2024-06-24 22:01
 categories: [Posts, Mathematics]
 tags: [linear algebra]     # TAG names should always be lowercase
 math: true
-image: false
+image: /assets/img/2024-06-24-symmetric-real-eigenvalues/cover.png
 published: true
 ---
 
