@@ -8,8 +8,7 @@ image: /assets/img/2024-06-27-math0029-note/cover.png
 published: true
 ---
 
-- [PDF (without proof)](/assets/img/2024-06-27-math0029-note/notes_on_graph_theory.pdf) 
-- [PDF]()
+- [PDF (without proof)](/assets/files/2024-06-27-notes-on-graph-theory/notes-on-graph-theory.pdf)
 
 ## 1 Basic counting: sets and tuples
 
