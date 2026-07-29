@@ -1,0 +1,24 @@
+{% assign pdf_title = include.title | default: "PDF document" %}
+{% assign pdf_url = include.src | relative_url %}
+
+<div class="pdf-viewer">
+  <object
+    class="pdf-viewer__frame"
+    data="{{ pdf_url }}#view=FitH"
+    type="application/pdf"
+    aria-label="{{ pdf_title | escape }}"
+    width="100%"
+    height="800"
+  >
+    <p>
+      Your browser cannot display this PDF inline.
+      <a href="{{ pdf_url }}">Open {{ pdf_title | escape }}</a>.
+    </p>
+  </object>
+
+  <p class="pdf-viewer__actions">
+    <a href="{{ pdf_url }}" target="_blank" rel="noopener">Open PDF in a new tab</a>
+    <span aria-hidden="true">·</span>
+    <a href="{{ pdf_url }}" download>Download PDF</a>
+  </p>
+</div>
