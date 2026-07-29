@@ -1,0 +1,23 @@
+/*
+ * Keep long desktop tables of contents sticky.
+ *
+ * A sticky element taller than its scroll container cannot remain within the
+ * viewport while the page scrolls. Path Signatures has enough headings to hit
+ * that case, so constrain the TOC to the available viewport and let the list
+ * scroll independently.
+ */
+#toc-wrapper {
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--main-border-color) transparent;
+
+  &::-webkit-scrollbar {
+    width: 0.25rem;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--main-border-color);
+    border-radius: 0.25rem;
+  }
+}
