@@ -6,298 +6,390 @@ tags: [algebraic number theory]     # TAG names should always be lowercase
 math: true
 image: /assets/img/2023-07-24-algebraic-number/cover.png
 ---
+
 Let's play a game with integer sequences. Observe the following sequence:
 
 $$
-\begin{align}
-    1\\
-    11\\
-    21\\
-    1211\\
-    111221\\
-    312211\\
-    \vdots
-\end{align}
+\begin{aligned}
+1&\\
+11&\\
+21&\\
+1211&\\
+111221&\\
+312211&\\
+\vdots&
+\end{aligned}
 $$
 
 Can you tell the next number?
 
-**Ans:** The next number is $1311221$ because we have "one $3$, one $1$, two $2$s, and two $1$s" from the previous term.
+**Answer.** It is $$13112221$$, because $$312211$$ is read as “one $$3$$, one
+$$1$$, two $$2$$s, and two $$1$$s.”
 
----
-I came across this [Conway look-and-say sequence](https://en.wikipedia.org/wiki/Look-and-say_sequence) in a minicourse about computational number theory and found the pattern was hilarious at first. After roughly going through the related section in [Eureka. 46](https://www.archim.org.uk/eureka/archive/Eureka-46.pdf) and some basic theorems, I took some notes for fun.
+At first I found this pattern hilarious. It looks like the sort of puzzle whose
+mathematics should end after ten minutes. Instead, it leads to field theory,
+algebraic integers, finite-state transducers, Perron--Frobenius theory, and an
+irreducible polynomial of degree $$71$$. This post is my attempt to explain why.
 
 ## Algebraic and transcendental numbers
----
 
-**Definition 0.1 (Algebraic Number)** A number $\theta \in \mathbb{C}$ is *algebraic* if it satifies the polynomial equation, i.e.
-
-$$
-    f(\theta) = a_n\theta^n + a_{n-1}\theta^{n-1} + \cdots + a_1\theta + a_0 = 0
-$$
-
-with $a_0, ..., a_n \in \mathbb{Q}$.
-
----
-From the definition, we notice that all rational numbers are algebriac as $x = \frac{a}{b}$ is a root of $bx-a$, where $a, b \in \mathbb{Z}$.
-
-
-Some classic examples are:
-
-- $\sqrt{2} \rightarrow x^2 - 2$,
-- $i = \sqrt{-1} \rightarrow x^2 + 1$,
-- $\cos(\frac{2\pi}{9})\rightarrow 8x^3-6x+1$.
-
----
-**Proposition 0.2**
-The algebraic numbers form a field $\bar{\mathbb{Q}} \subseteq \mathbb{C}$.
-
----
-- Properties such as associativity, commutativity, and distributivity are inherited from $\mathbb{C}$. For $\bar{\mathbb{Q}}$ to be a field, all we need is to show is that the sum, difference, product and quotient (if the denominator is nonzero) of two algebraic numbers is again algebraic.
-- To prove the sum and product of two algebraic numbers is again algebraic, the following lemma turns out to be helpful.
-
----
-**Lemma 0.3**
-Suppose $V \subseteq \mathbb{C}$ is a finite-dimensional vector space over $\mathbb{Q}$ with $V \ne 0$ and $x \in \mathbb{C}$, then
+**Definition 1 (algebraic number).** A complex number $$\alpha$$ is
+*algebraic over* $$\mathbb Q$$ if there is a nonzero polynomial
 
 $$
-    xV \subseteq V \implies x \in \bar{\mathbb{Q}}.
+f(x)=a_nx^n+\cdots+a_1x+a_0\in\mathbb Q[x]
 $$
 
-*Proof:* Let $e_1, ..., e_n$ be a basis for $V$.
-By assumption,
+such that $$f(\alpha)=0$$. Otherwise, $$\alpha$$ is *transcendental*.
+
+After clearing denominators, we may equivalently require
+$$f\in\mathbb Z[x]$$. Among all monic polynomials in $$\mathbb Q[x]$$
+annihilating $$\alpha$$ there is a unique one of least degree: its
+*minimal polynomial* $$m_\alpha(x)$$. The number
 
 $$
-\begin{align}
-xe_1 &= a_{11}e_1 + \cdots + a_{1n}e_n, \\
-xe_2 &= a_{21}e_1 + \cdots + a_{2n}e_n, \\
-&\vdots\\
-xe_n &= a_{n1}e_1 + \cdots + a_{nn}e_n. \\
-\end{align}
+[\mathbb Q(\alpha):\mathbb Q]=\deg m_\alpha
 $$
 
-Since a basis can't be all zero vectors, we have
+is called the degree of $$\alpha$$.
 
-$$
-\det(xI - A) = 0,
-$$
+For example,
 
-where 
+- $$\sqrt 2$$ has minimal polynomial $$x^2-2$$;
+- $$i$$ has minimal polynomial $$x^2+1$$;
+- $$2\cos(2\pi/9)$$ has minimal polynomial $$x^3-3x+1$$.
 
-$$
-   A =\begin{pmatrix}
-a_{11} & a_{12} & \cdots & a_{1n}\\
-a_{21} & a_{22} & \cdots & a_{2n}\\
-\vdots & \vdots &\ddots & \vdots\\
-a_{n1} & a_{n2} & \cdots & a_{nn}
-\end{pmatrix}.
-$$
-
-This is a polynomial equation with coefficients in $\mathbb{Q} \implies x \in \bar{\mathbb{Q}}$. ◼
-
----
-*Proof of proposition 0.2:*
-Let $\theta_1, \theta_2$ be algebraic and, without loss of generality, $f_1, f_2$ be some rational polynomials with least degrees $m,n$ such that $f_1(\theta_1) = 0, f_2(\theta_2) = 0$.
-Clearly, $f(-\theta_1) = 0$ and $\theta_1^{m}f_1(\frac{1}{\theta_1}) = 0$. To show that $\theta_1+\theta_2$ and $\theta_1 \theta_2$ are algebaic,
-consider the following vector space
-
-$$
-    V = \langle \theta_1^i\theta_2^j : 0\leq i <m, 0 \leq j <n \rangle
-$$
-
-over $\mathbb{Q}$ spanned by the $mn$ elements $\theta_1^i\theta_2^j$.
-Since $\theta_1^m$ can be expressed as a linear combination of lower degrees of $\theta_1$ (similarly for $\theta_2$), we have
-
-$$
-    \theta_1 V \subseteq V, ~~~ \theta_2 V \subseteq V.
-$$
-
-Hence
-
-$$
-    (\theta_1 + \theta_2) V \subseteq V, ~~~ \theta_1\theta_2 V \subseteq V,
-$$
-
-which completes the proof by the previous lemma. ◼
-
-**Remark:** Similarly, we can show that the set of all [*algebraic integers*](https://en.wikipedia.org/wiki/Algebraic_integer) forms a ring $\bar{\mathbb{Z}} \subseteq \bar{\mathbb{Q}}$.
-
----
-The algebraic numbers form a countable subset of the $\mathbb{C}$, so "most" numbers are not algebraic. 
-Non-algebraic numbers are called *transcendental*.
-
-- $\pi, \text{e}, \log(2), \text{e}^{\pi}$ are examples of transcendental numbers.
-
-One of many useful results is the **Lindemann’s Theorem**.
-
----
-**Theorem 0.4 (Lindemann’s Theorem)**
-Suppose $\theta \neq 0$ is algebraic. 
-Then $\text{e}^{\theta}$ is transcendental.
-
----
-**Some remarks:**
-- $\text{e}, \pi$ are transcendental immediately follows this theorem by setting $\theta = 1$ and $i\pi$.
-- I'll prove a related result which implies Lindemann’s Theorem.
-
----
-**Theorem 0.5**
-Suppose $\theta_1, ..., \theta_k$ are distinct algebraic integers. Then $\text{e}^{\theta_1}, ..., \text{e}^{\theta_k}$ are linearly independent over $\bar{\mathbb{Q}}$.
-
-Theorem 0.5 $\implies$ Theorem 0.4:
-Let $\theta$ be an algebraic number, then there exists an integer $k$ such that $\theta k$ is an algebriac interger (just multiply the corresponding polynomial equation by the appropriate integer).
-So, without loss of generality, suppose that $\theta$ is an algebraic integer and $\text{e}^{\theta} = b$ is an algebraic number. 
-By setting $\theta_1 = 0$ and $\theta_2 = \theta$, $b_1 = -b$ and $b_2 = 1$, we have
-
-$$
-    b_1\text{e}^{\theta_1} + b_2 \text{e}^{\theta_2} = -b + \text{e}^{\theta} = 0,
-$$
-
-contradicting the fact that $\text{e}^{\theta_1}$ and $\text{e}^{\theta_2}$ are linearly independent over $\bar{\mathbb{Q}}$. ◼
-
-*Proof of Lindemann’s Theorem:* I just noticed that this proof required lots of technical details. I will try to write my version of proof in a later post, hopefully.
-See [Jacobson’s book Algebra I, Page 277](http://www.math.toronto.edu/~ila/Jacobson-Basic_algebra_I%20(1).pdf) for a complete proof. ◼
+The last example is a useful reminder: algebraic numbers need not be expressible
+by square roots, and their natural home is field theory rather than a catalogue
+of special formulas.
 
 ---
 
-## An algebraic suprise
+**Proposition 2.** The set $$\overline{\mathbb Q}$$ of algebraic numbers is a
+subfield of $$\mathbb C$$.
+
+We first isolate the linear-algebra trick behind the proof.
+
+**Lemma 3.** Let $$V\subseteq\mathbb C$$ be a nonzero finite-dimensional
+$$\mathbb Q$$-vector space. If $$xV\subseteq V$$, then
+$$x\in\overline{\mathbb Q}$$.
+
+*Proof.* Multiplication by $$x$$ defines a $$\mathbb Q$$-linear operator
+$$T_x\colon V\to V$$. By the Cayley--Hamilton theorem,
+its characteristic polynomial $$\chi_{T_x}\in\mathbb Q[t]$$ satisfies
+$$\chi_{T_x}(T_x)=0$$. Applying this operator identity to any nonzero
+$$v\in V$$ gives
+
+$$
+\chi_{T_x}(x)v=0.
+$$
+
+Since $$v\ne0$$ in the field $$\mathbb C$$, we have
+$$\chi_{T_x}(x)=0$$. Thus $$x$$ is algebraic. $$\square$$
+
+*Proof of Proposition 2.* Take algebraic numbers $$\alpha,\beta$$ of degrees
+$$m,n$$. The $$\mathbb Q$$-algebra
+
+$$
+A=\mathbb Q[\alpha,\beta]
+$$
+
+is spanned over $$\mathbb Q$$ by the $$mn$$ elements
+
+$$
+\alpha^i\beta^j,\qquad 0\le i<m,\quad 0\le j<n.
+$$
+
+Indeed, the equations $$m_\alpha(\alpha)=0$$ and
+$$m_\beta(\beta)=0$$ reduce all higher powers. Moreover, a nonzero
+finite-dimensional algebra over a field that is also an integral domain is
+itself a field: multiplication by a nonzero element is injective, hence
+surjective. Therefore $$A=\mathbb Q(\alpha,\beta)$$. Multiplication by each of
+$$\alpha+\beta$$, $$\alpha-\beta$$, $$\alpha\beta$$ and, if
+$$\beta\ne0$$, $$\alpha/\beta$$ preserves $$A$$. Lemma 3 shows that all
+four numbers are algebraic. $$\square$$
+
+An algebraic number is an **algebraic integer** if its minimal polynomial lies
+in $$\mathbb Z[x]$$. Algebraic integers form a ring
+$$\overline{\mathbb Z}$$. One clean proof uses the integral-dependence
+criterion: $$x$$ is integral over $$\mathbb Z$$ exactly when some finitely
+generated nonzero $$\mathbb Z$$-module $$M\subset\mathbb C$$ satisfies
+$$xM\subseteq M$$. The same module argument, applied to
+$$\mathbb Z[\alpha,\beta]$$, proves closure under addition and multiplication.
+
+There are only countably many polynomials in $$\mathbb Z[x]$$, and each has
+finitely many roots. Thus $$\overline{\mathbb Q}$$ is countable, whereas
+$$\mathbb R$$ and $$\mathbb C$$ are uncountable. In this precise sense, almost
+every complex number is transcendental, although proving transcendence for a
+particular familiar constant can be extremely difficult.
+
+Two landmarks are worth stating accurately.
+
+**Hermite--Lindemann theorem.** If
+$$0\ne\alpha\in\overline{\mathbb Q}$$, then $$e^\alpha$$ is
+transcendental.
+
+**Lindemann--Weierstrass theorem.** If
+$$\alpha_1,\ldots,\alpha_r$$ are distinct algebraic numbers, then
+$$e^{\alpha_1},\ldots,e^{\alpha_r}$$ are linearly independent over
+$$\overline{\mathbb Q}$$.
+
+The second theorem implies the first by taking $$\alpha_1=0$$ and
+$$\alpha_2=\alpha$$. It also gives the transcendence of $$e$$ immediately.
+If $$\pi$$ were algebraic, then $$i\pi$$ would be a nonzero algebraic number
+whose exponential is $$-1$$, a contradiction. Similarly, if
+$$\log 2$$ were algebraic, its exponential would be algebraic. The
+transcendence of $$e^\pi$$ is a different theorem: it follows from
+Gelfond--Schneider by writing $$e^\pi$$ as a value of
+$$(-1)^{-i}$$.
+
+These theorems are much deeper than we need below. The point is simply that
+“algebraic” is a rigid arithmetic condition. So why should the growth rate of
+a silly digit game satisfy any polynomial at all?
+
+## The look-and-say operator
+
+Let a word be written in maximal constant runs as
+
+$$
+w=a_1^{r_1}a_2^{r_2}\cdots a_k^{r_k},
+\qquad a_i\ne a_{i+1}.
+$$
+
+The look-and-say operator $$D$$ replaces every run by its length followed by
+its symbol:
+
+$$
+D(w)=r_1a_1\,r_2a_2\cdots r_ka_k.
+$$
+
+Thus $$D(312211)=13112221$$. Starting from $$w_0=1$$, put
+$$w_{n+1}=D(w_n)$$ and $$L_n=|w_n|$$.
+
+For this particular seed, only the symbols $$1,2,3$$ occur after the first
+few generations, and no run has length more than $$3$$. These facts are easy
+to check inductively, but by themselves they do not explain the asymptotic
+growth.
+
+The crucial notion is **independent evolution**. A factorisation $$w=uv$$ is
+a permanent split if
+
+$$
+D^n(w)=D^n(u)D^n(v)\qquad\text{for every }n\ge0.
+$$
+
+This is stronger than saying that the first derivation happens to concatenate:
+the boundary between $$u$$ and $$v$$ must never merge at any later time. An
+**atom** is a nonempty word admitting no nontrivial permanent split.
+
+For example, $$22$$ is fixed because $$D(22)=22$$. It is the atom called
+hydrogen. Conway found $$92$$ common atoms and named them after the chemical
+elements from hydrogen to uranium. A few representatives are:
+
+| Element | Atom | Its decay |
+|:--|:--|:--|
+| H | `22` | H |
+| He | `13112221133211322112211213322112` | Hf · Pa · H · Ca · Li |
+| C | `3113112211322112211213322112` | B |
+| K | `1112` | Ar |
+| Ca | `12` | K |
+| Re | `111312211312113221133211322112211213322113` | Ge · Ca · W |
+| Pa | `13` | Th |
+| U | `3` | Pa |
+
+Here “decay” means that applying $$D$$ produces the concatenation of the atoms
+listed in the last column. The chemical names are whimsical; the finite
+decomposition is the mathematics.
+
 ---
-The sequence $1, 11, 21, 1211, 111221, 312211, ...$ is the Conway look-and-say sequence. Write $L_n$ for the length of the $n$th term. 
-Then, surprisingly to me at least, the number
+
+**Cosmological theorem, informal form.** Over the classical alphabet
+$$\{1,2,3\}$$, every sufficiently old nonempty look-and-say word, apart from
+the fixed word $$22$$, splits into Conway's common atoms. For a general initial
+alphabet, two parameterised “transuranic” families must also be allowed.
+
+The modern sharp formulation is stronger. Lairez and Storozhenko prove that if
+a word contains no factor $$aaaa$$, then every iterate from day $$24$$ onward
+splits into the $$94$$ common-or-transuranic atom types. Every first-generation
+word has no four consecutive equal symbols, so day $$25$$ is a uniform bound
+for an arbitrary seed. For the classical seed $$1$$, only the $$92$$ common
+atoms are relevant.
+
+This theorem is the hidden finiteness principle. An infinite process on longer
+and longer strings eventually becomes a finite substitution system.
+
+## From atoms to an integer matrix
+
+Index the relevant atoms by $$E_1,\ldots,E_{92}$$. When $$E_j$$ decays, let
+$$m_{ij}$$ be the number of copies of $$E_i$$ in its atomic factorisation, and
+form the nonnegative integer matrix
 
 $$
-    \lambda := \lim_{n \to \infty} \frac{L_{n+1}}{L_n} = 1.303577296...
+M=(m_{ij})\in M_{92}(\mathbb Z_{\ge0}).
 $$
 
-is algebraic, satisfying a polynomial of degree $71$, which looks like this:
+If $$c_n\in\mathbb Z_{\ge0}^{92}$$ records the number of atoms of each type in
+generation $$n$$, then
 
 $$
-\begin{align}
-&x^{71}-x^{69}-2x^{68}-x^{67}+2x^{66}+2x^{65}+x^{64}-x^{63}-x^{62}-x^{61}-x^{60}\\
--&x^{59}+2x^{58}+5x^{57}+3x^{56}-2x^{55}10x^{54}-3x^{53}-2x^{52}+6x^{51}\\
-+&6x^{50}+x^{49}+9x^{48}-3x^{47}-7x^{46}-8x^{45}-8x^{44}+10x^{43}+6x^{42}\\
-+&8x^{41}-5x^{40}-12x^{39}+7x^{38}-7x^{37}+7x^{36}+x^{35}-3x^{34}+10x^{33}\\
-+&x^{32}-6x^{31}-2x^{30}-10x^{29}-3x^{28}+2x^{27}+9x^{26}-3x^{25}+14x^{24}\\
--8&x^{23}-7x^{21}+9x^{20}+3x^{19}-4x^{18}-10x^{17}-7x^{16}+12x^{15}\\
-+7&x^{14}+2x^{13}-12x^{12}-4x^{11}-2x^{10}+5x^{9}+x^7-7x^6+7x^5\\
--4&x^4+12x^3-6x^2+3x-6.
-\end{align}
+c_{n+1}=Mc_n.
 $$
 
-The constant $\lambda$ can be interpreted as the ratio of two seccessive terms.
-It reveals the fact that the Conway look-and-say sequences grow predictably in size,
-and the length (i.e. number of digits) of the $(n+1)$ term is approximately $1.3057$ times the length of the $n$th term.
-Moreover, $\lambda$ is in fact the largest root of the above polynomial of degree 
-$71$. 
+Let
 
-### Properties of Conway look-and-say sequences
+$$
+\ell=(|E_1|,\ldots,|E_{92}|)^{\mathsf T}.
+$$
 
-One can verify the following properties of the look-and-say sequences by using induction on the length of each term.
+Once the primordial part of the sequence has decayed, its total digit length is
+therefore
 
-1. Only $1, 2$ or $3$ appear in the digits.
-2. Every term in the sequences ends in $1$.
-3. Every term begin with $1$ or $3$, execpt for the third term $21$.
-4. The digits $22$ is stable, in the sence that it never changes.
+$$
+L_n=\ell^{\mathsf T}c_n=\ell^{\mathsf T}M^{\,n-n_0}c_{n_0}.
+$$
 
-### $92$ Elements
+At this point the surprise becomes linear algebra. The full matrix is
+reducible---hydrogen, for instance, only produces hydrogen---but its dominant
+recurrent block is primitive. The Perron--Frobenius theorem gives that block a
+simple positive eigenvalue $$\lambda$$ whose modulus is strictly larger than
+that of every other eigenvalue in the block. Provided the initial vector reaches
+the dominant component, as the seed $$1$$ does,
 
-Conway discovered that each term in the look-and-say sequences can be broken up into smaller, atomic ones, in the sence that each term in the look-and-say sequences is a concatenation of $92$ non-interacting subsequences. 
-Conway named them after the $92$ elements in the periodic table from hydrogen $22$ to uranium $3$ with the longest atomic subsequence being rhenium: $111312211312113221133211322112211213322113$.
-To be more specific, let us summarise these $92$ atomic subsequences in lexicographical order in the table below.
+$$
+M^nc=C\lambda^n v+O(\rho^n)
+\qquad (\rho<\lambda),
+$$
 
-| Number | Subsequence                               | Length | Evolution               | Element |
-|--------|                                       ---:|--------|-------------------------|---------|
-|       1|                                       1112|       4|                     (63)|         |
-|       2|                                    1112133|       7|                 (64)(62)|         |
-|       3|                               111213322112|      12|                     (65)|         |
-|       4|                               111213322113|      12|                     (66)|         |
-|       5|                                       1113|       4|                     (68)|         |
-|       6|                                      11131|       5|                     (69)|         |
-|       7|                               111311222112|      12|                 (84)(55)|         |
-|       8|                                     111312|       6|                     (70)|         |
-|       9|                                   11131221|       8|                     (71)|         |
-|      10|                                 1113122112|      10|                     (76)|         |
-|      11|                                 1113122113|      10|                     (77)|         |
-|      12|                             11131221131112|      14|                     (82)|         |
-|      13|                            	 111312211312|      12|                     (78)|         |
-|      14|                             11131221131211|      14|                     (79)|         |
-|      15|                         111312211312113211|      18|                     (80)|         |
-|      16| 111312211312113221133211322112211213322112|      42|             (81)(29)(91)|         |
-|      17| 111312211312113221133211322112211213322113|      42|             (81)(29)(90)|         |
-|      18|                 11131221131211322113322112|      26|                 (81)(30)|         |
-|      19|                             11131221133112|      14|             (75)(29)(92)|         |
-|      20|               1113122113322113111221131221|      28|                 (75)(32)|         |
-|      21|                             11131221222112|      14|                     (72)|         |
-|      22|                   111312212221121123222112|      24|                     (73)|         |
-|      23|                   111312212221121123222113|      24|                     (74)|         |
-|      24|                                      11132|       5|                     (83)|         |
-|      25|                                    1113222|       7|                     (86)|         |
-|      26|                                 1113222112|      10|                     (87)|         |
-|      27|                                 1113222113|      10|                     (88)|         |
-|      28|                                   11133112|       8|                 (89)(92)|         |
-|      29|                                         12|       2|                      (1)|         |
-|      30|                                  123222112|       9|                      (3)|         |
-|      31|                                  123222113|       9|                      (4)|         |
-|      32|                    12322211331222113112211|      23|          (2)(61)(29)(85)|         |
-|      33|                                         13|       2|                      (5)|         |
-|      34|                                     131112|       6|                     (28)|         |
-|      35|           13112221133211322112211213322112|      32|     (24)(33)(61)(29)(91)|         |
-|      36|           13112221133211322112211213322113|      32|     (24)(33)(61)(29)(90)|         |
-|      37|                                   13122112|       8|                      (7)|         |
-|      38|                                        132|       3|                      (8)|         |
-|      39|                                      13211|       5|                      (9)|         |
-|      40|                                     132112|       6|                     (10)|         |
-|      41|                                 1321122112|      10|                     (21)|         |
-|      42|                         132112211213322112|      18|                     (22)|         |
-|      43|                         132112211213322113|      18|                     (23)|         |
-|      44|                                     132113|       6|                     (11)|         |
-|      45|                                 1321131112|      10|                     (19)|         |
-|      46|                                   13211312|       8|                     (12)|         |
-|      47|                                    1321132|       7|                     (13)|         |
-|      48|                                   13211321|       8|                     (14)|         |
-|      49|                               132113212221|      12|                     (15)|         |
-|      50|                       13211321222113222112|      20|                     (18)|         |
-|      51|         1321132122211322212221121123222112|      34|                     (16)|         |
-|      52|         1321132122211322212221121123222113|      34|                     (17)|         |
-|      53|                       13211322211312113211|      20|                     (20)|         |
-|      54|                                 1321133112|      10|          (6)(61)(29)(92)|         |
-|      55|                                    1322112|       7|                     (26)|         |
-|      56|                                    1322113|       7|                     (27)|         |
-|      57|                                13221133112|      11|             (25)(29)(92)|         |
-|      58|                              1322113312211|      13|             (25)(29)(67)|         |
-|      59|                      132211331222113112211|      21|             (25)(29)(85)|         |
-|      60|                          13221133122211332|      17| (25)(29)(68)(61)(29)(89)|         |
-|      61|                                         22|       2|                     (61)|         |
-|      62|                                          3|       1|                     (33)|         |
-|      63|                                       3112|       4|                     (40)|         |
-|      64|                                    3112112|       7|                     (41)|         |
-|      65|                             31121123222112|      14|                     (42)|         |
-|      66|                             31121123222113|      14|                     (43)|         |
-|      67|                                    3112221|       7|                 (38)(39)|         |
-|      68|                                       3113|       4|                     (44)|         |
-|      69|                                     311311|       6|                     (48)|         |
-|      70|                                   31131112|       8|                     (54)|         |
-|      71|                                 3113112211|      10|                     (49)|         |
-|      72|                           3113112211322112|      16|                     (50)|         |
-|      73|               3113112211322112211213322112|      28|                     (51)|         |
-|      74|               3113112211322112211213322113|      28|                     (52)|         |
-|      75|                                  311311222|       9|                 (47)(38)|         |
-|      76|                               311311222112|      12|                 (47)(55)|         |
-|      77|                               311311222113|      12|                 (47)(56)|         |
-|      78|                           3113112221131112|      16|                 (47)(57)|         |
-|      79|                         311311222113111221|      18|                 (47)(58)|         |
-|      80|                   311311222113111221131221|      24|                 (47)(59)|         |
-|      81|                    31131122211311122113222|      23|                 (47)(60)|         |
-|      82|                           3113112221133112|      16|     (47)(33)(61)(29)(92)|         |
-|      83|                                     311312|       6|                     (45)|         |
-|      84|                                      31132|       5|                     (46)|         |
-|      85|                            311322113212221|      15|                     (53)|         |
-|      86|                                     311332|       6|             (38)(29)(89)|         |
-|      87|                                 3113322112|      10|                 (38)(30)|         |
-|      88|                                 3113322113|      10|                 (38)(31)|         |
-|      89|                                        312|       3|                     (34)|         |
-|      90|                312211322212221121123222113|      27|                     (36)|         |
-|      91|                312211322212221121123222112|      27|                     (35)|         |
-|      92|                                      32112|       5|                     (37)|         |
+where $$v$$ is a positive right Perron eigenvector and $$C>0$$. Applying the
+positive linear functional $$\ell^{\mathsf T}$$ yields
 
-Later when I feel productive...
+$$
+\boxed{\displaystyle
+\lim_{n\to\infty}\frac{L_{n+1}}{L_n}=\lambda}.
+$$
+
+The same argument gives more than a growth rate. After normalisation, the atom
+count vector converges to the Perron eigenvector:
+
+$$
+\frac{c_n}{\mathbf 1^{\mathsf T}c_n}
+\longrightarrow
+\frac{v}{\mathbf 1^{\mathsf T}v}.
+$$
+
+Thus every atom has a limiting abundance, and digit frequencies are obtained
+by applying further linear functionals to $$v$$. The spectral gap
+$$\lambda-\rho$$ controls the exponential rate of convergence. In the language
+of symbolic dynamics, the mature look-and-say sequence is governed by a finite
+substitution with a unique asymptotic frequency vector.
+
+Most importantly, $$M$$ has integer entries. Every eigenvalue of an integer
+matrix is a root of its monic characteristic polynomial, so $$\lambda$$ is an
+algebraic integer. Algebraicity is not a numerical coincidence: it is forced by
+the finite atomic description.
+
+## Conway's constant
+
+Removing the transient directions and factoring the characteristic polynomial
+leaves the following irreducible degree-$$71$$ polynomial:
+
+$$
+\begin{aligned}
+p(x)={}&x^{71}-x^{69}-2x^{68}-x^{67}+2x^{66}+2x^{65}+x^{64}
+-x^{63}-x^{62}-x^{61}-x^{60}\\
+&-x^{59}+2x^{58}+5x^{57}+3x^{56}-2x^{55}-10x^{54}-3x^{53}
+-2x^{52}+6x^{51}\\
+&+6x^{50}+x^{49}+9x^{48}-3x^{47}-7x^{46}-8x^{45}-8x^{44}
++10x^{43}+6x^{42}\\
+&+8x^{41}-5x^{40}-12x^{39}+7x^{38}-7x^{37}+7x^{36}+x^{35}
+-3x^{34}+10x^{33}\\
+&+x^{32}-6x^{31}-2x^{30}-10x^{29}-3x^{28}+2x^{27}+9x^{26}
+-3x^{25}+14x^{24}\\
+&-8x^{23}-7x^{21}+9x^{20}+3x^{19}-4x^{18}-10x^{17}
+-7x^{16}+12x^{15}\\
+&+7x^{14}+2x^{13}-12x^{12}-4x^{11}-2x^{10}+5x^9+x^7
+-7x^6+7x^5\\
+&-4x^4+12x^3-6x^2+3x-6.
+\end{aligned}
+$$
+
+Conway's constant is the unique positive real root of $$p$$:
+
+$$
+\lambda
+=1.303577269034296391257099112152551890730702504659404875754\ldots
+$$
+
+Because $$p$$ is irreducible over $$\mathbb Q$$, this really is the minimal
+polynomial of $$\lambda$$ and
+
+$$
+[\mathbb Q(\lambda):\mathbb Q]=71.
+$$
+
+Notice the logical order. A decimal approximation can suggest a constant, but
+it cannot explain degree $$71$$. The explanation is the finite decay matrix;
+the polynomial is a compressed algebraic shadow of that matrix.
+
+## What is recent here?
+
+Conway's original analysis was ingenious, but the cosmological theorem was
+notoriously awkward to verify by hand. The subject has recently acquired a much
+cleaner computational language.
+
+In 2024, Pierre Lairez and Aleksandr Storozhenko represented look-and-say
+derivation, splitting, and admissible sources by finite-state transducers. Their
+proof of the day-$$24$$ bound reduces the theorem to equality of two finite
+transducers. In their reported computation, the largest minimised automaton has
+$$592$$ states and the complete verification takes about $$150$$ milliseconds
+on a laptop. The result was subsequently published in *The American
+Mathematical Monthly* in 2025. This is a satisfying example of computer-assisted
+proof: the computer checks a finite automata identity, while the paper proves
+why that identity implies the infinite theorem.
+
+The same finite-state and substitution viewpoint also exposes nearby worlds:
+
+- Dresden and Siehler showed in 2024 that bases $$b\ge4$$ eventually recover
+  Conway's $$92$$ elements and the same constant $$\lambda$$. Binary and ternary
+  look-and-say behave differently: their growth constants are respectively the
+  positive roots of $$x^3-x^2-1$$ and $$x^3-x-1$$.
+- In a “stuttering” variant, a run is described with an extra repeated count.
+  Comes proved that its asymptotic growth rate is again an algebraic integer,
+  but now of degree $$415$$.
+
+So the frontier is not about guessing more digits of $$\lambda$$. It is about
+understanding which local description rules admit a finite atomic
+decomposition, how to certify that decomposition, and what spectral data the
+resulting substitution system forces.
+
+## Final thought
+
+The look-and-say sequence begins as a joke and ends as a small piece of
+algebraic dynamics:
+
+$$
+\text{local run rule}
+\longrightarrow
+\text{finite atomic decay}
+\longrightarrow
+\text{integer substitution matrix}
+\longrightarrow
+\text{algebraic Perron eigenvalue}.
+$$
+
+That chain is the real reason a degree-$$71$$ algebraic integer appears. The
+polynomial is spectacular, but the finite-state structure behind it is the
+better surprise.
+
+## References
+
+1. J. H. Conway, [*The Weird and Wonderful Chemistry of Audioactive
+   Decay*](https://doi.org/10.1007/978-1-4612-4808-8_53), in *Open Problems in
+   Communication and Computation*, 1987, pp. 173--188.
+2. P. Lairez and A. Storozhenko, [*Conway's Cosmological Theorem and Automata
+   Theory*](https://arxiv.org/abs/2409.20341), *The American Mathematical
+   Monthly* **132** (2025), 867--882.
+3. G. Dresden and J. Siehler, [*Look, There's More to Say about Conway's
+   Look-and-Say Sequence*](https://arxiv.org/abs/2405.11103), 2024.
+4. J. Comes, [*Stuttering Look-and-Say Sequences and a Challenger to Conway's
+   Cosmological Theorem*](https://arxiv.org/abs/2206.11991), 2022.
