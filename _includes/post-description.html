@@ -18,7 +18,13 @@
       {%- assign content = content | replace: '</td><td class="rouge-code">', '</td> --><td class="rouge-code">' -%}
     {%- endif -%}
 
-    {{- content | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
+    {% comment %}
+      `post.content` is already rendered HTML on some pages (for example the
+      homepage), but remains raw Markdown when posts come from tag/category
+      collections (for example related posts). Render it first so headings,
+      emphasis, links, and math never leak into the plain-text description.
+    {% endcomment %}
+    {{- content | markdownify | strip_html | newline_to_br | replace: '<br />', ' ' | strip_newlines -}}
   {%- endif -%}
 {%- endcapture -%}
 
