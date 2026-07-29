@@ -4,14 +4,14 @@ date: 2024-06-22 21:35
 categories: [Posts, Arch Linux]
 tags: [setting]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2024-06-22-arch-linux-bluetooth/arch_bluethooth.png
+image: /assets/img/2024-06-22-arch-linux-bluetooth/cover.png
 published: true
 ---
 
 After installing [Arch Linux](https://wiki.archlinux.org/title/installation_guide) and fiddling with it, I encountered an issue where the Bluetooth option was visible but I was unable to activate it.
 
 
-![Bluethooth button fails to function](/assets/img/2024-06-22-arch-linux-bluetooth/arch_bluetooth.gif)
+![Bluetooth button fails to function](/assets/img/2024-06-22-arch-linux-bluetooth/disabled-button.gif)
 _Bluethooth button fails to function_
 
 Check Bluetooth Status
@@ -33,7 +33,7 @@ This indicates that the Bluetooth service is disabled and inactive, which is why
 Activate Bluetooth Service
 ---
 Here's how I resolved the issue:
-![Bluethooth is functioning](/assets/img/2024-06-22-arch-linux-bluetooth/console_bluethooth.png)
+![Bluetooth is functioning](/assets/img/2024-06-22-arch-linux-bluetooth/console-output.png)
   
 - Start the Bluetooth service:
   ```zsh
@@ -48,7 +48,7 @@ Here's how I resolved the issue:
     This ensures that the Bluetooth service starts automatically with each boot of the system.
 
 Now the bluetooth is functioning!
-![Bluethooth is functioning](/assets/img/2024-06-22-arch-linux-bluetooth/bluetooth_work.png)
+![Bluetooth is functioning](/assets/img/2024-06-22-arch-linux-bluetooth/working-button.png)
 _Bluethooth is functioning_
 
 I hope this guide helps you resolve any similar issues with Bluetooth on Arch Linux.

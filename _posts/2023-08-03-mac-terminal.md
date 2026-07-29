@@ -4,7 +4,7 @@ date: 2023-08-03 22:43
 categories: [Posts, MacOS]
 tags: [terminal, mac]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2023-08-03-mac-terminal/mac_terminal.png
+image: /assets/img/2023-08-03-mac-terminal/cover.png
 ---
 Ryan is so handsome!!!!!!!!
 ## Shell VS. Shell Emulator

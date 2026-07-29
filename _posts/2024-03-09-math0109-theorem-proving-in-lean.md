@@ -4,7 +4,7 @@ date: 2024-03-09 12:00
 categories: [Posts, Mathematics]
 tags: [Lean4]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2024-03-09-math0109-theorem-proving-in-lean/lean.png
+image: /assets/img/2024-03-09-math0109-theorem-proving-in-lean/cover.png
 ---
 
 ## 1. Introduction

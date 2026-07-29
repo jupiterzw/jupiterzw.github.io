@@ -21,8 +21,4 @@
 
 # Exclude the checked-in Chirpy theme snapshot from GitHub language statistics.
 # Site-specific styles in _sass/custom and local overrides remain counted.
-_sass/addon/** linguist-vendored
-_sass/colors/** linguist-vendored
-_sass/layout/** linguist-vendored
-_sass/main.scss linguist-vendored
-_sass/main.bundle.scss linguist-vendored
+_vendor/chirpy-legacy-sass/** linguist-vendored

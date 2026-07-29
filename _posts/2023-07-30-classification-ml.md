@@ -1,10 +1,11 @@
 ---
 title: Binary Classification Neural Network from Scratch
 date: 2023-07-30 09:58
+last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Machine Learning]
 tags: [ml, mln]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2023-07-31-classification-ml/mln.png
+image: /assets/img/2023-07-30-classification-ml/cover.png
 ---
 
 ## Packages
@@ -115,7 +116,7 @@ Here is the outline of this project:
     - Combine the previous two steps into a new [LINEAR->ACTIVATION] backward function
     - Stack [LINEAR->RELU] backward L-1 times and add [LINEAR->SIGMOID] backward in a new L_model_backward function
 - Update the parameters using gradient descent
-![outline](/assets/img/2023-07-31-classification-ml/final outline.png)
+![outline](/assets/img/2023-07-30-classification-ml/network-outline.png)
 
 ## Initialisation
 Create and initialise the parameters of the 2-layer neural network with structure *LINEAR -> RELU -> LINEAR -> SIGMOID*. 
@@ -308,7 +309,7 @@ Now, similarly to forward propagation, we build the backward propagation in thre
 2. LINEAR -> ACTIVATION backward where ACTIVATION computes the derivative of either the ReLU or sigmoid activation
 3. [LINEAR -> RELU] $\times$ (L-1) -> LINEAR -> SIGMOID backward (whole model)
 
-![backward propagation](/assets/img/2023-07-31-classification-ml/backprop_kiank.png)
+![backward propagation](/assets/img/2023-07-30-classification-ml/backpropagation.png)
 
 ### Linear Backward
 Suppose we have already calculated the derivative $dZ^{[l]} = \frac{\partial \mathcal{L} }{\partial Z^{[l]}}$. We want to get $(dW^{[l]}, db^{[l]}, dA^{[l-1]})$.
@@ -322,7 +323,7 @@ $$ dA^{[l-1]} = \frac{\partial \mathcal{L} }{\partial A^{[l-1]}} = W^{[l] T} dZ^
 
 $A^{[l-1] T}$ is the transpose of $A^{[l-1]}$. 
 
-![backward single layer](/assets/img/2023-07-31-classification-ml/linearback_kiank.png)
+![backward single layer](/assets/img/2023-07-30-classification-ml/single-layer-backpropagation.png)
 
 **Note:**
 - axis=1 or axis=0 specify if the sum is carried out by rows or by columns respectively.
@@ -405,7 +406,7 @@ Now we implement backpropagation for the *[LINEAR->RELU] $\times$ (L-1) -> LINEA
 
 Recall that when we implemented the `L_model_forward` function, at each iteration, we stored a cache which contains (X,W,b, and z). In the back propagation module, we use those variables to compute the gradients. Therefore, in the `L_model_backward` function, we iterate through all the hidden layers backward, starting from layer $L$. On each step, we use the cached values for layer $l$ to backpropagate through layer $l$. The figure below shows the backward pass. 
 
-![backward](/assets/img/2023-07-31-classification-ml/mn_backward.png)
+![backward](/assets/img/2023-07-30-classification-ml/network-backpropagation.png)
 
 ```python
 def L_model_backward(AL, Y, caches):

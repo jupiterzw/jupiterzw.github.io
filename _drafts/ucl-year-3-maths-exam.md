@@ -4,15 +4,14 @@ date: 2024-04-26 17:00
 categories: [Posts, Mathematics]
 tags: [exam]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2024-04-26-2324exam/Exam-graphic.jpg
-published: false
+image: /assets/img/2024-04-26-ucl-year-3-maths-exam/cover.jpg
 ---
 
 Please note that these recollections are based solely on my memory and I post them purely for fun!
 
 Date| Modules      | PDF        |   TeX |
 ---| ----------- | ----------- |  ---  |
-2024-04-25 | MATH0029 - Graph Theory and Combinatorics    |   [Paper](/assets/files/2024-04-07-2324-exam/math0029-2023-2024-exam.pdf)    |  [TeX](/assets/files/2024-04-07-2324-exam/math0029-2023-2024-exam.tex)     |  |
+2024-04-25 | MATH0029 - Graph Theory and Combinatorics    |   [Paper](/assets/files/2024-04-26-ucl-year-3-maths-exam/math0029-exam.pdf)    |  [TeX](/assets/files/2024-04-26-ucl-year-3-maths-exam/math0029-exam.tex)     |  |
 2024-05-01 | MATH0069 - Probability  |       |       |    |
 2024-05-02 | MATH0018 - Functional Analysis |       |       | |
 2024-05-03 | MATH0070 - Linear Partial Differential Equations  |       |       |  |

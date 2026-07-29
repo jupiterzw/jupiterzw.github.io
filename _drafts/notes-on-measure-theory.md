@@ -5,5 +5,4 @@ categories: [Posts, Mathematics]
 tags: [measure theory]     # TAG names should always be lowercase
 math: true
 image: false
-published: false
 ---

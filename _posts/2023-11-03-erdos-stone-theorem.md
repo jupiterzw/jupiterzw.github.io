@@ -1,10 +1,12 @@
 ---
 title: Erdös–Stone Theorem
 date: 2023-11-03 13:55
+last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Mathematics]
 tags: [graph theory]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2023-11-03-erdös–stone-theorem/ES_thm.png
+image: /assets/img/2023-11-03-erdos-stone-theorem/cover.png
+permalink: /posts/erdös-stone-theorem/
 ---
 
 ## Basics
@@ -176,7 +178,7 @@ $$
 $$
 
 Then the contradiction comes from the following claim. But before that, let's see a diagram of the graph $G$. If we define $A = \\{v \in V\setminus W \ : v \text{ has } < (r-2)w + t \text{ neighbours in }H\\}$, then the graph looks something like this.
-![A diagram of graph G](/assets/img/2023-11-03-erdös–stone-theorem/IMG_C58B40608572-1.png)
+![A diagram of graph G](/assets/img/2023-11-03-erdos-stone-theorem/graph-g.png)
 _A diagram of graph G_
 
 **Claim:** For $n$ sufficiently large, 
@@ -297,4 +299,3 @@ $G$ is not
 $K_r(t)$-free.
 
 This contradiction completes the proof of theorem 0.8. ◼
-

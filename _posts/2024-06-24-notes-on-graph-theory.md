@@ -1,14 +1,15 @@
 ---
 title: Notes on Graph Theory (Updating...)
-date: 2024-06-24 22:01
+date: 2024-06-24 22:01:01 +0100
+last_modified_at: 2026-07-28 17:31:03 +0800
 categories: [Posts, Mathematics]
 tags: [graph theory]     # TAG names should always be lowercase
 math: true
-image: /assets/img/2024-06-27-math0029-note/cover.png
+image: /assets/img/2024-06-24-notes-on-graph-theory/cover.png
 published: true
 ---
 
-- [PDF (without proof)](/assets/files/2024-06-27-notes-on-graph-theory/notes-on-graph-theory.pdf)
+- [PDF (without proof)](/assets/files/2024-06-24-notes-on-graph-theory/notes-on-graph-theory.pdf)
 
 ## 1 Basic counting: sets and tuples
 
@@ -165,10 +166,10 @@ $E \subseteq {V \choose 2}$ implies immediately that they are
 simple, loopless and undirected.
 </div>
 
-![a directed graph](/assets/img/2024-06-27-math0029-note/figure1_directed_graph.png){: width="300"}
+![a directed graph](/assets/img/2024-06-24-notes-on-graph-theory/figure-01-directed-graph.png){: width="300"}
 _Figure 1. A directed graph_
 
-![loop and not simple](/assets/img/2024-06-27-math0029-note/figure2_loop_not_simple.png){: width="300"}
+![loop and not simple](/assets/img/2024-06-24-notes-on-graph-theory/figure-02-loop-nonsimple.png){: width="300"}
 _Figure 2. An undirected graph which is not loopless and not simple_
 
 
@@ -226,7 +227,7 @@ $$
 
 </div>
 
-![K5](/assets/img/2024-06-27-math0029-note/figure3_K5.png){: width="300"}
+![K5](/assets/img/2024-06-24-notes-on-graph-theory/figure-03-k5.png){: width="300"}
 _Figure 3. The complete graph of order $5$, $K_5$_
 
 <div class="defn" markdown="1">
@@ -239,7 +240,7 @@ $$
 
 </div>
 
-![E3](/assets/img/2024-06-27-math0029-note/figure4_E3.png){: width="300"}
+![E3](/assets/img/2024-06-24-notes-on-graph-theory/figure-04-e3.png){: width="300"}
 _Figure 4. The empty graph of order 3, $E_3$_
 
 
@@ -253,7 +254,7 @@ $$
 
 </div>
 
-![C4](/assets/img/2024-06-27-math0029-note/figure5_C4.png){: width="300"}
+![C4](/assets/img/2024-06-24-notes-on-graph-theory/figure-05-c4.png){: width="300"}
 _Figure 5. The cycle of order 4, $C_4$_
 
 <div class="defn" markdown="1">
@@ -266,7 +267,7 @@ $$
 
 </div>
 
-![P4](/assets/img/2024-06-27-math0029-note/figure6_P4.png){: width="300"}
+![P4](/assets/img/2024-06-24-notes-on-graph-theory/figure-06-p4.png){: width="300"}
 _Figure 6. The path of length 4, $P_4$_
 
 
@@ -283,7 +284,7 @@ $$
 
 </div>
 
-![K23](/assets/img/2024-06-27-math0029-note/figure7_K23.png){: width="300"}
+![K23](/assets/img/2024-06-24-notes-on-graph-theory/figure-07-k2-3.png){: width="300"}
 _Figure 7. The complete bipartite graph with classes of size 2 and 3_
 
 
@@ -301,7 +302,7 @@ $$
 
 </div>
 
-![Q3](/assets/img/2024-06-27-math0029-note/figure8_Q3.png){: width="300"}
+![Q3](/assets/img/2024-06-24-notes-on-graph-theory/figure-08-q3.png){: width="300"}
 _Figure 8. The discrete hypercube of dimension 3, $Q_3$_
 
 <!-- ### 2.3 Subgraphs and isomorphisms

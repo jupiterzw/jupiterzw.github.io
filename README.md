@@ -5,11 +5,13 @@
 .
 ├── .github/workflows/   # GitHub Pages build and deployment
 ├── _data/               # Contact and sharing data
+├── _drafts/             # Unpublished articles
 ├── _includes/           # Local overrides of Chirpy includes
 ├── _plugins/            # Custom Jekyll plugins
-├── _posts/              # Blog posts
-├── _sass/               # Theme snapshot and custom Sass partials
+├── _posts/              # Published articles
+├── _sass/               # Site-specific Sass partials
 ├── _tabs/               # About, archives, categories, and tags pages
+├── _vendor/             # Pinned third-party theme sources
 ├── assets/
 │   ├── css/             # Jekyll Sass entry point
 │   ├── files/           # PDFs, TeX sources, and other downloads
