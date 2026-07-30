@@ -1,0 +1,13 @@
+/*
+ * Keep generated <picture> elements aligned with Chirpy's existing image
+ * wrappers while allowing the browser to select the smallest suitable source.
+ */
+picture.responsive-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  > img {
+    display: block;
+  }
+}

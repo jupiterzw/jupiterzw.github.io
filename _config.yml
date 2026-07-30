@@ -2,7 +2,7 @@
 theme: jekyll-theme-chirpy
 lang: en
 timezone: Europe/London
-url: "https://jupiterzw.github.io"
+url: "https://www.jupiterzw.com"
 baseurl:
 
 # Identity and metadata
@@ -121,4 +121,5 @@ exclude:
   - README.md
   - node_modules
   - package*.json
+  - scripts
   - vendor

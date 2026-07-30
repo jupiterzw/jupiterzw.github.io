@@ -5,7 +5,12 @@
   "description": "My personal blog",
   "author": "Zhiyu Wang",
   "license": "MIT",
+  "scripts": {
+    "build:images": "node scripts/build-responsive-images.mjs",
+    "build": "npm run build:images && bundle exec jekyll build"
+  },
   "devDependencies": {
-    "bootstrap": "5.3.8"
+    "bootstrap": "5.3.8",
+    "sharp": "0.35.3"
   }
 }
