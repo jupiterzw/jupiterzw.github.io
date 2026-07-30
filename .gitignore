@@ -9,6 +9,8 @@ _site/
 .jekyll-metadata
 .sass-cache/
 assets/js/dist/
+assets/img/generated/
+_data/responsive_images.json
 
 # Node dependencies and logs
 node_modules/
