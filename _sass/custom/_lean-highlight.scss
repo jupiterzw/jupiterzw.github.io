@@ -1,0 +1,9 @@
+/*
+ * Rouge's Lean lexer marks several valid Lean tokens (for example `{`, `}`,
+ * `⊢`, and some Unicode notation) as `Error`. Chirpy renders that token class
+ * with a red background, so neutralize it only inside Lean code blocks.
+ */
+div.language-lean .highlight .err {
+  color: inherit;
+  background-color: transparent;
+}

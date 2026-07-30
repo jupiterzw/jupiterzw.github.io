@@ -2,555 +2,1037 @@
 title: UCL MATH0109 Theorem Proving in Lean Notes
 date: 2024-03-09 12:00
 categories: [Posts, Mathematics]
-tags: [Lean4]     # TAG names should always be lowercase
+tags: [lean4]     # TAG names should always be lowercase
 math: true
 image: /assets/img/2024-03-09-math0109-theorem-proving-in-lean/cover.png
 ---
 
-## 1. Introduction
-## 2. Foundations
-### 2.1 A_functions
+## Introduction
 
-* **`exact`**
-    * if your goal is `⊢ A` and you have a term `x : A`, then exact `x` will close the goal
+This post is a compact reference based on the UCL MATH0109 theorem-proving notes. It is intended for students who are new to Lean and want to connect familiar mathematical reasoning with Lean 4 syntax and Mathlib.
 
-* **`sorry`**
-    * this tactic closes the goal without a proof. It is used as a placeholder until we are ready to complete the proof
+The examples assume that you:
 
-* **`apply`**
-    * if we have a function `f : A → B` and our goal is `⊢ B`, then `apply f` reduces our goal to `⊢ A`
+- know the basics of propositional logic, functions, sets, and elementary algebra;
+- can open a Lean project in an editor and inspect the goal state;
+- have Mathlib available through `import Mathlib`.
 
-* **`intro`**
-    * if our goal is a function type `⊢ A → B`, then `intro a` will introduce a term `a : A` into the local context and change our goal to `⊢ B`
+The material begins with propositions and core tactics, moves to proof organization and automation, then introduces finite sets, casts, structures, classes, homomorphisms, and isomorphisms. The examples in this revision were checked with Lean and Mathlib `v4.33.0-rc1`.
 
+### Contents
 
-### 2.2 B_or_and_imp
+- [Foundations](#foundations)
+- [Organizing mathematical proofs](#organizing-mathematical-proofs)
+- [Finite sets, finite sums, and casts](#finite-sets-finite-sums-and-casts)
+- [Structures, classes, and algebraic maps](#structures-classes-and-algebraic-maps)
 
-* **`left / right`**
-  
-    * if our goal is `⊢ P ∨ Q`, then `left` reduces this to `⊢ P` while right reduces this to `⊢ Q`
+## Foundations
 
-* **`cases`**
-  
-    * if we have  `h : P ∨ Q`, then `cases h` gives us two goals with `h : P` in the first local context and `h : Q` in the second
+### Reading a Lean goal
 
-* **`constructor`**
-  
-    * if our goal is `⊢ P ∧ Q`,  this gives us two new goals of `⊢ P` and `⊢ Q`. Similarly, if our goal is `⊢ P ↔ Q`, then it gives two new goals `⊢ P → Q` and `⊢ Q → P`
-    * * if our goal is `⊢ P ↔ Q`, then `constructor` will convert this into two goals: `⊢ P → Q` and `⊢ Q → P`
+A proposition is a term of type `Prop`. A proof of a proposition `P` is a term of type `P`. In a tactic proof, Lean displays:
 
-* **`obtain`** 
-  
-    * if we have  `h : P ∧ Q` in the local context, then `obtain ⟨hp, hq⟩ := h` replaces `h` by `hp : P` and `hq : Q` in the local context
-    * we can use `obtain ⟨hpq, hqp⟩ := h` to convert `h : P ↔ A` into `hpq : P → Q` and `hqp : Q → P` in the local context
-    * if we have `h : P ↔ Q` in the local context, then `h.1 : P → Q` and `h.2 : Q → P`
-    
+- **variables**, such as `n : ℕ`;
+- **hypotheses**, such as `h : n > 0`;
+- a **goal**, such as `⊢ n + 1 > 0`.
 
+A tactic changes the proof state while constructing an underlying proof term. A theorem or lemma that has already been proved can itself be used as a term in a later proof.
 
-### 2.3 C_not_false
+### Terms, functions, and basic tactics
 
-* **`contradiction`** 
-  * prove any goal if you already have a contradiction in the local context
-  
-* **`by_cases P`** (or **`by_cases hp : P`**) 
-  * replace the current goal by two separate goals, the first assuming P is true and the second assuming P is false
-  
-* **`exfalso`** 
-  * replace the current goal by `False`
-  
-* **`triv`** 
-  * prove the goal `True`
+#### `exact`
 
-* **`contrapose`**
-  * convert any goal `P → Q` into its contrapositive
+- **What it does:** `exact t` closes the current goal when `t` has the required type.
+- **When to use it:** Use it when a hypothesis, theorem, or constructed term already proves the goal.
+- **Example:**
 
-
-### 2.4 D_quantifiers
-
-**Universal `∀`**
-* **`apply h`**  
-  * close any goal of the form `P a`, given `h : ∀x, P x` in the local context
-
-
-* **`specialize h a`**   
-  * replace `h : ∀x, P x` by `h : P a` in the local context
-
-* **`intro a`**  
-  * if the goal is `∀x, P x`, then introduce a new variable `a` and change the goal to `P a`
-
-**Existential `∃`**
-* **`use a`**  
-  * if the goal is `∃x, P x`, then change the goal to `P a` (If `P a` is already in the local context, then the goal is closed automatically)
-
-* **`obtain ⟨a,ha⟩ := h`** 
-  * if `h : ∃x, P x` is in the local context then create a new term `a` in the local context and a new hypothesis `ha : P a`
-  * if our hypothesis in the local context is `h : ∃x, ∃y, ...`, then `obtain ⟨x, y, hxy⟩ := h` will give us `x` and `y`
-
-
-**Negated quantifiers `¬`**
-
-In Lean `¬P` is formally defined as `P → False` so it is an implication.
-
-* **`push_neg`** 
-  * move all `¬` symbols as far to the right as possible. In particular, replace `¬∀x, P x` by `∃x, ¬P x`, and similarly with `¬∃`
-  * use it to simplify a hypothesis in the local context `h` with `push_neg at h`
-
-* **`by_contra h`** 
-  * add a hypothesis `h` stating that the current goal is false, and change the goal to `False`
-
-
-### 2.5 E_equality_rfl_rw
-
-* **`rfl`** 
-  * if your goal is  `⊢ a = b` and `a` is **definitionally equal** to `b`, then `rfl` will close the goal
-* **`rw`** 
-  * if we have a hypothesis `h : a = b` in the local context, then `rw [h]` will replace every occurence of `a` by `b` in the goal
-  * we can also do `rw [← h]` to replace `b` by `a` in the goal
-  * if `h2` is another term in the local context then `rw [h] at h2` replaces `a` by `b` in `h2`
-  * the `a` in `rwa` is short for `assumption`
-  * we can group a sequence of rewrites together as follows `rw [h1, h2]`
-  * if we have a hypothesis (or theorem) of the form `h : ∀ a b , ... = ...`, then we can use `rw [h i j]` to rewrite using this equality in the case `a = i` and `b = j` (we can also use `rw [h]` and Lean will choose `i` and `j` for us)
-
-### 2.6 F_nat
-
-* **`induction n`** 
-  * if our goal is of the form  `⊢ P n` where `n` is an arbitrary natural number, then this allows us to do induction on `n`. We get two goals one for `0` and one for `succ n`, in the latter we also have an inductive hypothesis saying that the result holds for `n`
   ```lean
-    theorem zero_add (n : N) : 0 + n = n :=
-    by
-        induction n with
-        | zero =>
-            rfl
-        | succ n ih =>
-            rw [add_succ, ih]
+  example {P : Prop} (h : P) : P := by
+    exact h
   ```
 
-* **`cases n`** 
-  * this allows us to prove a result `⊢ P n` by considering the two cases, `0` and `succ n` separately (but we no longer have the inductive hypothesis)
+- **Limitation:** The type of `t` must match the goal, up to definitional equality. If `t` proves an implication whose conclusion is the goal, use `apply` instead.
+
+#### `apply`
+
+- **What it does:** If `h : P → Q` and the goal is `Q`, then `apply h` changes the goal to `P`.
+- **When to use it:** Use it to work backward from a theorem's conclusion to its premises.
+- **Example:**
+
   ```lean
-    theorem zero_pow (n : N) (h : n ≠ 0) : 0 ^ n = 0:=
-    by
-        cases n with
-        | zero =>
-            contradiction
-        | succ n =>
-            rw [pow_succ,zero_mul]
+  example {P Q : Prop} (hPQ : P → Q) (hP : P) : Q := by
+    apply hPQ
+    exact hP
   ```
 
-### 2.7 G_ext
+- **Limitation:** Applying a theorem with several premises can create several goals. Lean must also be able to infer the theorem's implicit arguments.
 
-* **`ext`** 
-  * if our goal is to show that `⊢ f = g` where `f g : A → B`,  we can use `ext x` to introduce `x : A` into the local context and our goal becomes `⊢ f x = g x`
-  * `ext` also allows to prove equalities between other types, such as complex numbers, matrices, etc.
-  * sometimes `ext` does too much, for example if we want to prove that two complex matrices are equal,
-  we can use `ext1` to apply one extensionality lemma at a time
-* **Functions: fun => notation**
-  * We have already seen how to define functions using tactics, however it
-        will be useful to also know the function notation that Lean uses to display
-        functions in the Infoview.
-    ```lean
-        -- tactic definition
-        def double1 : ℕ → ℕ :=
-        by
-            intro n
-            exact 2 * n
+#### `refine`
 
-        -- fun => notation
-        def double2 : ℕ → ℕ := fun n => 2 * n
-    ```
-* **Sets**
-  * If `A : Type`, then we can form the type of subsets of A, called `Set A`.
-    Two sets are equal iff they contain exactly the same elements.
-    Applying the `ext` tactic allows us to prove set identities using the tactics introduced to prove basic results in logic.
-  * If `x : A` and `s t : Set A` then `x ∈ s` is the Prop `x is a member of s`
-    Proving set identities is just logic in disguise.
+- **What it does:** `refine` supplies part of a proof term and turns each placeholder `?_` into a new goal.
+- **When to use it:** Use it when you know the overall proof constructor or theorem but want to fill in its arguments step by step.
+- **Example:**
 
-    `x ∈ s ∪ t` is `x ∈ s ∨ x ∈ t`
-
-    `x ∈ s ∩ t` is `x ∈ s ∧ x ∈ t`
-
-    `x ∉ s` is `¬ x ∈ s` which is `x ∈ s → False`
-
-    `x ∈ sᶜ` is another way of writing `x ∉ s`
-
-    `x ∈ s \ t` is `x ∈ s ∧ x ∉ t`
-
-    `s ⊆ t` is `∀x, x ∈ s → x ∈ t`
-
-    Note that `A` is not a term of type `Set A`. We use `univ` to refer to the `Set A` that is `all of A`. We also have the empty set `∅`.
-
-    `x ∈ univ` is the Prop `True`
-
-    `x ∈ ∅` is the Prop `False`
-
-### 2.8 H_Mathlib
-
-* **Mathlib**
-  
-    "Mathlib" is a huge database of mathematical theorems all written in lean.
-It currently has well over 3000 files, each containing many theorems.
-The first line of this file allows us to use any theorem in Mathlib. 
-
-* **`exact? / apply?`**
-
-  * Often, we are faced with proving a very simple goal, which is almost certainly
-already in Mathlib. Typing `exact?` will search Mathlib and try to find the
-theorem that we need.
-  * `exact?` searchs Mathlib for a result that will close the goal.
-  * `apply?` gives suggestions for a lemma to apply when `exact?` fails.
-
-* **`le_of_lt`**
-
-  * We can look up the theorem `le_of_lt` in the *API documentation* of
-Mathlib to see exactly what it says.
-We can also use the command `#check` to do this.
-Also "ctrl-click" on `le_of_lt` will take us to the file
-in Mathlib where this theorem is proved.
-  * We can think of the theorem `le_of_lt` as a function, which takes a
-long list of arguments and returns a proof of the statement `a < b`.
-The arguments are listed before the `:`.
-  * Note that some of the arguments are contained in `( )`, some in `{ }`
-and some in `[ ]`. The arguments contained in `( )` are called
-**explicit arguments**, and the others are called **implicit arguments**.
-If we type `le_of_lt h`, then lean will assume that `h` is the explicit
-argument. It is usually not necessary to provide the implicit arguments,
-because lean can work out for itself what values they need to take.
-In the case of `le_of_lt`, the only explicit argument is `h : a < b`.
-If we give it a value of `h`, then it can deduce the what `a` and `b`
-are, and also that `α = ℝ`, since this is the type of the variables
-`a` and `b`.
-
-## 3. Analysis
-### 3.1 A_structured_tactics
-
-* **`refine`** 
-  
-  * `refine` is like `exact` except that we can replace any explicit argument that we don't currently have in our local context by `?_` and Lean will add this as a new goal
-  * if `exact my_lemma h` would close the current goal, then `refine my_lemma ?h` reduces our goal to `⊢ h`
-
-* **`congr! `** 
-  * apply congrence lemmas to try to reduce the goal to several smaller goals that may be easier to prove
-  * Congruence lemmas: if `f = g` and `a = b` then `f a = g b`. We can prove this easily using `rw` but the tactic `congr!` will do it for us
-  * sometimes `congr!` is too aggressive and results in goals that are false. We can control this using `congr! n` where `n = 1,2,..`
-
-* **`convert`** 
-  * if our goal is  `⊢ e`, then `convert d` tells Lean to try to use `d` and produce new subgoals to prove that `d = e`
-  * `convert` is similar to `refine` but it works when the goal is not exactly the same as the term we use. It introduces new goals for us to prove that the given term is in fact correct. It uses the same strategies as `congr!` and can be controlled in a similar way using `convert h using n` where `n = 1, 2, ...`
-
-* **`symm`** 
-  * if our goal is `⊢ A ∼ B` where `∼` is a symmetric relation then symm changes the goal to `⊢ B ∼ A`
-  * if `h : A ∼ B` is in the local context then `h.symm` is `B ∼ A`
-  
-* **`trans`** 
-  * if our goal is `⊢ A ∼ B` where `∼` is a transitive relation, then `trans C` converts this into two goals `⊢ A ∼ C` and `⊢ C ∼ B`
-  
-### 3.2 B_higher_tactics
-
-* **`ring`**  
-  * prove identities in commutative rings (eg ℝ, ℤ, ℚ)
-  
-* **`norm_num`** 
-  * close goals only involving numerical expressions
-  
-* **`decide`** 
-  * close the goal by applying an algorithm for deciding if the goal is true or false
-  
-* **`linarith`** 
-  * prove results involving linear (in)equalities and arithmetic
-  * e.g. the goal can be solved by `linarith`
-    ```lean
-        abc: ℕ
-        h: a + b + c = 3 * c
-        ⊢ 2 * c = a + b
-    ```
-  
-* **`nlinarith`** 
-  * extension of linarith to some simple non-linear examples such as quadratics
-  
-### 3.3 C_have
-
-* **`have h : P`**   
-  * introduce a new goal `P`, and add the hypothesis `h : P` to the local context of the current goal
-  
   ```lean
-    import Mathlib.Tactic.Basic
-    import Mathlib.Data.Real.Basic
+  example {P Q : Prop} (h : P → Q) (hp : P) : Q := by
+    refine h ?_
+    exact hp
+  ```
 
-    /-- xₙ → a if for any ε > 0 there is N ∈ ℕ such that for all n ≥ N we have |xₙ - a| < ε  -/
-    def sLim (x : ℕ → ℝ) (a : ℝ) : Prop :=
-    ∀ ε, 0 < ε → ∃ N, ∀ n, N ≤ n → |x n - a| < ε
+- **Limitation:** Every placeholder must eventually be solved. A placeholder is not a persistent name for a mathematical fact.
 
-    notation "limₙ " => sLim 
+#### `intro`
 
-    /-- The sequence `1/(n+1) → 0` -/
-    theorem one_over_nat : limₙ (fun n => (n + 1)⁻¹) 0 :=
-    by
-    intro ε hε
-    dsimp
-    have h : ∃ N : ℕ, N > ε⁻¹
-    · exact exists_nat_gt ε⁻¹
-    obtain ⟨N,hN⟩ := h 
-    use N
-    intro n hn
-    rw [sub_zero]
-    have h : |(n+1:ℝ)⁻¹| = (n+1:ℝ)⁻¹
-    · rw [abs_eq_self]
-        apply le_of_lt
-        exact Nat.inv_pos_of_nat
+- **What it does:** For a goal `P → Q` or `∀ x, P x`, `intro` adds the input to the local context and leaves the corresponding conclusion as the new goal.
+- **When to use it:** Use it to prove implications, universal statements, and function types.
+- **Example:**
+
+  ```lean
+  example {P : Prop} : P → P := by
+    intro h
+    exact h
+  ```
+
+- **Limitation:** `intro` only applies when the goal reduces to a function or dependent function type.
+
+#### `sorry`
+
+- **What it does:** `sorry` asks Lean to accept a missing proof temporarily.
+- **When to use it:** Use it only as a local placeholder while developing or teaching an unfinished proof.
+- **Example:** A declaration containing `sorry` elaborates, but Lean reports a warning that the declaration uses `sorry`.
+- **Limitation:** It does not prove the theorem. Published or trusted code should not contain `sorry`.
+
+### Propositional logic
+
+#### `left` and `right`
+
+- **What they do:** For a goal `P ∨ Q`, `left` selects `P`, while `right` selects `Q`.
+- **When to use them:** Use them when proving a disjunction and you know which side is true.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (h : P) : P ∨ Q := by
+    left
+    exact h
+  ```
+
+- **Limitation:** Choosing a side commits the proof to that disjunct; Lean will not switch sides automatically if the resulting goal is unprovable.
+
+#### `constructor`
+
+- **What it does:** It applies the constructor of the goal. For `P ∧ Q`, it creates goals `P` and `Q`; for `P ↔ Q`, it creates goals `P → Q` and `Q → P`.
+- **When to use it:** Use it when the goal is built from a structure or inductive type with an appropriate constructor.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (hp : P) (hq : Q) : P ∧ Q := by
+    constructor
+    · exact hp
+    · exact hq
+  ```
+
+- **Limitation:** Some types have several constructors or constructors with many fields. In those cases, an explicit term such as `⟨hp, hq⟩` may be clearer.
+
+#### `cases`
+
+- **What it does:** It eliminates an inductive value by considering its constructors. For `h : P ∨ Q`, it creates one case with a proof of `P` and one with a proof of `Q`.
+- **When to use it:** Use it to reason by cases or unpack a value whose constructor matters.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (h : P ∨ Q) : Q ∨ P := by
+    cases h with
+    | inl hp => exact Or.inr hp
+    | inr hq => exact Or.inl hq
+  ```
+
+- **Limitation:** `cases` does not provide an induction hypothesis. For recursive arguments, use `induction`.
+
+#### `obtain`
+
+- **What it does:** `obtain` destructures a hypothesis using a pattern.
+- **When to use it:** Use it to unpack conjunctions, existential statements, subtypes, or other structured values.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (h : P ∧ Q) : Q ∧ P := by
+    obtain ⟨hp, hq⟩ := h
+    exact ⟨hq, hp⟩
+  ```
+
+- **Limitation:** The pattern must match the constructor shape of the hypothesis. For `h : P ↔ Q`, the projections `h.1 : P → Q` and `h.2 : Q → P` are often simpler.
+
+### Negation, falsehood, and classical cases
+
+Lean defines `¬ P` as `P → False`. A proof of `False` can be eliminated to prove any proposition.
+
+#### `contradiction`
+
+- **What it does:** It closes the goal when the local context already contains contradictory facts, such as `h : P` and `hn : ¬ P`.
+- **When to use it:** Use it after the contradiction has become explicit in the context.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (h : P) (hn : ¬ P) : Q := by
+    contradiction
+  ```
+
+- **Limitation:** It is not a general-purpose proof search tactic; it may not discover a contradiction that still requires mathematical reasoning.
+
+#### `exfalso`
+
+- **What it does:** It replaces the current proposition-valued goal with `False`.
+- **When to use it:** Use it when a contradiction is easier to derive than the original goal.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (h : P) (hn : ¬ P) : Q := by
+    exfalso
+    exact hn h
+  ```
+
+- **Limitation:** This only helps if the assumptions really imply `False`.
+
+#### `trivial`
+
+- **What it does:** It proves the proposition `True`.
+- **When to use it:** Use it when the current goal is definitionally `True`.
+- **Example:**
+
+  ```lean
+  example : True := by
+    trivial
+  ```
+
+- **Limitation:** The modern tactic name is `trivial`, not `triv`; it does not solve arbitrary easy-looking goals.
+
+#### `by_cases`
+
+- **What it does:** `by_cases hp : P` creates one goal under `hp : P` and another under `hp : ¬ P`.
+- **When to use it:** Use it when a proof naturally splits according to whether a proposition holds.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (hp : P) : P ∨ Q := by
+    by_cases hq : Q
+    · exact Or.inr hq
+    · exact Or.inl hp
+  ```
+
+- **Limitation:** Case splits can duplicate later work. For arbitrary propositions, the reasoning is classical.
+
+#### `by_contra`
+
+- **What it does:** `by_contra h` assumes the negation of the current goal and changes the goal to `False`.
+- **When to use it:** Use it for proofs by contradiction.
+- **Example:**
+
+  ```lean
+  example {P : Prop} : ¬¬P → P := by
+    intro h
+    by_contra hn
+    exact h hn
+  ```
+
+- **Limitation:** Double-negation elimination is classical for arbitrary propositions.
+
+#### `contrapose` and `contrapose!`
+
+- **What they do:** They replace an implication with a contrapositive form. The `!` variant also pushes negations inward.
+- **When to use them:** Use them when `¬ Q → ¬ P` is easier to prove than `P → Q`.
+- **Example:**
+
+  ```lean
+  example {P Q : Prop} (h : ¬ Q → ¬ P) : P → Q := by
+    contrapose!
+    exact h
+  ```
+
+- **Limitation:** The transformed goal may be less readable, and the logical equivalence can require classical reasoning.
+
+### Quantifiers
+
+#### Universal quantifiers
+
+To prove `∀ x, P x`, introduce an arbitrary `x`. To use `h : ∀ x, P x`, apply it to a specific argument.
+
+```lean
+example : ∀ n : ℕ, n = n := by
+  intro n
+  rfl
+
+example (h : ∀ n : ℕ, n ≤ n) : 3 ≤ 3 := by
+  exact h 3
+```
+
+#### `specialize`
+
+- **What it does:** `specialize h a` replaces a universal hypothesis `h : ∀ x, P x` with the instance `h : P a`.
+- **When to use it:** Use it when only one instance of a universal fact is needed.
+- **Example:**
+
+  ```lean
+  example (h : ∀ n : ℕ, n ≤ n) : 3 ≤ 3 := by
+    specialize h 3
+    exact h
+  ```
+
+- **Limitation:** It overwrites the local form of `h`. Use `have ha := h a` if later steps still need the universal statement.
+
+#### `use`
+
+- **What it does:** For a goal `∃ x, P x`, `use a` supplies the witness `a` and leaves `P a` as the goal.
+- **When to use it:** Use it when you can exhibit a concrete witness.
+- **Example:**
+
+  ```lean
+  example : ∃ n : ℕ, n = 3 := by
+    use 3
+  ```
+
+- **Limitation:** A witness alone is not enough; its required property must also be proved. Lean may close that property automatically only when it follows immediately.
+
+Existential hypotheses can be unpacked with `obtain`:
+
+```lean
+example (h : ∃ n : ℕ, n > 10) : True := by
+  obtain ⟨n, hn⟩ := h
+  -- Here `n : ℕ` and `hn : n > 10`.
+  trivial
+```
+
+Nested existentials can be unpacked with a larger pattern, such as `obtain ⟨x, y, hxy⟩ := h`.
+
+#### `push Not`
+
+- **What it does:** It pushes negations through logical connectives and quantifiers using the relevant equivalences.
+- **When to use it:** Use it to turn a negated quantified statement into a more usable form, in a goal or at a hypothesis.
+- **Example:**
+
+  ```lean
+  example (h : ¬ ∀ n : ℕ, n = 0) : ∃ n : ℕ, n ≠ 0 := by
+    push Not at h
+    exact h
+  ```
+
+- **Limitation:** Transformations such as `¬ ∀ x, P x` into `∃ x, ¬ P x` are classical. In current Mathlib, `push_neg` is deprecated in favor of `push Not`.
+
+### Equality and rewriting
+
+#### `rfl`
+
+- **What it does:** It proves an equality whose two sides are definitionally equal.
+- **When to use it:** Use it for direct computation, unfolding, or reflexive equalities.
+- **Example:**
+
+  ```lean
+  example (n : ℕ) : (fun x => x) n = n := by
+    rfl
+  ```
+
+- **Limitation:** Mathematically equal expressions need not be definitionally equal. For example, commutativity generally requires a theorem or automation rather than `rfl`.
+
+#### `rw` and `rwa`
+
+- **What they do:** `rw [h]` rewrites with an equality or equivalence. `rw [← h]` uses the reverse direction. `rwa` rewrites and then tries `assumption`.
+- **When to use them:** Use them to replace equals by equals in the goal or in a hypothesis.
+- **Example:**
+
+  ```lean
+  example {α : Type*} (a b c : α) (h : a = b) : (a, c) = (b, c) := by
     rw [h]
-    have : n+1 > ε⁻¹
-    · trans (N:ℝ)
-        · norm_cast
-        exact Nat.lt_succ.mpr hn
-        · assumption
-    exact inv_lt_of_inv_lt hε this
   ```
 
-### 3.4 D_calc
+- **Limitation:** Rewriting follows syntactic occurrences after elaboration. Specify a location with `rw [h] at h₂`, and instantiate a quantified theorem explicitly, for example `rw [h i j]`, when inference is ambiguous.
 
-* **`calc`**
-  * A `calc`-block is a useful way of writing a proof which consists of
-a series of rearrangements of a formula. This way of writing proofs is
-very similar to the way that most mathematicians write proofs on paper,
-so the resulting proofs are easy to read.
-  * When dealing with inequalities in `calc`-blocks, the tactic `rel` is often useful. `rel` is similar to `rw`, but substitutes inequalities rather than equalities. 
+#### `symm`
 
+- **What it does:** It reverses a goal involving a symmetric relation; for equality it changes `a = b` to `b = a`.
+- **When to use it:** Use it when a known fact has the required relation in the opposite direction.
+- **Example:**
 
-### 3.5 E1_intro_to_finsets
+  ```lean
+  example {α : Type*} (a b : α) (h : a = b) : b = a := by
+    symm
+    exact h
+  ```
 
-* **Finsets**
-  * Finite sets, such as $\{0, 1, 2,..., n\}$ have a special type in Lean,
-they are called `Finsets`. If `s : Finset α` then `s` is a finite set of terms of type α. In many respects we can treat them like `Set α`.
-    ```lean
-    -- Most standard set notation is still valid
-    #check n ∈ s
-    #check s ⊆ t
-    #check s ∩ t
-    #check s ∪ t
-    #check s \ t
-    --#check sᶜ -- fails since the complement of a `Finset ℕ` is never finite
-    -- In general there is no `univ : Finset α` (unless `α` is itself finite) similiarly there is no `sᶜ`.
-    -- We  `open` the `Finset` namespace so that we can write `range` instead of `Finset.range` etc.
-    open Finset
-    #check s.Nonempty       -- ∃x , x ∈ s
-    #check Disjoint s t     -- s ∩ t = ∅
-    #check range n          -- {0,1,...,n - 1} as a Finset ℕ
-    #check ({n} : Finset ℕ) -- {n} as a Finset ℕ
-    #check insert n s       -- s ∪ {n}
-    #check s.erase n        -- s \ {n}
-    #check s.image f        -- {f x | x ∈ s}
-    #check s.card           -- |s| the number of elements in s
-    --  We can `filter` a set to obtain the subset with a given property.
-    #check s.filter Even    -- { x | x ∈ s and x is even}
-    #eval Ico a (b + 1)     -- {a,a+1,..,b} defaults to ∅ if b ≤ a
-    ```
-  * `mem_union`: `a ∈ s ∪ t ↔ a ∈ s ∨ a ∈ t`
-  * `mem_Ico`: `x ∈ Ico a b ↔ a ≤ x ∧ x < b`
-  * There are two different `maximum` functions defined for `s : Finset P` when `P` is any LinearOrder such as `ℕ` or `ℝ`
-    
-    ```lean
-        #check Finset.max'
-        -- this requires a proof that s is Nonempty and then returns a value in `P`
-        #check Finset.max
-        -- this returns a value in `WithBot P` which we can think of as `P` with an extra
-        -- element that is < everything in `P`.
-    ```
-    requring a proof: `use s.max' h` where `h` is the proof that `s.Nonempty`
+- **Limitation:** The relation must have a registered symmetry theorem. For a hypothesis `h : a = b`, the term `h.symm` is often shorter.
 
-  * If `S : α → Finset β` and `I : Finset α` then `I.biUnion S` is the finite union of the Finsets indexed by `I`.
-  
-  * The cardinality of `s : Finset α` is `s.card`. 
+#### `trans`
 
-* **Finite sums**
-  * `∑ i in range n.succ, i`: `0 + 1 + 2 + ... + n`
-  * `sum_range_succ`: `∑ x in range (n + 1), f x = ∑ x in range n, f x + f n`
-  * `sum_range_one`: `∑ k in range 1, f k = f 0`
-  * `card_eq_sum_ones`: `card s = ∑ x in s, 1`
-  * `sum_range_add_sum_Ico`: `Finset.sum_range_add_sum_Ico.{v} {β : Type v} [inst✝ : AddCommMonoid β] (f : ℕ → β) {m n : ℕ} (h : m ≤ n) : ∑ k in range m, f k + ∑ k in Ico m n, f k = ∑ k in range n, f k`
-  
+- **What it does:** `trans b` splits a transitive relation from `a` to `c` into relations from `a` to `b` and from `b` to `c`.
+- **When to use it:** Use it when an intermediate term makes the proof clearer.
+- **Example:**
 
-### 3.6 E2_let
+  ```lean
+  example {α : Type*} (a b c : α) (hab : a = b) (hbc : b = c) : a = c := by
+    trans b
+    · exact hab
+    · exact hbc
+  ```
 
-* **`let`**
-  * `let I : Finset ℕ := range K.succ`
-  
-  * a new way of using `have`: `have hne : I.Nonempty := by exact nonempty_range_succ`
-  
-### 3.7 F_casts
+- **Limitation:** The relation must have a registered transitivity rule. For longer readable chains, prefer a `calc` block.
 
-* **divisibility**
-  * `a ∣ b` (typed as `\|`) means that there is some `c` such that `b = a * c` (`use` is helpful here)
-  
-  * `Nat.div_mul_div_comm`: `Nat.div_mul_div_comm {m n k l : ℕ} (hmn : n ∣ m) (hkl : l ∣ k) : m / n * (k / l) = m * k / (n * l)`
-  
-  * `Nat.mul_div_mul`: `Nat.mul_div_mul {m : ℕ} (n k : ℕ) (H : 0 < m) : m * n / (m * k) = n / k`
+### Natural numbers: cases and induction
 
-* **`push_cast`**
-  * change `↑(a + b)` to `↑a + ↑b`
-  
-* **`norm_cast`**
-  * sometimes try `norm_cast at h` or `norm_cast at h ⊢`
-  * If `d n : ℕ` and we have the hypothesis `h: d ∣ n` then norm_cast can prove that `((n / d : ℕ) : ℝ)` equals `(n : ℝ)/(d : ℝ)`, but without this hypothesis it simply isn't true.
+#### `induction`
 
-* **`cancel_denoms`**
-  * change `a = b / 2` to `2 * a = b`
+- **What it does:** Induction on `n : ℕ` creates a base case for `0` and a successor case with an induction hypothesis.
+- **When to use it:** Use it when the statement for `n + 1` depends on the statement for `n`.
+- **Example:**
 
+  ```lean
+  example (n : ℕ) : 0 + n = n := by
+    induction n with
+    | zero => rfl
+    | succ n ih =>
+        rw [Nat.add_succ, ih]
+  ```
 
-## 4. Structures and classes
+- **Limitation:** Choosing the wrong induction variable or generalizing too little can produce an unusable induction hypothesis.
 
-### 4.1 A_structures_and_classes
+#### `cases` on a natural number
 
-* **Structures**
-  * In Lean, there are many `Type`s, for example `ℕ`, `ℤ`, `ℚ`, `ℝ`, `ℂ`,
-  `ℕ → ℝ`, `Set ℕ`, ... etc.
+- **What it does:** It splits `n : ℕ` into the cases `0` and `Nat.succ n`, without an induction hypothesis.
+- **When to use it:** Use it when only the zero/successor distinction matters.
+- **Example:**
 
-    A common way of defining a new `Type` is using the command `structure`.
+  ```lean
+  example (n : ℕ) (h : n ≠ 0) : 0 ^ n = 0 := by
+    cases n with
+    | zero => contradiction
+    | succ n => simp
+  ```
 
-    Below, we define a new `Type` called `Plane` whose terms can be thought of as being
-    points in the plane. They each have an `x`-coordinate and a `y`-coordinate, both
-    of which are integers.
+- **Limitation:** Use `induction`, not `cases`, when the successor case needs a recursive hypothesis.
 
-    ```lean
-        @[ext]  -- automatically generates a lemma `Plane.ext`,
-                -- which gives us a way of proving that two terms of type `Plane` are equal.
-                -- The lemma is used by the `ext` tactic.   
-        structure Plane where
-        x : ℤ
-        y : ℤ
-        -- `x` and `y` are called "fields" of the structure `Plane`.
+### Extensionality, functions, and sets
 
-        /-
-        We can define terms of type `Plane` in one of the following
-        equivalent methods:
-        -/
-        def A : Plane where
-            x := 1
-            y := 3
-        def B : Plane := ⟨-4,7⟩
-        def origin : Plane := {x := 0, y:= 0}
-    ```
+#### `ext` and `ext1`
 
-* **Classes**
-  * later
+- **What they do:** They apply extensionality lemmas. For functions, equality reduces to pointwise equality; for sets, it reduces to equality of membership propositions.
+- **When to use them:** Use them to prove equality of functions, sets, structures, matrices, complex numbers, and other types with registered extensionality lemmas.
+- **Example:**
 
-### 4.2 B_defining_a_class
+  ```lean
+  example {α β : Type*} (f g : α → β) (h : ∀ x, f x = g x) : f = g := by
+    ext x
+    exact h x
+  ```
 
-* **Group**
-  * Let's define the notion of a group in lean.
-  Recall that a group is a set `G`, together with
-    * a multiplication operation `G → G → G`,
-    * a function `G → G` taking an element `x` to an element `x⁻¹`,
-    * a certain element in `G` called `1`.
-    Furthermore, `G` must satisfy the group axioms:
-    * multiplication in `G` is associative,
-    * `1` is a 2-sided identity element,
-    * For every element `x`, the element `x⁻¹`
-    is a 2-sided inverse of `x`.
-        ```lean
-            /-
-            The following code tells lean what it means for `G` to be a group.
-            Note that `Mul` and `Inv` and `One` are also classes, and
-            you can see their definition by control-clicking on them.
-            -/
-            class MyGroup (G : Type) extends Mul G, Inv G, One G where
-            ax_assoc    : ∀ x y z : G, (x * y) * z = x * (y * z)
-            ax_mul_one  : ∀ x : G, x * 1 = x
-            ax_one_mul  : ∀ x : G, 1 * x = x
-            ax_mul_inv  : ∀ x : G, x * x⁻¹ = 1
-            ax_inv_mul  : ∀ x : G, x⁻¹ * x = 1
+- **Limitation:** `ext` may apply several lemmas and create more goals than intended. Use `ext1` to apply one extensionality lemma at a time.
 
-            #check (MyGroup)
-        ```
+Functions can be written either as tactic proofs or lambda terms:
 
-### 4.3 C_groups
+```lean
+def double1 : ℕ → ℕ := by
+  intro n
+  exact 2 * n
 
-* **Subgroup**
-  
-  In lean, `Subgroup G` is a `Type`, defined as a structure with fields
-    * `carrier` - a subset of `G` (the elements of the subgroup);
-    * `mul_mem'` - a proof that if `g` and `h` are in `carrier` then so is `g * h`;
-    * `one_mem'` - a proof that `1` is in `carrier`;
-    * `inv_mem'` - a proof that if `g ∈ carrier` then `g⁻¹ ∈ carrier`.
-        ```lean
-            open Set
-            -- Show that `{1}` is a subgroup of `G`
-            def Trivial_subgroup : Subgroup G where
-            carrier := {1}
-            mul_mem' := by
-                intro a b ha hb
-                rw [mem_singleton_iff] at *
-                rw [ha, hb, one_mul]
-            one_mem' := rfl
-            inv_mem' := by
-                intro a ha
-                dsimp at ha ⊢
-                rw [mem_singleton_iff] at *
-                rw [ha, inv_one]
-        ```
+def double2 : ℕ → ℕ := fun n => 2 * n
+```
 
-* **Homomorphism**
+For a type `α`, `Set α` is the type of sets of elements of `α`. Internally, a set behaves like a predicate `α → Prop`. Consequently, set identities reduce to logic:
 
-    If `G` and `H` are groups, then `G →* H` is the `Type` of group homomorphisms from `G` to `H`. This is a `structure` with fields:
-    * `toFun` a function `G → H`;
-    * `map_mul'` a proof that `toFun (g * g') = toFun g * toFun g'`;
-    * `map_one'` a proof that `toFun 1 = 1`.
-        ```lean
-            /-
-            Show that the function taking every element of `G` to `1 : H` is
-            a homomorphism.
-            -/
-            def trivial_hom : G →* H where
-            toFun := fun _ ↦ 1
-            map_one' := rfl
-            map_mul' := by
-                intro x y
-                dsimp
-                exact self_eq_mul_left.mpr rfl
-        ```
-* **Isomorphism**
-  
-    If `G` and `H` are groups, then `G ≃+ H` is the `Type` of group isomorphisms from `G` to `H`. This is a `structure` with fields:
-    * `toFun` a function `G → H`;
-    * `invFun` the inverse function of the above function;
-    * `left_inv` a proof that `invFun` is a left inverse of `toFun`;
-    * `right_inv` a proof that `invFun` is a right inverse of `toFun`;
-    * `map_mul'` a proof that `toFun (g * g') = toFun g * toFun g'`.
-        ```lean
-            /-
-            Prove that if there is a surjective homomorphism `φ : G →+ ℤ` then
-            `G` is isomorphic to `φ.ker × ℤ`.
-            -/
-            lemma equiv_prod_of_ontoInt [AddCommGroup G] (φ : G →+ ℤ) (hφ : Function.Surjective (φ : G → ℤ)) :
-            φ.ker × ℤ ≃+ G :=
-            by
-            specialize hφ 1
-            set g := hφ.choose with g_def
-            have g_spec := hφ.choose_spec
-            exact {
-                toFun := fun ⟨x,n⟩ ↦ x + n • g
-                invFun := fun x ↦ ⟨⟨x - φ x • g, by simp [AddMonoidHom.mem_ker, g_spec]⟩, φ x⟩
-                left_inv := by
-                intro ⟨⟨_,h⟩,_⟩
-                rw [AddMonoidHom.mem_ker] at h
-                dsimp
-                ext <;>
-                · simp [g_spec, h]
-                right_inv := by intro; simp
-                map_add' := by
-                intros
-                dsimp
-                rw [←g_def, add_zsmul, add_assoc, add_assoc]
-                congr 1
-                rw [add_comm, add_assoc]
-                congr 1
-                apply add_comm
-            }
-        ```
-    
+- `x ∈ s ∪ t` means `x ∈ s ∨ x ∈ t`;
+- `x ∈ s ∩ t` means `x ∈ s ∧ x ∈ t`;
+- `x ∉ s` means `¬ x ∈ s`;
+- `x ∈ sᶜ` means `x ∉ s`;
+- `x ∈ s \ t` means `x ∈ s ∧ x ∉ t`;
+- `s ⊆ t` means `∀ x, x ∈ s → x ∈ t`;
+- `x ∈ Set.univ` simplifies to `True`;
+- `x ∈ (∅ : Set α)` simplifies to `False`.
 
-### 4.4 D_simp
+For example:
 
-* **`simp`**
-  * `simp` is a high level tactic, which repeatedly searches for ways to `rw` a goal in order to make it "simpler". It doesn't search through the whole of Mathlib, but only the `lemma`s and `theorem`s marked with the attribute `@[simp]` just before their statement. Such `lemma`s are always equations or iff statements, in which the RHS is in some sense simpler than the LHS.
-  * To see exactly what `simp` does, typing this line after importing: `set_option trace.Meta.Tactic.simp.rewrite true`.
-  * If we type `simp?` instead of `simp`, then lean will tell us which lemmas it has used, and offer to replace your `simp` by an equivalent `simp only ...`. This should always be done if `simp` does not completely close the goal.
+```lean
+example {α : Type*} (s t : Set α) (h : s ⊆ t) : s ∩ t = s := by
+  ext x
+  constructor
+  · intro hx
+    exact hx.1
+  · intro hx
+    exact ⟨hx, h hx⟩
+```
+
+### Finding and inspecting Mathlib results
+
+Mathlib is a large, community-maintained library of Lean definitions and theorems. `import Mathlib` makes its umbrella import available; focused project files often use narrower imports to reduce dependencies.
+
+#### `exact?`
+
+- **What it does:** It searches the local context and imported library for a term that closes the current goal, then reports a reproducible suggestion.
+- **When to use it:** Use it when the goal is likely an existing theorem or an immediate consequence of one.
+- **Example:** For `h : a < b` and goal `a ≤ b`, `exact?` can suggest `exact le_of_lt h`.
+- **Limitation:** Search depends on imported declarations and can be slower or less predictable than naming the intended theorem directly.
+
+#### `apply?`
+
+- **What it does:** It searches for a theorem whose conclusion can be applied to the current goal.
+- **When to use it:** Use it when `exact?` cannot close the goal but a library theorem may reduce it to useful subgoals.
+- **Example:** Run `apply?` at the goal and inspect the proposed `apply ...` replacement.
+- **Limitation:** A successful application may leave premises that are no easier than the original goal. Treat suggestions as code to understand, not as opaque magic.
+
+The `#check` command displays a term's type:
+
+```lean
+#check le_of_lt
+```
+
+Its relevant type is:
+
+```lean
+-- le_of_lt {α : Type*} [Preorder α] {a b : α}
+--   (hab : a < b) : a ≤ b
+```
+
+Thus `le_of_lt` takes a proof of `a < b` and returns a proof of `a ≤ b`. Parenthesized arguments are explicit, braces mark implicit arguments inferred from context, and square brackets mark type-class arguments. Editor navigation to the declaration is useful when the displayed type alone is not enough.
+
+## Organizing mathematical proofs
+
+### Local facts and readable calculations
+
+#### `have`
+
+- **What it does:** `have h : P := ...` proves a local fact `P` and adds it to the context as `h`.
+- **When to use it:** Use it to name an intermediate result, document the argument, or give Lean a type annotation that improves inference.
+- **Example:**
+
+  ```lean
+  example (a b c : ℝ) (hab : a ≤ b) (hbc : b ≤ c) : a ≤ c := by
+    have hac : a ≤ c := le_trans hab hbc
+    exact hac
+  ```
+
+- **Limitation:** Too many one-use local facts can obscure a short proof. Prefer names that express mathematical meaning.
+
+#### `calc`
+
+- **What it does:** A `calc` block chains equalities or other compatible relations through intermediate expressions.
+- **When to use it:** Use it when the paper proof is naturally a sequence of equations or inequalities.
+- **Example:**
+
+  ```lean
+  example (a b c : ℝ) (hab : a ≤ b) (hbc : b < c) : a < c := by
+    calc
+      a ≤ b := hab
+      _ < c := hbc
+  ```
+
+- **Limitation:** Each line needs a proof, and consecutive relations must have a known transitivity rule.
+
+#### `gcongr`
+
+- **What it does:** It applies generalized congruence and monotonicity lemmas, reducing a relation between compound expressions to relations between their parts.
+- **When to use it:** Use it for monotone operations in equality or inequality goals.
+- **Example:**
+
+  ```lean
+  example (a b : ℝ) (h : a ≤ b) : a + 2 ≤ b + 2 := by
+    gcongr
+  ```
+
+- **Limitation:** Side conditions such as positivity may remain as goals, and the required monotonicity lemma must be registered.
+
+#### `rel`
+
+- **What it does:** `rel [h₁, h₂]` uses supplied relational hypotheses with generalized congruence rules.
+- **When to use it:** Use it when particular inequalities should be substituted into corresponding monotone positions.
+- **Example:**
+
+  ```lean
+  example (a b x c d : ℝ) (h₁ : a ≤ b) (h₂ : c ≤ d) :
+      x ^ 2 * a + c ≤ x ^ 2 * b + d := by
+    rel [h₁, h₂]
+  ```
+
+- **Limitation:** `rel` does not rewrite inequalities as if they were equalities. It succeeds only when registered generalized-congruence rules justify the requested relation and all side conditions can be discharged.
+
+### Congruence and conversion
+
+#### `congr!`
+
+- **What it does:** It applies congruence lemmas recursively to reduce equality or relation goals to smaller component goals.
+- **When to use it:** Use it when two compound expressions differ only in corresponding arguments.
+- **Example:**
+
+  ```lean
+  example {α : Type*} (a b : α) (h : a = b) : (a, a) = (b, b) := by
+    congr! 1
+  ```
+
+- **Limitation:** It can decompose too aggressively. A depth such as `congr! 1` limits how far it descends.
+
+#### `convert`
+
+- **What it does:** It uses a term whose type is close to the goal and creates equality subgoals for mismatching parts.
+- **When to use it:** Use it when a theorem has the right mathematical content but its expression differs slightly from the target.
+- **Example:**
+
+  ```lean
+  example (n : ℕ) (h : n = 2) : n + 1 = 3 := by
+    convert congrArg (fun k : ℕ => k + 1) h using 1
+  ```
+
+- **Limitation:** The generated equalities can be harder than the original goal. The optional `using n` controls the transparency depth used during comparison.
+
+### Arithmetic automation
+
+#### `ring`
+
+- **What it does:** It proves polynomial identities by normalization.
+- **When to use it:** Use it for identities in commutative semirings and rings, including `ℕ`, `ℤ`, `ℚ`, and `ℝ` where applicable.
+- **Example:**
+
+  ```lean
+  example (x y : ℤ) : (x + y) ^ 2 = x ^ 2 + 2 * x * y + y ^ 2 := by
+    ring
+  ```
+
+- **Limitation:** It does not prove arbitrary inequalities or handle non-polynomial functions directly.
+
+#### `norm_num`
+
+- **What it does:** It normalizes concrete numerical expressions and proves many resulting arithmetic facts.
+- **When to use it:** Use it when the essential work is computation with explicit numerals.
+- **Example:**
+
+  ```lean
+  example : (21 : ℚ) / 3 + 2 = 9 := by
+    norm_num
+  ```
+
+- **Limitation:** It is not intended to solve symbolic algebra by itself; combine it with tactics such as `ring` or `linarith` when variables matter.
+
+#### `decide`
+
+- **What it does:** It proves a decidable proposition by evaluating its `Decidable` instance.
+- **When to use it:** Use it for small closed propositions whose truth is computationally decidable.
+- **Example:**
+
+  ```lean
+  example : (17 : ℕ) < 23 := by
+    decide
+  ```
+
+- **Limitation:** The proposition must have a `Decidable` instance, and large computations may be expensive.
+
+#### `linarith`
+
+- **What it does:** It searches for contradictions or consequences of linear equalities and inequalities.
+- **When to use it:** Use it for linear arithmetic over ordered rings and fields.
+- **Example:**
+
+  ```lean
+  example (a b c : ℤ) (h : a + b + c = 3 * c) : 2 * c = a + b := by
+    linarith
+  ```
+
+- **Limitation:** Products of variables, powers, and non-linear functions are outside its linear fragment. Arithmetic over `ℕ` can also require care because natural subtraction is truncated.
+
+#### `nlinarith`
+
+- **What it does:** It extends `linarith` with polynomial preprocessing for many non-linear arithmetic goals.
+- **When to use it:** Use it for modest polynomial problems, especially those involving squares and sign conditions.
+- **Example:**
+
+  ```lean
+  example (x : ℝ) (h : x ^ 2 ≤ 0) : x = 0 := by
+    nlinarith [sq_nonneg x]
+  ```
+
+- **Limitation:** It is incomplete and is not a solver for arbitrary transcendental, rational, or high-degree problems.
+
+### Simplification
+
+#### `simp`
+
+- **What it does:** It repeatedly rewrites using simplification lemmas, local hypotheses, and selected definitions.
+- **When to use it:** Use it to remove routine logical, algebraic, and structural clutter.
+- **Example:**
+
+  ```lean
+  example (n : ℕ) : n + 0 = n := by
+    simp
+  ```
+
+- **Limitation:** `simp` does not search all of Mathlib. Its main rewrite set comes from declarations tagged `@[simp]`, and adding unsuitable rewrite rules can make proofs slow or unstable.
+
+To inspect simplifier rewrites locally, use:
+
+```lean
+set_option trace.Meta.Tactic.simp.rewrite true in
+example (n : ℕ) : n + 0 = n := by
+  simp
+```
+
+#### `simp?`
+
+- **What it does:** It runs simplification and suggests a more explicit replacement, often using `simp only [...]`.
+- **When to use it:** Use it to discover which simplification lemmas matter or to make a proof's dependencies more explicit.
+- **Example:** Replace a trial `simp` with `simp?` and inspect the editor suggestion.
+- **Limitation:** A long `simp only` list is not automatically more readable or more robust. Keep the version that best communicates the proof.
+
+### Example: proving a sequence limit
+
+The following course-style definition says that a real sequence `x` converges to `a` when, for every positive `ε`, all terms after some index lie within `ε` of `a`.
+
+```lean
+def sLim (x : ℕ → ℝ) (a : ℝ) : Prop :=
+  ∀ ε, 0 < ε → ∃ N, ∀ n, N ≤ n → |x n - a| < ε
+
+notation "limₙ " => sLim
+```
+
+Here is a direct proof that \(1/(n+1)\) converges to \(0\). It illustrates `have`, `obtain`, `refine`, casts, and a `calc` block.
+
+```lean
+theorem one_over_nat :
+    limₙ (fun n => (((n + 1 : ℕ) : ℝ)⁻¹)) 0 := by
+  intro ε hε
+  obtain ⟨N, hN⟩ := exists_nat_gt (1 / ε)
+  refine ⟨N, ?_⟩
+  intro n hn
+  rw [sub_zero, abs_of_pos (by positivity)]
+  have hNn : (1 / ε : ℝ) < ((n + 1 : ℕ) : ℝ) := by
+    calc
+      (1 / ε : ℝ) < (N : ℝ) := hN
+      _ ≤ (n : ℝ) := by exact_mod_cast hn
+      _ < ((n + 1 : ℕ) : ℝ) := by
+        exact_mod_cast Nat.lt_succ_self n
+  have hprod : 1 < ((n + 1 : ℕ) : ℝ) * ε :=
+    (div_lt_iff₀ hε).mp hNn
+  rw [inv_lt_iff_one_lt_mul₀
+    (by positivity : (0 : ℝ) < (n + 1 : ℕ))]
+  simpa [mul_comm] using hprod
+```
+
+This is an elementary epsilon proof, not Mathlib's general topological definition of sequence convergence.
+
+## Finite sets, finite sums, and casts
+
+### Sets and finsets
+
+`Set α` represents an arbitrary set as a predicate. `Finset α` is a data structure representing a finite collection without duplicates. Some `Finset` operations require a `DecidableEq α` instance so that Lean can compute whether two elements are equal.
+
+```lean
+section
+
+open Finset
+
+variable {α β : Type*} [DecidableEq α] [DecidableEq β]
+variable (s t : Finset α) (f : α → β)
+
+#check (show Finset α from s ∩ t)
+#check (show Finset α from s ∪ t)
+#check (show Finset α from s \ t)
+#check s.Nonempty
+#check Disjoint s t
+#check s.image f
+#check s.card
+
+end
+```
+
+As with sets, `n ∈ s` is a proposition and `s ⊆ t` means every member of `s` is a member of `t`. The usual finite intersection, union, and difference operations are available.
+
+`Finset.univ` and finset complement require the ambient type itself to be finite:
+
+```lean
+section
+
+variable {α : Type*} [Fintype α] [DecidableEq α]
+variable (s : Finset α)
+
+#check (Finset.univ : Finset α)
+#check sᶜ
+
+end
+```
+
+For an infinite ambient type such as `ℕ`, there is no finset containing every value, even though individual finite ranges are available.
+
+### Ranges, intervals, filtering, and images
+
+- `Finset.range n` is `{0, 1, ..., n - 1}`.
+- `Finset.Ico a b` contains values `x` satisfying `a ≤ x ∧ x < b`.
+- `{n}` is singleton notation when Lean can infer a `Finset` type.
+- `insert n s` inserts `n`; `s.erase n` removes it.
+- `s.image f` is the finset of values `f x` for `x ∈ s`.
+- `s.filter p` keeps the elements satisfying the decidable predicate `p`.
+- `s.card` is the number of elements in `s`.
+- `s.Nonempty` means `∃ x, x ∈ s`.
+- `Disjoint s t` means that `s` and `t` have no common member.
+
+```lean
+open Finset
+
+example : Finset.Ico 2 6 = {2, 3, 4, 5} := by
+  decide
+
+#check Finset.mem_union
+#check Finset.mem_Ico
+#check (Finset.range 10).filter (fun n => n % 2 = 0)
+```
+
+In particular, `Finset.Ico a b` is empty when `b ≤ a`. To represent `{a, a + 1, ..., b}`, use `Finset.Ico a (b + 1)`.
+
+If `I : Finset α` and `S : α → Finset β`, then `I.biUnion S` is the finite union of the finsets indexed by `I`. This operation requires decidable equality on `β`.
+
+### Maximum elements
+
+For a `Finset α` with `[LinearOrder α]`, the two common maximum operations have different result types:
+
+```lean
+#check Finset.max'
+#check Finset.max
+```
+
+- `s.max' h` takes `h : s.Nonempty` and returns an element of `α`.
+- `s.max` returns a value of `WithBot α`; the extra bottom value represents the empty finset case.
+
+Use `max'` when a nonemptiness proof is already available and the result should remain in `α`.
+
+### Finite sums
+
+With `open Finset`, the expression `∑ i in Finset.range n.succ, i` denotes
+\(0 + 1 + \cdots + n\). Useful library facts include:
+
+```lean
+#check Finset.sum_range_succ
+#check Finset.sum_range_one
+#check Finset.card_eq_sum_ones
+#check Finset.sum_range_add_sum_Ico
+```
+
+Their mathematical content is:
+
+- `sum_range_succ`: split the last term from a sum over `range (n + 1)`;
+- `sum_range_one`: a sum over `range 1` equals the term at `0`;
+- `card_eq_sum_ones`: the cardinality of a finset is the sum of `1` over it;
+- `sum_range_add_sum_Ico`: when `m ≤ n`, a sum over `range m` plus a sum over `Ico m n` equals the sum over `range n`.
+
+### Local definitions with `let`
+
+#### `let`
+
+- **What it does:** `let I := t` gives the term `t` a local name.
+- **When to use it:** Use it to shorten a repeated expression or expose the mathematical object used in the next part of a proof.
+- **Example:**
+
+  ```lean
+  example (K : ℕ) : ∃ I : Finset ℕ, I.Nonempty := by
+    let I : Finset ℕ := Finset.range K.succ
+    have hne : I.Nonempty := by
+      exact Finset.nonempty_range_iff.mpr (Nat.succ_ne_zero K)
+    exact ⟨I, hne⟩
+  ```
+
+- **Limitation:** A `let` definition is local and definitionally reducible, but simplification may still need `dsimp [I]` or `simp [I]`.
+
+### Divisibility and natural-number division
+
+For natural numbers, `a ∣ b` means that there exists `c` such that `b = a * c`:
+
+```lean
+example {a b : ℕ} (h : a ∣ b) : ∃ c, b = a * c := h
+```
+
+Current names for two useful division results are:
+
+```lean
+#check Nat.div_mul_div_comm
+#check Nat.mul_div_mul_left
+```
+
+The first combines two exact quotients, assuming the corresponding divisibility
+hypotheses. The second states, for `0 < m`, that
+`m * n / (m * k) = n / k`.
+
+The older name `Nat.mul_div_mul` is not present in the checked toolchain; use `Nat.mul_div_mul_left` or `Nat.mul_div_mul_right` according to the common factor's position.
+
+### Moving between number systems
+
+#### `push_cast`
+
+- **What it does:** It pushes coercions through supported operations, for example changing `↑(a + b)` into `↑a + ↑b`.
+- **When to use it:** Use it when a goal mixes arithmetic in a source type such as `ℕ` with arithmetic in a target type such as `ℤ` or `ℝ`.
+- **Example:**
+
+  ```lean
+  example (a b : ℕ) :
+      (((a + b : ℕ) : ℤ)) = (a : ℤ) + (b : ℤ) := by
+    push_cast
+    rfl
+  ```
+
+- **Limitation:** It only uses known cast lemmas and may normalize the goal without closing it.
+
+#### `norm_cast`
+
+- **What it does:** It normalizes casts and can move suitable equalities or inequalities between numeric types.
+- **When to use it:** Use it at a goal or hypothesis whose main difficulty is coercion syntax.
+- **Example:**
+
+  ```lean
+  example {m n : ℕ} (h : (m : ℤ) ≤ (n : ℤ)) : m ≤ n := by
+    exact_mod_cast h
+  ```
+
+  With exact divisibility, it can also justify a natural-number quotient cast:
+
+  ```lean
+  example (d n : ℕ) (h : d ∣ n) :
+      (((n / d : ℕ) : ℝ)) = (n : ℝ) / (d : ℝ) := by
+    norm_cast
+  ```
+
+- **Limitation:** Cast normalization does not make incompatible division operations equivalent. The divisibility hypothesis above is essential.
+
+#### `cancel_denoms`
+
+- **What it does:** It removes explicit numeral denominators from field-valued equalities and inequalities.
+- **When to use it:** Use it to clear fixed rational denominators before arithmetic reasoning.
+- **Example:**
+
+  ```lean
+  example (a b : ℚ) (h : a = b / 2) : 2 * a = b := by
+    cancel_denoms at h
+    linarith
+  ```
+
+- **Limitation:** It is designed for numeral denominators. General symbolic denominators require nonzero side conditions and usually different tools.
+
+## Structures, classes, and algebraic maps
+
+### Defining structures
+
+A structure packages named fields into a new type. Here a point in an integer plane has two coordinates:
+
+```lean
+@[ext]
+structure Plane where
+  x : ℤ
+  y : ℤ
+
+def pointA : Plane where
+  x := 1
+  y := 3
+
+def pointB : Plane := ⟨-4, 7⟩
+
+def origin : Plane := { x := 0, y := 0 }
+```
+
+The `@[ext]` attribute generates an extensionality theorem used by the `ext` tactic. `Plane.x` and `Plane.y` are fields, and the three definitions illustrate record and constructor notation.
+
+### Defining a class
+
+A class is a structure intended for type-class inference. The following pedagogical definition packages group operations and axioms:
+
+```lean
+class MyGroup (G : Type*) extends Mul G, Inv G, One G where
+  ax_assoc : ∀ x y z : G, (x * y) * z = x * (y * z)
+  ax_mul_one : ∀ x : G, x * 1 = x
+  ax_one_mul : ∀ x : G, 1 * x = x
+  ax_mul_inv : ∀ x : G, x * x⁻¹ = 1
+  ax_inv_mul : ∀ x : G, x⁻¹ * x = 1
+```
+
+Mathlib already provides the standard `Group` class and its extensive API; `MyGroup` is only an instructional example.
+
+> **TODO:** The original notes do not yet develop instances or type-class inference. Add that material only when it is covered in the course.
+
+### Subgroups
+
+For `[Group G]`, `Subgroup G` is a structure containing:
+
+- `carrier : Set G`;
+- `one_mem'`, proving that `1` belongs to the carrier;
+- `mul_mem'`, proving closure under multiplication;
+- `inv_mem'`, proving closure under inverses.
+
+The singleton `{1}` forms the trivial subgroup:
+
+```lean
+section
+
+variable (G : Type*) [Group G]
+
+def trivialSubgroup : Subgroup G where
+  carrier := {1}
+  one_mem' := by simp
+  mul_mem' := by
+    intro a b ha hb
+    simp only [Set.mem_singleton_iff] at ha hb ⊢
+    simp [ha, hb]
+  inv_mem' := by
+    intro a ha
+    simp only [Set.mem_singleton_iff] at ha ⊢
+    simp [ha]
+
+end
+```
+
+The library notation `⊥ : Subgroup G` denotes the same subgroup.
+
+### Homomorphisms
+
+A bundled multiplicative homomorphism from `G` to `H` has type `G →* H`. It contains a function together with proofs that it preserves `1` and multiplication. For groups, preservation of inverses follows from these fields.
+
+```lean
+section
+
+variable (G H : Type*) [Group G] [Group H]
+
+def trivialHom : G →* H where
+  toFun := fun _ => 1
+  map_one' := rfl
+  map_mul' := by simp
+
+end
+```
+
+For additive structures, the corresponding notation is `A →+ B`.
+
+### Equivalences and isomorphisms
+
+Keep the following bundled types distinct:
+
+- `α ≃ β` is an equivalence of types;
+- `G ≃* H` is a multiplicative equivalence, suitable for group isomorphisms written multiplicatively;
+- `A ≃+ B` is an additive equivalence.
+
+Thus the notation `G ≃+ H` is not the general notation for a multiplicative group isomorphism.
+
+The following advanced example preserves the original note's result. If `G` is an additive commutative group and `φ : G →+ ℤ` is surjective, choosing an element sent to `1` gives an additive equivalence `φ.ker × ℤ ≃+ G`.
+
+Because the result is an equivalence value rather than a proposition, it is defined with `noncomputable def`, not `lemma`:
+
+```lean
+noncomputable def equivProdOfOntoInt {G : Type*} [AddCommGroup G]
+    (φ : G →+ ℤ) (hφ : Function.Surjective (φ : G → ℤ)) :
+    φ.ker × ℤ ≃+ G := by
+  let g := Classical.choose (hφ 1)
+  have hg : φ g = 1 := Classical.choose_spec (hφ 1)
+  exact
+    { toFun := fun ⟨x, n⟩ => (x : G) + n • g
+      invFun := fun x =>
+        ⟨⟨x - φ x • g, by
+          rw [AddMonoidHom.mem_ker]
+          simp [hg]⟩, φ x⟩
+      left_inv := by
+        intro ⟨⟨x, hx⟩, n⟩
+        rw [AddMonoidHom.mem_ker] at hx
+        ext <;> simp [hg, hx]
+      right_inv := by
+        intro x
+        simp
+      map_add' := by
+        intro x y
+        simp only [AddSubgroup.coe_add, add_zsmul]
+        abel }
+```
+
+This construction is noncomputable because it uses classical choice to select `g` from the surjectivity proof.
