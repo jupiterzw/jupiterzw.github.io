@@ -6,6 +6,7 @@
   "author": "Zhiyu Wang",
   "license": "MIT",
   "scripts": {
+    "postinstall": "npm run build:images",
     "build:images": "node scripts/build-responsive-images.mjs",
     "build": "npm run build:images && bundle exec jekyll build"
   },
