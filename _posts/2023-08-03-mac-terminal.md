@@ -6,7 +6,7 @@ tags: [terminal, mac]     # TAG names should always be lowercase
 math: true
 image: /assets/img/2023-08-03-mac-terminal/cover.png
 ---
-Ryan is so handsome!!!!!!!!
+
 ## Shell VS. Shell Emulator
 
 | **Aspect**          | **Shell**                                                                 | **Shell Emulator**                                                                                          |
