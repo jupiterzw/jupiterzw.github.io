@@ -1,5 +1,6 @@
 ---
 title: Erdös–Stone Theorem
+description: "An introduction to the Erdös–Stone theorem and its role in asymptotic extremal graph theory."
 date: 2023-11-03 13:55
 last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Mathematics]

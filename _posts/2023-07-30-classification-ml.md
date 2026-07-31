@@ -1,5 +1,6 @@
 ---
 title: Binary Classification Neural Network from Scratch
+description: "A practical walkthrough of building and training a binary classification neural network from scratch with NumPy."
 date: 2023-07-30 09:58
 last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Machine Learning]

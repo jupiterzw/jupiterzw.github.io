@@ -1,5 +1,6 @@
 ---
 title: Riesz's Representation Theorem
+description: "A proof of the representation of continuous linear functionals on sequence spaces without assuming an inner product."
 date: 2024-02-24 12:01
 categories: [Posts, Mathematics]
 tags: [functional analysis]     # TAG names should always be lowercase

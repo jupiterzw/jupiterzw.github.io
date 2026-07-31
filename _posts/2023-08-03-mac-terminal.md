@@ -1,5 +1,6 @@
 ---
 title: I "UPDATE" My Mac Terminal
+description: "A personal guide to improving the macOS command-line experience with iTerm2, Oh My Zsh, plugins, and themes."
 date: 2023-08-03 22:43
 categories: [Posts, MacOS]
 tags: [terminal, mac]     # TAG names should always be lowercase
@@ -120,7 +121,6 @@ source ~/.zshrc
 ```
 
 I'll update the plugin section once I find useful ones.
-
 
 
 

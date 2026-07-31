@@ -1,5 +1,6 @@
 ---
 title: LMS Summer School
+description: "Reflections and photographs from the LMS Undergraduate Summer School at the University of Sheffield."
 date: 2023-07-28 09:58
 last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Mathematics]

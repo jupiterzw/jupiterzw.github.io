@@ -1,5 +1,6 @@
 ---
 title: Path Signatures
+description: "An introduction to path signatures, from rough path foundations to signature kernels and machine-learning applications."
 date: 2025-03-01 10:00
 categories: [Posts, Mathematics]
 tags: [probability theory]

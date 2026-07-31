@@ -1,5 +1,6 @@
 ---
 title: UCL MATH0109 Theorem Proving in Lean Notes
+description: "A compact Lean 4 and Mathlib reference connecting familiar mathematical reasoning with formal proofs."
 date: 2024-03-09 12:00
 categories: [Posts, Mathematics]
 tags: [lean4]     # TAG names should always be lowercase

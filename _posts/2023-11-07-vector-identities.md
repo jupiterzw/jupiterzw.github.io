@@ -1,5 +1,6 @@
 ---
 title: Vector Identities
+description: "Derivations of fundamental vector calculus identities using index notation and the Einstein summation convention."
 date: 2023-11-07 19:43
 categories: [Posts, Mathematics]
 tags: [vector calculus]     # TAG names should always be lowercase

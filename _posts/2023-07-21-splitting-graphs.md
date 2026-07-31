@@ -1,5 +1,6 @@
 ---
 title: Splitting Graphs
+description: "An exploration of the probabilistic method through graph splitting, stable sets, bipartite graphs, and hypergraph colouring."
 date: 2023-07-21 18:30
 categories: [Posts, Mathematics]
 tags: [graph theory, probability]     # TAG names should always be lowercase
@@ -191,4 +192,3 @@ Any give hyperedge $e \in E$ contains $k$ vertices, and each such vertices can b
 Applying Lemma 0.8 with $d = k(k-1)$ and $p = 2^{1-k}$, it remains to check if $\text{e}k(k-1)2^{1-k} \leq 1$ holds. The solutions to this inequality are $k \geq 8.40096$ or $x \in [-0.145232, 1.34737]$. Since we are given that $k \geq 9$, this inequality holds and implies that $\mathbb{P}[\cap_{e\in E}A^c_e] > 0$ and the $2$-colouring of $G$ exists.◼
 
 You can show that Lemma 0.7 still hodls for $k \geq 4$ [(Henning and Yeo [2013])](https://www.sciencedirect.com/science/article/pii/S0195669813000607), but the case $k = 2$ and $k = 3$ remain open.
-

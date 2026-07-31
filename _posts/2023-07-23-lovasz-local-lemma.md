@@ -1,5 +1,6 @@
 ---
 title: The Lovász Local Lemma
+description: "An introduction to the Lovász Local Lemma and its use in avoiding dependent bad events with positive probability."
 date: 2023-07-23 10:23
 categories: [Posts, Mathematics]
 tags: [graph theory, probability]     # TAG names should always be lowercase
