@@ -1,0 +1,161 @@
+<!-- The Side Bar -->
+
+<aside aria-label="Sidebar" id="sidebar" class="d-flex flex-column align-items-end">
+  <header class="profile-wrapper">
+    <a href="{{ '/' | relative_url }}" id="avatar" class="rounded-circle">
+      {%- if site.avatar != empty and site.avatar -%}
+        {%- capture avatar_url -%}
+          {% include media-url.html src=site.avatar %}
+        {%- endcapture -%}
+        <img src="{{- avatar_url -}}" width="112" height="112" alt="avatar" onerror="this.style.display='none'">
+      {%- endif -%}
+    </a>
+
+    <a class="site-title d-block" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <p class="site-subtitle fst-italic mb-0">{{ site.tagline }}</p>
+  </header>
+  <!-- .profile-wrapper -->
+
+  <nav class="flex-column flex-grow-1 w-100 ps-0">
+    <ul class="nav">
+      <li class="nav-item{% if page.layout == 'home' %}{{ " active" }}{% endif %}">
+        <a href="{{ '/' | relative_url }}" class="nav-link">
+          <i class="fa-fw fas fa-home"></i>
+          <span>{{ site.data.locales[include.lang].tabs.home | upcase }}</span>
+        </a>
+      </li>
+
+      {% for tab in site.tabs %}
+        <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
+          <a href="{{ tab.url | relative_url }}" class="nav-link">
+            <i class="fa-fw {{ tab.icon }}"></i>
+            {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
+            <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  </nav>
+
+  <div class="sidebar-bottom sidebar-bottom--social d-flex flex-wrap align-items-center w-100">
+    {% unless site.theme_mode %}
+      <button type="button" class="btn btn-link nav-link" aria-label="Switch Mode" id="mode-toggle">
+        <i class="fas fa-adjust"></i>
+      </button>
+
+      {% if site.data.contact.size > 0 %}
+        <span class="icon-border"></span>
+      {% endif %}
+    {% endunless %}
+
+    <button
+      type="button"
+      class="social-qr-trigger social-qr-trigger--wechat"
+      aria-label="Show WeChat QR code"
+      title="WeChat"
+      popovertarget="wechat-qr-card"
+    >
+      <i class="fab fa-weixin" aria-hidden="true"></i>
+    </button>
+
+    <button
+      type="button"
+      class="social-qr-trigger social-qr-trigger--rednote"
+      aria-label="Show RedNote QR code"
+      title="RedNote"
+      popovertarget="rednote-qr-card"
+    >
+      {% include icon-xiaohongshu.svg %}
+    </button>
+
+    {% for entry in site.data.contact %}
+      {% case entry.type %}
+        {% when 'github', 'twitter' %}
+          {%- capture url -%}
+            https://{{ entry.type }}.com/{{ site[entry.type].username }}
+          {%- endcapture -%}
+        {% when 'email' %}
+          {% assign email = site.social.email | split: '@' %}
+          {%- capture url -%}
+            javascript:location.href = 'mailto:' + ['{{ email[0] }}','{{ email[1] }}'].join('@')
+          {%- endcapture -%}
+        {% when 'rss' %}
+          {% assign url = '/feed.xml' | relative_url %}
+        {% else %}
+          {% assign url = entry.url %}
+      {% endcase %}
+
+      {% if url %}
+        <a
+          href="{{ url }}"
+          aria-label="{{ entry.type }}"
+          {% assign link_types = '' %}
+          {% unless entry.noblank %}
+            target="_blank"
+            {% assign link_types = 'noopener noreferrer' %}
+          {% endunless %}
+          {% if entry.type == 'mastodon' %}
+            {% assign link_types = link_types | append: ' me' | strip %}
+          {% endif %}
+          {% unless link_types == empty %}
+            rel="{{ link_types }}"
+          {% endunless %}
+        >
+          <i class="{{ entry.icon }}"></i>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  <!-- .sidebar-bottom -->
+
+  {% include social-qr-card.html
+    id='wechat-qr-card'
+    service='WeChat'
+    account_label='WeChat ID'
+    account='fmo55no1'
+    image='/assets/img/social/wechat-qr.jpg'
+    icon='fab fa-weixin'
+    modifier='wechat'
+  %}
+
+  {% include social-qr-card.html
+    id='rednote-qr-card'
+    service='RedNote'
+    account_label='RedNote ID'
+    account='9477143786'
+    image='/assets/img/social/rednote-qr.jpg'
+    icon='xiaohongshu'
+    modifier='rednote'
+  %}
+</aside>
+<!-- #sidebar -->
+
+<script>
+  document.querySelectorAll('.social-qr-copy').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const account = button.dataset.copy;
+      const status = button.querySelector('.social-qr-copy__status');
+
+      try {
+        await navigator.clipboard.writeText(account);
+      } catch (_) {
+        const input = document.createElement('textarea');
+        input.value = account;
+        input.setAttribute('readonly', '');
+        input.style.position = 'fixed';
+        input.style.opacity = '0';
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        input.remove();
+      }
+
+      button.classList.add('is-copied');
+      status.textContent = 'Copied!';
+      window.setTimeout(() => {
+        button.classList.remove('is-copied');
+        status.textContent = 'Copy';
+      }, 1600);
+    });
+  });
+</script>

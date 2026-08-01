@@ -1,0 +1,47 @@
+<div
+  id="{{ include.id }}"
+  class="social-qr-card social-qr-card--{{ include.modifier }}"
+  popover
+  aria-label="{{ include.service }} contact details"
+>
+  <div class="social-qr-card__header">
+    <span class="social-qr-card__title">
+      {% if include.icon == 'xiaohongshu' %}
+        {% include icon-xiaohongshu.svg %}
+      {% else %}
+        <i class="{{ include.icon }}" aria-hidden="true"></i>
+      {% endif %}
+      {{ include.service }}
+    </span>
+    <button
+      type="button"
+      class="social-qr-card__close"
+      aria-label="Close {{ include.service }} QR code"
+      popovertarget="{{ include.id }}"
+      popovertargetaction="hide"
+    >
+      <i class="fas fa-times" aria-hidden="true"></i>
+    </button>
+  </div>
+
+  <div class="social-qr-card__image-wrap">
+    <img
+      src="{{ include.image | relative_url }}"
+      width="220"
+      height="220"
+      loading="lazy"
+      decoding="async"
+      alt="{{ include.service }} QR code for {{ include.account }}"
+    >
+  </div>
+
+  <p class="social-qr-card__hint">Scan to connect, or copy the account ID.</p>
+
+  <button type="button" class="social-qr-copy" data-copy="{{ include.account }}">
+    <span class="social-qr-copy__account">
+      <small>{{ include.account_label }}</small>
+      <strong>{{ include.account }}</strong>
+    </span>
+    <span class="social-qr-copy__status" aria-live="polite">Copy</span>
+  </button>
+</div>
