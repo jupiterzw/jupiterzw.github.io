@@ -127,6 +127,10 @@
     border: 1px solid var(--btn-border-color);
     border-radius: 0.7rem;
     background: #fff;
+
+    picture {
+      display: block;
+    }
   }
 
   img {

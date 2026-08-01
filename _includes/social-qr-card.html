@@ -25,14 +25,18 @@
   </div>
 
   <div class="social-qr-card__image-wrap">
-    <img
-      src="{{ include.image | relative_url }}"
-      width="220"
-      height="220"
-      loading="lazy"
-      decoding="async"
-      alt="{{ include.service }} QR code for {{ include.account }}"
-    >
+    {% assign webp_image = include.image | replace: '.jpg', '.webp' %}
+    <picture>
+      <source srcset="{{ webp_image | relative_url }}" type="image/webp">
+      <img
+        src="{{ include.image | relative_url }}"
+        width="220"
+        height="220"
+        loading="lazy"
+        decoding="async"
+        alt="{{ include.service }} QR code for {{ include.account }}"
+      >
+    </picture>
   </div>
 
   <p class="social-qr-card__hint">Scan to connect, or copy the account ID.</p>
