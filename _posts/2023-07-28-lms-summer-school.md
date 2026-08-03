@@ -4,7 +4,7 @@ description: "Reflections and photographs from the LMS Undergraduate Summer Scho
 date: 2023-07-28 09:58
 last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Mathematics]
-tags: [experience]     # TAG names should always be lowercase
+tags: [Mathematics Summer School]
 math: true
 image: /assets/img/2023-07-28-lms-summer-school/cover.jpg
 ---

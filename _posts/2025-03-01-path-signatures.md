@@ -3,7 +3,7 @@ title: Path Signatures
 description: "An introduction to path signatures, from rough path foundations to signature kernels and machine-learning applications."
 date: 2025-03-01 10:00
 categories: [Posts, Mathematics]
-tags: [probability theory]
+tags: [Rough Path Theory, Machine Learning]
 math: true
 image: /assets/img/2025-03-01-path-signatures/cover.png
 published: true

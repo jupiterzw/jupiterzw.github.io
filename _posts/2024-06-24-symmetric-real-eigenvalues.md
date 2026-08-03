@@ -3,7 +3,7 @@ title: The Eigenvalues of a Real Symmetric Matrix Are Real
 description: "A concise proof that every eigenvalue of a real symmetric matrix is real."
 date: 2024-06-24 22:01
 categories: [Posts, Mathematics]
-tags: [linear algebra]     # TAG names should always be lowercase
+tags: [Linear Algebra]
 math: true
 image: /assets/img/2024-06-24-symmetric-real-eigenvalues/cover.png
 published: true

@@ -3,7 +3,7 @@ title: Splitting Graphs
 description: "An exploration of the probabilistic method through graph splitting, stable sets, bipartite graphs, and hypergraph colouring."
 date: 2023-07-21 18:30
 categories: [Posts, Mathematics]
-tags: [graph theory, probability]     # TAG names should always be lowercase
+tags: [Graph Theory, Probabilistic Method]
 math: true
 image: /assets/img/2023-07-21-splitting-graphs/cover.png
 ---

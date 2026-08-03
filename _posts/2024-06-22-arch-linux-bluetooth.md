@@ -3,7 +3,7 @@ title: How to Activate Bluetooth Service on Arch Linux?
 description: "A concise guide to diagnosing and enabling the Bluetooth service on Arch Linux."
 date: 2024-06-22 21:35
 categories: [Posts, Arch Linux]
-tags: [setting]     # TAG names should always be lowercase
+tags: [Arch Linux, Bluetooth]
 math: true
 image: /assets/img/2024-06-22-arch-linux-bluetooth/cover.png
 published: true

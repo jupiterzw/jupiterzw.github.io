@@ -4,7 +4,7 @@ description: "An introduction to the Erdös–Stone theorem and its role in asym
 date: 2023-11-03 13:55
 last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Mathematics]
-tags: [graph theory]     # TAG names should always be lowercase
+tags: [Graph Theory]
 math: true
 image: /assets/img/2023-11-03-erdos-stone-theorem/cover.png
 permalink: /posts/erdös-stone-theorem/

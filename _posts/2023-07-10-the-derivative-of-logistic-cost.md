@@ -3,7 +3,7 @@ title: The Derivative of Logistic Cost
 description: "A step-by-step derivation of the logistic regression cost function and its gradient."
 date: 2023-07-10 08:00
 categories: [Posts, Machine Learning]
-tags: [calculus, ml]     # TAG names should always be lowercase
+tags: [Calculus, Machine Learning]
 math: true
 image: /assets/img/2023-07-10-the-derivative-of-logistic-cost/cover.png
 ---

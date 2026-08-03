@@ -4,7 +4,7 @@ description: "A practical walkthrough of building and training a binary classifi
 date: 2023-07-30 09:58
 last_modified_at: 2024-03-07 00:46:18 +0000
 categories: [Posts, Machine Learning]
-tags: [ml, mln]     # TAG names should always be lowercase
+tags: [Machine Learning, Neural Networks]
 math: true
 image: /assets/img/2023-07-30-classification-ml/cover.png
 ---

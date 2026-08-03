@@ -2,7 +2,7 @@
 title: UCL 2023-2024 Year 3 Maths Exam Recollection
 date: 2024-04-26 17:00
 categories: [Posts, Mathematics]
-tags: [exam]     # TAG names should always be lowercase
+tags: [Mathematics Examinations]
 math: true
 image: /assets/img/2024-04-26-ucl-year-3-maths-exam/cover.jpg
 ---

@@ -4,7 +4,7 @@ description: "Evolving notes on graph theory, covering foundational counting arg
 date: 2024-06-24 22:01:01 +0100
 last_modified_at: 2026-07-28 17:31:03 +0800
 categories: [Posts, Mathematics]
-tags: [graph theory]     # TAG names should always be lowercase
+tags: [Graph Theory]
 math: true
 image: /assets/img/2024-06-24-notes-on-graph-theory/cover.png
 published: true
