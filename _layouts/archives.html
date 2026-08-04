@@ -1,0 +1,130 @@
+---
+layout: page
+---
+
+<div class="archive-index" data-archive-index>
+  <nav class="archive-index__tabs" aria-label="Browse the archive" role="tablist">
+    <a
+      id="archive-tab-posts"
+      class="archive-index__tab active"
+      href="#archive-posts"
+      role="tab"
+      aria-controls="archive-posts"
+      aria-selected="true"
+      data-archive-tab="posts"
+    >
+      <span>Posts</span>
+    </a>
+    <a
+      id="archive-tab-categories"
+      class="archive-index__tab"
+      href="#archive-categories"
+      role="tab"
+      aria-controls="archive-categories"
+      aria-selected="false"
+      tabindex="-1"
+      data-archive-tab="categories"
+    >
+      <span>Categories</span>
+    </a>
+    <a
+      id="archive-tab-tags"
+      class="archive-index__tab"
+      href="#archive-tags"
+      role="tab"
+      aria-controls="archive-tags"
+      aria-selected="false"
+      tabindex="-1"
+      data-archive-tab="tags"
+    >
+      <span>Tags</span>
+    </a>
+  </nav>
+
+  <section
+    id="archive-posts"
+    class="archive-index__panel"
+    role="tabpanel"
+    aria-labelledby="archive-tab-posts"
+    data-archive-panel="posts"
+  >
+    {% include archive-post-list.html %}
+  </section>
+
+  <section
+    id="archive-categories"
+    class="archive-index__panel"
+    role="tabpanel"
+    aria-labelledby="archive-tab-categories"
+    data-archive-panel="categories"
+  >
+    {% include archive-category-list.html %}
+  </section>
+
+  <section
+    id="archive-tags"
+    class="archive-index__panel"
+    role="tabpanel"
+    aria-labelledby="archive-tab-tags"
+    data-archive-panel="tags"
+  >
+    {% include archive-tag-list.html %}
+  </section>
+</div>
+
+<script>
+  (() => {
+    const archiveIndex = document.querySelector('[data-archive-index]');
+    if (!archiveIndex) return;
+
+    const tabs = Array.from(archiveIndex.querySelectorAll('[data-archive-tab]'));
+    const panels = Array.from(archiveIndex.querySelectorAll('[data-archive-panel]'));
+    const validTabs = new Set(tabs.map((tab) => tab.dataset.archiveTab));
+
+    const tabFromHash = () => {
+      const tab = window.location.hash.replace('#archive-', '');
+      return validTabs.has(tab) ? tab : null;
+    };
+
+    const activateTab = (name, moveFocus = false) => {
+      tabs.forEach((tab) => {
+        const active = tab.dataset.archiveTab === name;
+        tab.classList.toggle('active', active);
+        tab.setAttribute('aria-selected', active ? 'true' : 'false');
+        tab.setAttribute('tabindex', active ? '0' : '-1');
+        if (active && moveFocus) tab.focus();
+      });
+
+      panels.forEach((panel) => {
+        panel.hidden = panel.dataset.archivePanel !== name;
+      });
+    };
+
+    archiveIndex.dataset.enhanced = 'true';
+    activateTab(tabFromHash() || 'posts');
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', (event) => {
+        event.preventDefault();
+        const name = tab.dataset.archiveTab;
+        activateTab(name);
+        window.history.replaceState(null, '', `#archive-${name}`);
+      });
+
+      tab.addEventListener('keydown', (event) => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        const direction = event.key === 'ArrowRight' ? 1 : -1;
+        const nextIndex = (index + direction + tabs.length) % tabs.length;
+        const nextTab = tabs[nextIndex];
+        activateTab(nextTab.dataset.archiveTab, true);
+        window.history.replaceState(null, '', nextTab.hash);
+      });
+    });
+
+    window.addEventListener('hashchange', () => {
+      const tab = tabFromHash();
+      if (tab) activateTab(tab);
+    });
+  })();
+</script>

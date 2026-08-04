@@ -26,13 +26,24 @@
       </li>
 
       {% for tab in site.tabs %}
-        <li class="nav-item{% if tab.url == page.url %}{{ " active" }}{% endif %}">
-          <a href="{{ tab.url | relative_url }}" class="nav-link">
-            <i class="fa-fw {{ tab.icon }}"></i>
-            {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
-            <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
-          </a>
-        </li>
+        {% unless tab.url == '/categories/' or tab.url == '/tags/' %}
+          {% assign tab_active = false %}
+          {% if tab.url == page.url %}
+            {% assign tab_active = true %}
+          {% elsif tab.url == '/archives/' %}
+            {% if page.layout == 'categories' or page.layout == 'category' or page.layout == 'tags' or page.layout == 'tag' %}
+              {% assign tab_active = true %}
+            {% endif %}
+          {% endif %}
+
+          <li class="nav-item{% if tab_active %}{{ " active" }}{% endif %}">
+            <a href="{{ tab.url | relative_url }}" class="nav-link"{% if tab_active %} aria-current="page"{% endif %}>
+              <i class="fa-fw {{ tab.icon }}"></i>
+              {% capture tab_name %}{{ tab.url | split: '/' }}{% endcapture %}
+              <span>{{ site.data.locales[include.lang].tabs.[tab_name] | default: tab.title | upcase }}</span>
+            </a>
+          </li>
+        {% endunless %}
       {% endfor %}
     </ul>
   </nav>

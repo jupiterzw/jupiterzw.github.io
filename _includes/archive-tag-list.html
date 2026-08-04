@@ -1,0 +1,17 @@
+<div id="tags" class="d-flex flex-wrap mx-xl-2">
+  {% assign tags = '' | split: '' %}
+  {% for tag in site.tags %}
+    {% assign tags = tags | push: tag[0] %}
+  {% endfor %}
+
+  {% assign sorted_tags = tags | sort_natural %}
+
+  {% for tag in sorted_tags %}
+    <div>
+      <a class="tag" href="{{ tag | slugify | url_encode | prepend: '/tags/' | append: '/' | relative_url }}">
+        {{ tag -}}
+        <span class="text-muted">{{ site.tags[tag].size }}</span>
+      </a>
+    </div>
+  {% endfor %}
+</div>

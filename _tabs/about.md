@@ -5,6 +5,9 @@ order: 2
 ---
 Hi, I’m Peter. I hold an MSc in Mathematics from the University of Oxford, awarded with Distinction, and a first-class honours BSc in Mathematics from University College London.
 
+Research
+- [Asymptotic Analysis for Scattering off One-Dimensional Compactly Supported Weak Potentials](/assets/files/publications/asymptotic-analysis-for-scattering-off-one-dimensional-compactly-supported-weak-potentials.pdf)
+
 My academic interests span
 - Functional Analysis
   - Banach and Hilbert Spaces
@@ -25,9 +28,6 @@ My academic interests span
   - Graph Representation learning
   - Generalization Bounds
   - Scaling Laws
-
-Research
-- [Asymptotic Analysis for Scattering off One-Dimensional Compactly Supported Weak Potentials](/assets/files/publications/asymptotic-analysis-for-scattering-off-one-dimensional-compactly-supported-weak-potentials.pdf)
 
 <!-- Leisure
 * Proficient at piano and chess
