@@ -17,7 +17,7 @@ $$
 \end{equation}
 $$
 
-where $\Omega$ is a prbability space and  $A_i \subseteq \Omega$ and $A_i^c = \Omega \setminus A_i$.
+where $(\Omega,\mathbb{P})$ is a probability space, each $A_i\subseteq\Omega$ is an event, and $A_i^c=\Omega\setminus A_i$.
 
 The Lovász Local Lemma, to some extent, resides at the intersection of two contrasting scenarios:
 
@@ -25,8 +25,7 @@ The Lovász Local Lemma, to some extent, resides at the intersection of two cont
 
 - If we have an arbitrary number of mutually independent events $(A_i)_{i = 1}^n$ and $\mathbb{P}[A_i] < 1~\forall i$, then (*) holds.
 
-The local lemma deals with the case when each bad event is independent with most other
-bad events, but possibly dependent with a small number $d$ of other events.
+The local lemma deals with the case in which each bad event is independent of most of the other bad events but may depend on a small number $d$ of them.
 <!-- A prototypical application of this result is the [hypergraph $2$-colouring problem](https://www.jupiterzw.com/posts/splitting-graphs/#hypergraph-colouring). -->
 
 
@@ -35,22 +34,32 @@ Here are some basic definitions.
 
 ---
 **Definition 0.1 (Probability Space)**
-A *probability space* is a pair $(\Omega, \mathbb{P})$, where $\Omega$ is a finite set of *elementary events* (e.g. {Heads, Tails} or {1,2,3,4,5,6}) and $\mathbb{P}:\Omega \to [0,1]$ such that $\mathbb{P}[\emptyset] = 0$ and  $\sum_{\omega \in \Omega} \mathbb{P}[\omega] = 1$.
+A *finite probability space* is a pair $(\Omega,\mathbb P)$, where $\Omega$ is a finite sample space and $\mathbb P:2^\Omega\to[0,1]$ satisfies $\mathbb P(\Omega)=1$ and
+
+$$
+\mathbb P(A\cup B)=\mathbb P(A)+\mathbb P(B)
+$$
+
+whenever $A,B\subseteq\Omega$ are disjoint. The elements of $\Omega$ are called *outcomes*; for example, $\Omega=\{\text{Heads},\text{Tails}\}$ for one coin toss.
 
 ---
 **Definition 0.2 (Event)**
-Any subset $A \subseteq \Omega$ is called an *event* and we define its probability to be $\mathbb{P}[A] = \sum_{\omega \in A}\mathbb{P}[\omega]$.
+Any subset $A\subseteq\Omega$ is called an *event*. In a finite probability space,
+
+$$
+\mathbb P(A)=\sum_{\omega\in A}\mathbb P(\{\omega\}).
+$$
 
 ---
 **Lemma 0.3 (The Probabilistic Method)**
- If $(\Omega, \mathbb{P})$ is a probability space and $A⊆\Omega$ is an event satisfying $\mathbb{P}[A]>0$ then $A \ne ∅$.
+ If $(\Omega,\mathbb P)$ is a probability space and $A\subseteq\Omega$ satisfies $\mathbb P(A)>0$, then $A\neq\emptyset$.
 
  *Proof:*
- (Contrapositive) If $A=∅$, then $\mathbb{P}[A]=0$. ◼
+ (Contrapositive) If $A=\emptyset$, then $\mathbb P(A)=0$. ◼
 
  ---
  **Lemma 0.4 (The union bound)**
- Let $(\Omega, \mathbb{P})$ be a finite probability space and $A_1, ..., A_n \subseteq \Omega$, then
+ Let $(\Omega,\mathbb P)$ be a finite probability space and let $A_1,\ldots,A_n\subseteq\Omega$. Then
 
  $$
     \mathbb{P}\left[\bigcup^{n}_{i = 1}A_i\right] \leq \sum_{i = 1}^n \mathbb{P}[A_i].
@@ -60,7 +69,7 @@ Any subset $A \subseteq \Omega$ is called an *event* and we define its probabili
  Let $A = \cup_{i = 1}^nA_i$ and $\omega \in A$. Then $\omega \in A_i$ for some $1 \leq i \leq n$. Define $f:\Omega \to \mathbb{N}$ by $f(\omega) = \left|\\{i : \omega \in A_i\\}\right|$. We have $f(\omega) \geq 1 ~\forall \omega \in A$ and hence
 
  $$
-    \mathbb{P}\left[\bigcup_{i = 1}^n A_i\right] = \sum_{\omega \in A} \mathbb{P}[\omega] \leq \sum_{\omega \in A} f(\omega)\mathbb{P}[\omega] = \sum_{i=1}^n \mathbb{P}[A_i],
+    \mathbb{P}\left[\bigcup_{i = 1}^n A_i\right] = \sum_{\omega \in A} \mathbb{P}(\{\omega\}) \leq \sum_{\omega \in A} f(\omega)\mathbb{P}(\{\omega\}) = \sum_{i=1}^n \mathbb{P}[A_i],
  $$ 
 
 which completes the proof. ◼
@@ -81,7 +90,7 @@ If $\text{e}p(d + 1) \leq 1$, where $\text{e}=2.71828...$ is Euler’s number, t
 
 ---
 
-### Asymmetric Lováz Local Lemma: statement and proof
+### Asymmetric Lovász Local Lemma: statement and proof
 
 Here is a useful definition we need.
 
@@ -90,11 +99,11 @@ Here is a useful definition we need.
 For all integers $n > 0$, define $[n]:=\\{1, ..., n\\}$.
 A graph $G = (V, E)$ is a *dependency graph* on events $A_1, ..., A_n$ if $V = [n]$ and each event $A_i$ is mutually independent of its non-neighbours $\\{A_j: j \ne i, \\{i, j\\} \notin E\\}$.
 
-We now state the asymmetric Lováz Local Lemma.
+We now state the asymmetric Lovász Local Lemma.
 
 ---
-**Lemma 0.7 (Asymmetric Lováz Local Lemma)**
-Suppose $G$ is a dependecy graph for events $A_1, ...,A_n$ and $\exists~x_1, ..., x_n \in (0,1)$ such that
+**Lemma 0.7 (Asymmetric Lovász Local Lemma)**
+Suppose $G$ is a dependency graph for events $A_1,\ldots,A_n$ and there exist $x_1,\ldots,x_n\in(0,1)$ such that
 
 $$
     \begin{equation}
@@ -112,7 +121,7 @@ $$
 
 ---
 Before proving Lemma 0.7, let us see why it implies Lemma 0.5. 
-Set $x_i = \frac{1}{d+1} < 1$ for all $i$. 
+The case $d=0$ follows immediately from independence, so assume $d\geq1$. Set $x_i=\frac{1}{d+1}<1$ for all $i$.
 Then
 
 $$
@@ -181,9 +190,9 @@ $$
  $$
 
  - $(3), (4):$ It becomes clear once you draw a Venn diagram.
- - $(5):$ This is because the mutual independence of $A_a$ and $\\{A_i : i \notin \Gamma^+(a)\\}$. 
+ - $(5):$ This follows from the mutual independence of $A_a$ and $\\{A_i:i\notin\Gamma^+(a)\\}$.
 
- Dividing $P_{S \setminus \\{a\\}}$ on both sides ($P_{S \setminus \\{a\\}}$ > 0 by the induction hypothesis), we have
+ Dividing both sides by $P_{S\setminus\\{a\\}}>0$, which is positive by the induction hypothesis, gives
 
  $$ \tag{††}
     \frac{P_S}{P_{S \setminus \{a\}}} \geq 1 - \mathbb{P}[A_a] \frac{P_{S \setminus \Gamma^+(a)}}{P_{S \setminus \{a\}}}.
@@ -203,7 +212,7 @@ $$
     \frac{P_{S \setminus \Gamma^+(a)}}{P_{S \setminus \{a\}}} \leq \frac{1}{1-x_{b_1}}\cdots \frac{1}{1-x_{b_d}}. 
  $$
 
- By the assumption stated in Lemma 0.7, we have $\mathbb{P}[A_a] \leq x_a \prod_{b \in \Gamma(a)} (a-x_b)$, $(††)$ becomes
+ By the assumption in Lemma 0.7, $\mathbb{P}[A_a]\leq x_a\prod_{b\in\Gamma(a)}(1-x_b)$. Substituting this into $(††)$ gives
 
  $$
     \frac{P_S}{P_{S \setminus \{a\}}} \geq 1-x_a\prod_{b \in \Gamma(a)}(1-x_b) \prod_{c \in \Gamma(a) \cap S} \frac{1}{1-x_c} \geq 1-x_a > 0. 

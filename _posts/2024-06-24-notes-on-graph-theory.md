@@ -14,7 +14,7 @@ published: true
 
 ## 1 Basic counting: sets and tuples
 
-*This section lacks a formal definition of the cardinality of a set, offering instead an intuitive explanation of the concept (which refers to the number of elements within a given set). For certain audiences, this approach may be considered insufficiently rigourous. Nevertheless, this is enough for our purpose.*
+*This section does not give a formal construction of cardinality; instead, it uses the intuitive notion of the number of elements in a finite set. Although this may not be sufficiently rigorous for every audience, it is adequate for our purposes.*
 
 If $X$ is a set, then $|X|$ is the **size** or **cardinality** of $X$.
 Most of the sets we will encounter in this note will be finite (with
@@ -57,9 +57,9 @@ $A_i \cap A_j=\emptyset$ for all $1 \leq i<j \leq n$.
 
 Let $A$ and $B$ be finite sets. Then
 
-1.  $\|A \setminus B\|=\|A\|-\|A \cap B\|;$
-2.  $\|A \cup B\|=\|A\|+\|B\|-\|A \cap B\|;$
-3.  $\|A \times B\|=\|A\| \cdot\|B\|;$
+1.  $|A \setminus B|=|A|-|A \cap B|;$
+2.  $|A \cup B|=|A|+|B|-|A \cap B|;$
+3.  $|A \times B|=|A|\,|B|;$
 4.  If $A_1, A_2, \ldots, A_n$ are pairwise disjoint sets, then
     $\left|\bigcup_{i=1}^n A_i\right|=\sum_{i=1}^n\left|A_i\right|;$
 5.  If $A_1, A_2, \ldots, A_n$ are sets, then
@@ -124,7 +124,7 @@ Let $1 \leq k \leq n$ be integers and $X$ be a set of size $n$. Then
 
 6.  ${n+1 \choose k}={n \choose k}+{n \choose k-1}$;
 
-7.  $\|\mathscr{P}(X)\|=2^n$.
+7.  $|\mathscr{P}(X)|=2^n$.
 </div>
 
 *Proof.* Omitted. ◻
@@ -321,7 +321,7 @@ set is $V(G[A])=A$ and edge set is $E(G[A])= E(G) \cap {A \choose 2}$.
 
 
 definition
-Graphs $G$ and $H$ are **isomorphic** iff there is a bijection
+Graphs $G$ and $H$ are **isomorphic** if and only if there is a bijection
 $f: V(G) \rightarrow V(H)$ such that
 $v w \in E(G) \Longleftrightarrow f(v) f(w) \in E(H)$. If $G$ and $H$
 are isomorphic we denote this by $G \cong H$. $G$ contains a **copy** of
@@ -347,7 +347,7 @@ either.
 
 
 lemma
-Define the relation $\sim$ on $V(G)$ by $v \sim w$ iff there is a walk
+Define the relation $\sim$ on $V(G)$ by $v \sim w$ if and only if there is a walk
 from $v$ to $w$ in $G$. Then $\sim$ is an equivalence relation.
 
 
@@ -370,7 +370,7 @@ is a path that starts at $x$ and ends at $y$.
 
 
 lemma
-There is an $x$-$y$ path in $G$ iff there is a walk from $x$ to $y$ in
+There is an $x$-$y$ path in $G$ if and only if there is a walk from $x$ to $y$ in
 $G$.
 
 
@@ -403,7 +403,7 @@ once.
 
 
 theorem
-A graph $G$ has an Euler circuit iff $G$ is connected and every vertex
+A graph $G$ has an Euler circuit if and only if $G$ is connected and every vertex
 has even degree.
 
 
@@ -421,7 +421,7 @@ $G=(A, B ; E)$ to emphasise this.
 
 
 theorem
-A graph is bipartite iff it contains no odd cycle.
+A graph is bipartite if and only if it contains no odd cycle.
 
 
 proof
@@ -447,7 +447,7 @@ A graph $G$ is **$k$-colourable** if $G$ has a $k$-colouring.
 
 remark
 It follows that if a graph $G$ is $k$-colourable, then $G$ is also
-$k + 1$-colourable. Note that a graph is bipartite iff it is
+$k + 1$-colourable. Note that a graph is bipartite if and only if it is
 $2$-colourable.
 
 
@@ -458,7 +458,7 @@ sets.
 
 
 remark
-Note that a graph is $k$-partite iff it is $k$-colourable.
+Note that a graph is $k$-partite if and only if it is $k$-colourable.
 
 
 definition
@@ -610,7 +610,7 @@ proof
 ### 3.2 Random graphs
 
 The probability space for graphs that we will consider is
-$\mathscr{G}(n, p)$ : the space of Erdös-Renyi random graphs. The
+$\mathscr{G}(n, p)$: the space of Erdős–Rényi random graphs. The
 underlying set of outcomes is the set of all labelled graphs of order
 $n$ :
 $$\Omega=\left\{G \mid V(G)=[n], E(G) \subseteq {[n] \choose 2} \right\}.$$
@@ -629,7 +629,7 @@ random process produces the graph $H$:
     coin tosses are independent.
 
 Note that unless $p \in\{0,1\}$, every possible graph $H \in \Omega$ has
-non-zero probability of occuring.
+non-zero probability of occurring.
 
 ### 3.3 Large girth and large chromatic number
 
@@ -698,7 +698,7 @@ a travelling salesman who wishes to visit every city exactly once,
 starting and finishing at home.
 
 The question of whether a given graph $G$ contains an Euler circuit has,
-as we saw a simple characterisation: $G$ contains an Euler circuit iff
+as we saw a simple characterisation: $G$ contains an Euler circuit if and only if
 it is connected and all vertices have even degree. The corresponding
 question for Hamilton cycles has no such easy answer. (Indeed for those
 of you who know any computational complexity theory the problem of
@@ -826,7 +826,7 @@ as equal as possible in size.
 
 
 remark
-Note that this defines a unique (upto isomorphism) $r$-partite graph of
+Note that this defines a unique (up to isomorphism) $r$-partite graph of
 order $n$, with $b$ vertex classes each containing
 $\lfloor n / r\rfloor$ vertices and $r-b$ vertex classes each containing
 $\lceil n / r\rceil$ vertices, where $b$ satisfies
@@ -951,7 +951,7 @@ proof
 *Proof.* Omitted. ◻
 
 
-### 4.7 Erdös-Stone: the fundamental theorem of extremal graph theory
+### 4.7 Erdős–Stone: the fundamental theorem of extremal graph theory
 
 Turán's theorem implies that for $r \geq 3$
 $$\pi\left(K_r\right)=1-\frac{1}{r-1}=1-\frac{1}{\chi\left(K_r\right)-1} .$$
@@ -1058,7 +1058,7 @@ $\mathscr{A} \subseteq \mathscr{P}([n])$ is a chain or antichain how
 large can $\mathscr{A}$ be?
 
 For chains this question is trivial (stop and figure out the answer for
-yourself if it isn't immedidately obvious). For antichains the answer
+yourself if it is not immediately obvious). For antichains the answer
 requires some work.
 
 Both versions of this question require the following simple fact.
@@ -1135,7 +1135,7 @@ remark
 Note that $2$ terms ${ n \choose |A_1|}, { n \choose |A_2|}$ in this
 summation is the same if $|A_1| = |A_2|$. For $0 \leq k \leq n$, let
 $a_k = |\mathscr{A} \cap {[n] \choose k} |$ denote the number of size
-$k$ sets in $\mathscr{A}$, then equivalenly,
+$k$ sets in $\mathscr{A}$, then equivalently,
 {% raw %}$$\left(\sum_{A \in \mathscr{A}} \frac{1}{{n \choose |A|}} = \right) \quad \sum_{k=0}^n \frac{a_k}{{n \choose k}} \leq 1.$$${% endraw %}
 We are simply gathering same terms.
 
@@ -1377,7 +1377,7 @@ proof
 
 
 Having introduced all of the necessary algebra, we now introduce one
-more definitino and the combinatorial problem that we wish to consider.
+one more definition and the combinatorial problem that we wish to consider.
 
 definition
 $Let L \subseteq\{0,1,2, \ldots, n\}$. A family

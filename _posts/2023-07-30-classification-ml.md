@@ -10,9 +10,9 @@ image: /assets/img/2023-07-30-classification-ml/cover.png
 ---
 
 ## Packages
-We first import necessary packages:
-- [numpy](http://www.numpy.org) is the main package for scientific computing with Python.
-- [matplotlib](http://matplotlib.org) is a library to plot graphs in Python.
+We first import the necessary packages:
+- [NumPy](http://www.numpy.org) is the main package for scientific computing with Python.
+- [Matplotlib](http://matplotlib.org) is a plotting library for Python.
 - [h5py](https://www.h5py.org/) is a Pythonic interface to the HDF5 binary data format.
 
 ```python
@@ -31,7 +31,7 @@ plt.rcParams['image.cmap'] = 'gray'
 %autoreload 2 # all modules are reloaded before executing code
 ```
 ## Sigmoid and ReLU
-We first write some necessary functions we need in the later forward and backward propagation.
+We first define the activation functions and their derivatives, which will be used during forward and backward propagation.
 
 ```python
 def sigmoid(Z):
@@ -96,12 +96,12 @@ For every forward function, there is a corresponding backward function. This is 
 
 ## Outline
 **Notation**:
-- Superscript $[l]$ denotes a quantity associated with the $l^{th}$ layer. 
-    - Example: $a^{[L]}$ is the $L^{th}$ layer activation. $W^{[L]}$ and $b^{[L]}$ are the $L^{th}$ layer parameters.
-- Superscript $(i)$ denotes a quantity associated with the $i^{th}$ example. 
-    - Example: $x^{(i)}$ is the $i^{th}$ training example.
-- Lowerscript $i$ denotes the $i^{th}$ entry of a vector.
-    - Example: $a^{[l]}_i$ denotes the $i^{th}$ entry of the $l^{th}$ layer's activations.
+- A superscript $[l]$ denotes a quantity associated with the $l$th layer.
+    - Example: $a^{[L]}$ is the activation of the $L$th layer. The quantities $W^{[L]}$ and $b^{[L]}$ are its parameters.
+- A superscript $(i)$ denotes a quantity associated with the $i$th example.
+    - Example: $x^{(i)}$ is the $i$th training example.
+- A subscript $i$ denotes the $i$th entry of a vector.
+    - Example: $a^{[l]}_i$ denotes the $i$th entry of the activations in layer $l$.
 
 Here is the outline of this project:
 - Initialize the parameters for a two-layer network and for an $L$-layer neural network
@@ -109,11 +109,11 @@ Here is the outline of this project:
      - Complete the LINEAR part of a layer's forward propagation step (resulting in $Z^{[l]}$)
      - Use ReLU/Sigmoid as the activation functions.
      - Combine the previous two steps into a new [LINEAR->ACTIVATION] forward function.
-     - Stack the [LINEAR->RELU] forward function L-1 time (for layers 1 through L-1) and add a [LINEAR->SIGMOID] at the end (for the final layer $L$). This gives you a new L_model_forward function.
+     - Stack the [LINEAR -> RELU] forward function $L-1$ times (for layers $1$ through $L-1$), then add [LINEAR -> SIGMOID] for the final layer. This gives the new `L_model_forward` function.
 - Compute the loss
 - Implement the backward propagation module (denoted in red in the figure below)
     - Complete the LINEAR part of a layer's backward propagation step
-    - USe relu_backward/sigmoid_backward to compute gradient of the activation functions
+    - Use `relu_backward` and `sigmoid_backward` to compute the gradients of the activation functions
     - Combine the previous two steps into a new [LINEAR->ACTIVATION] backward function
     - Stack [LINEAR->RELU] backward L-1 times and add [LINEAR->SIGMOID] backward in a new L_model_backward function
 - Update the parameters using gradient descent
@@ -173,7 +173,7 @@ def initialize_parameters_deep(layer_dims):
     return parameters
 ```
 ## Forward Propagation
-To do implement the forward propagation module properly, let's write $3$ functions respectively to do the following:
+To implement forward propagation, we write three functions that perform the following operations:
 - LINEAR
 - LINEAR -> ACTIVATION where ACTIVATION will be either ReLU or Sigmoid. 
 - [LINEAR -> RELU] $\times$ (L-1) -> LINEAR -> SIGMOID (whole model)
@@ -210,12 +210,12 @@ In this project, we only use 2 activation functions:
 A, activation_cache = sigmoid(Z)
 ```
 
-- **ReLU**: The mathematical formula for ReLu is $A = RELU(Z) = max(0, Z)$. 
+- **ReLU**: The rectified linear unit is $A=\operatorname{ReLU}(Z)=\max(0,Z)$, applied elementwise.
 ``` python
 A, activation_cache = relu(Z)
 ```
 
-Now we implement the forward propagation of the *LINEAR->ACTIVATION* layer. Mathematically, $A^{[l]} = g(Z^{[l]}) = g(W^{[l]}A^{[l-1]} +b^{[l]})$ where the activation "g" can be sigmoid() or relu().
+We now implement forward propagation for a *LINEAR -> ACTIVATION* layer. Mathematically, $A^{[l]}=g(Z^{[l]})=g(W^{[l]}A^{[l-1]}+b^{[l]})$, where $g$ is either the sigmoid or ReLU activation.
 
 ```python
 def linear_activation_forward(A_prev, W, b, activation):
@@ -245,7 +245,7 @@ def linear_activation_forward(A_prev, W, b, activation):
 ```
 
 ### L Model Forward
-It is time to put the above 2 functions together to implement the entire forward module.
+We now combine the preceding two functions to implement the complete forward module.
 Mathematically, the variable `AL` will denote $A^{[L]} = \sigma(Z^{[L]}) = \sigma(W^{[L]} A^{[L-1]} + b^{[L]})$, where $\sigma$ stands for the sigmoid function.
 
 ```python
@@ -280,7 +280,7 @@ def L_model_forward(X, parameters):
 ```
 
 ## Cost Function
-We've implemented a full forward propagation that takes the input X and outputs a row vector $A^{[L]}$ containing the predictions. It also records all intermediate values in "caches". Now we use $A^{[L]}$ to compute the cost of the predictions. This is straightforward as long as we are familiar with the formula of the logistic cost function.
+The forward pass takes the input $X$ and returns a row vector $A^{[L]}$ containing the predictions. It also records intermediate values in caches. We now use $A^{[L]}$ to compute the binary cross-entropy cost.
 
 The cost function is computed as
 
@@ -372,7 +372,9 @@ dZ = relu_backward(dA, activation_cache)
 If $g(.)$ is the activation function, 
 `sigmoid_backward` and `relu_backward` compute 
 
-$$dZ^{[l]} = dA^{[l]} * g'(Z^{[l]}).$$
+$$dZ^{[l]} = dA^{[l]} \odot g'(Z^{[l]}),$$
+
+where $\odot$ denotes elementwise multiplication.
 
 ```python
 def linear_activation_backward(dA, cache, activation):
@@ -405,7 +407,7 @@ def linear_activation_backward(dA, cache, activation):
 ### L Model Backward
 Now we implement backpropagation for the *[LINEAR->RELU] $\times$ (L-1) -> LINEAR -> SIGMOID* model.
 
-Recall that when we implemented the `L_model_forward` function, at each iteration, we stored a cache which contains (X,W,b, and z). In the back propagation module, we use those variables to compute the gradients. Therefore, in the `L_model_backward` function, we iterate through all the hidden layers backward, starting from layer $L$. On each step, we use the cached values for layer $l$ to backpropagate through layer $l$. The figure below shows the backward pass. 
+Recall that `L_model_forward` stores the values $(A,W,b,Z)$ needed to compute gradients. The `L_model_backward` function traverses these caches from layer $L$ back to layer $1$. The figure below illustrates this backward pass.
 
 ![backward](/assets/img/2023-07-30-classification-ml/network-backpropagation.png)
 
@@ -445,7 +447,7 @@ def L_model_backward(AL, Y, caches):
         # lth layer: (RELU -> LINEAR) gradients.
         # Inputs: "grads["dA" + str(l + 1)], current_cache". Outputs: "grads["dA" + str(l)] , grads["dW" + str(l + 1)] , grads["db" + str(l + 1)] 
         current_cache = caches[l]
-        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(L-1)], current_cache, 'relu')
+        dA_prev_temp, dW_temp, db_temp = linear_activation_backward(grads["dA" + str(l + 1)], current_cache, 'relu')
         grads["dA" + str(l)] = dA_prev_temp
         grads["dW" + str(l + 1)] = dW_temp
         grads["db" + str(l + 1)] = db_temp
@@ -462,7 +464,7 @@ $$ b^{[l]} = b^{[l]} - \alpha \text{ } db^{[l]}, $$
 
 where $\alpha$ is the learning rate. 
 
-After computing the updated parameters,  we store them in the parameters dictionary. 
+After computing the updates, we store the new values in the `parameters` dictionary.
 
 ```python
 def update_parameters(params, grads, learning_rate):
@@ -488,4 +490,4 @@ def update_parameters(params, grads, learning_rate):
 
     return parameters
 ```
-We are done! (In fact, not quite done yet. I will modify it later when I feel productive...) You can see an application of classifying cat vs non-cat images in this [github repo](https://github.com/jupiterzw/binary-classification-nn-from-scratch).
+The complete model can now perform forward propagation, compute the cost, backpropagate the gradients, and update its parameters. An application to classifying cat and non-cat images is available in this [GitHub repository](https://github.com/jupiterzw/binary-classification-nn-from-scratch).

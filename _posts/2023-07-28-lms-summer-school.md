@@ -9,7 +9,7 @@ math: true
 image: /assets/img/2023-07-28-lms-summer-school/cover.jpg
 ---
 
-As the days stretch on, my thoughts often wander back to the cherished moments spent at the Hicks Building at University of Sheffield, where everyone can unapologetically show the love of mathematics. The chalk-dusted blackboard stood as a canvas for ideas to flourish, as theorems and symbols sprawled like intricate artworks. I think I will forever remember the sense of belonging that enveloped me as I stepped into this room. 
+As the days stretch on, my thoughts often wander back to the cherished moments spent in the Hicks Building at the University of Sheffield, where everyone could unapologetically express their love of mathematics. The chalk-dusted blackboard was a canvas on which ideas flourished and theorems and symbols spread like intricate works of art. I think I will always remember the sense of belonging that enveloped me when I stepped into that room.
 
 I took some pictures during those days – snapshots frozen in time, capturing the essence of what made Hicks Building so special.
 
@@ -33,24 +33,24 @@ _Professor Oliver Johnson explaining algorithm performance in group testing_
 
 ## PhD Talks
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2445.jpg)
-_PhD Yannik Schuler talking about Strings_
+_Yannik Schuler discussing strings_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2438.jpg)
-_PhD Alberto Cobos Rabano talking about enumerative geometry and planet orbits_
+_Alberto Cobos Rábano discussing enumerative geometry and planetary orbits_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2415.jpg)
-_PhD Poppy Jeffries talking about optimal foraging theory_
+_Poppy Jeffries discussing optimal foraging theory_
 
 
 ## Colloquium Talks
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2473.jpg)
-_Professor Silke Weinfurtner talking about blackholes_
+_Professor Silke Weinfurtner discussing black holes_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2538.jpg)
-_Professor Carmen Molina-Paris talking about invasion reproduction number_
+_Professor Carmen Molina-París discussing the invasion reproduction number_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2528.jpg)
-_Dr Vandita Patelss talking about Fermat's Last Theorem_
+_Dr Vandita Patel speaking on “Beyond Fermat's Last Theorem”_
 
 <!-- ![lms](/assets/img/2023-07-28-lms-summer-school/img-2557.jpg)
 _Professor Alexander Veselov introducing Bernoulli numbers_ -->
@@ -61,16 +61,16 @@ _Dr Gary Verth talking about maths for studying the sun_
 
 ## Some Moments
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2394.jpg)
-_My upsidedown straw_
+_My upside-down straw_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2391.jpg)
-_Happen to see the graduation ceremony of Sheffield undergraduates_
+_Watching the graduation ceremony for Sheffield undergraduates_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2432.jpg)
 _Euler-Lagrange equation & conservation of mass for compressible fluids_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2468.jpg)
-_Happen to be the 1st one arriving at the classroom_
+_The first person to arrive in the classroom_
 
 ![lms](/assets/img/2023-07-28-lms-summer-school/img-2452.jpg)
 _Quick yet spicy lunch_

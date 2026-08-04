@@ -1,5 +1,5 @@
 ---
-title: Conway Look-and-say Sequence
+title: Conway's Look-and-Say Sequence
 description: "An exploration of Conway's look-and-say sequence, its long-term behaviour, and the algebraic structure behind it."
 date: 2023-07-24 21:35
 categories: [Posts, Mathematics]

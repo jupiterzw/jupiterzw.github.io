@@ -1,7 +1,7 @@
 ---
 # the default layout is 'page'
 icon: fas fa-info-circle
-order: 2
+order: 1
 ---
 Hi, I’m Peter. I hold an MSc in Mathematics from the University of Oxford, awarded with Distinction, and a first-class honours BSc in Mathematics from University College London.
 

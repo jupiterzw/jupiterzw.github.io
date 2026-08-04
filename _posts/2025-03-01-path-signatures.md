@@ -22,7 +22,7 @@ This article is the web-readable version of the presentation prepared for the De
 
 ## Time-ordered data
 
-- Financial times-series. ![Daily financial time-series plot](/assets/img/2025-03-01-path-signatures/A_daily_20140101-20241231.png)
+- Financial time series. ![Daily financial time-series plot](/assets/img/2025-03-01-path-signatures/A_daily_20140101-20241231.png)
 
 - Text: “The quick brown fox jumped over the lazy dog.”
 
@@ -30,25 +30,25 @@ This article is the web-readable version of the presentation prepared for the De
 
 ## Time-ordered data as paths
 
-We can think of time-ordered data as a path, i.e. a continuous function
+After a suitable numerical encoding and interpolation, we can represent time-ordered data as a path, that is, a continuous function
 
 $$X:[a, b] \rightarrow E$$
 
-for some set $$E$$ (target space).
+into a finite-dimensional vector space $$E$$.
 
 - Financial time series: $$X:[a, b] \rightarrow \mathbb{R}^d,[a, b]=$$ time horizon, $$d=$$ number of assets tracked;
 
-- Text: $$X:[0, T] \rightarrow \mathcal{A}, T=$$ length of text, $$\mathcal{A}=\{a, A, b, B, \ldots\}=$$ alphabet;
+- Text: encode each symbol in an alphabet $$\mathcal A$$ as a vector and interpolate the resulting sequence to obtain a path $$X:[0,T]\to E$$;
 
-- Time-evolving network: $$X:[0, T] \rightarrow \mathcal{G}, \mathcal{G}=$$ a set of graphs.
+- Time-evolving network: encode each graph snapshot numerically and interpolate to obtain a path $$X:[0,T]\to E$$.
 
 ## Features of paths
 
 We would like to summarise important features of paths.
 
-Goal: introduce a special feature, the **signature** of a path, which have desired properties listed below.
+Our goal is to introduce a special feature—the **signature** of a path—which has the desirable properties listed below.
 
-1.  Sometimes only the order $$X_{t_1}, \ldots, X_{t_N}$$ matters and the time-paramterisation $$\left(t_1, \ldots, t_N\right)$$ is irrelevant (Time-representation invariance);
+1.  Sometimes only the order $$X_{t_1}, \ldots, X_{t_N}$$ matters, while the time parametrisation $$\left(t_1, \ldots, t_N\right)$$ is irrelevant (time-reparametrisation invariance);
 
 2.  One-to-one correspondence between paths and their features (Uniqueness);
 
@@ -108,7 +108,7 @@ Paths form one of the basic elements of this chapter. Let us first introduce the
 
 > **Definition (Path).** A *path* is a continuous function $$X : [a, b] \to E$$.
 
-We use the subscript notation $$X_t=X(t)$$ to denote dependence on $$t \in[a, b]$$ and superscript notation to denote its coordinates $$X_t = (X_t^1, X_t^2, \dots, X_t^d)$$ We denote the space of all continuous paths by $$\mathsf{C}^0([a, b], E)$$.
+We use the subscript notation $$X_t=X(t)$$ to denote dependence on $$t \in[a, b]$$ and superscripts to denote coordinates: $$X_t = (X_t^1, X_t^2, \dots, X_t^d)$$. We denote the space of all continuous paths by $$\mathsf{C}^0([a, b], E)$$.
 
 ## $$p$$-variation
 
@@ -162,7 +162,7 @@ In fact, we can define norms and inner products on $$T((E))$$. We will discuss t
 >
 > $$T_{1}((E)):=\left\{\left(a_0, a_1, a_2, \ldots\right) \in T((E)) \mid a_0=1\right\}.$$
 
-> **Proposition.** $$(T_{1}((E)), \otimes)$$ is a group.
+> **Proposition.** $$(T_{1}((E)), \otimes)$$ is a group: the inverse of any formal series with zeroth level equal to one can be constructed recursively, one tensor level at a time.
 
 ## Tensor algebra
 
@@ -176,17 +176,21 @@ In fact, we can define norms and inner products on $$T((E))$$. We will discuss t
 
 > **Definition (Truncated tensor algebra).** The *truncated tensor algebra* at order $$n \in \mathbb{N}$$ is
 >
-> $$T(E) \supseteq T^{(n)}(E):=\bigoplus_{i=0}^{n} E^{\otimes i}= \left\{\boldsymbol{a}=\left(a_k\right)_{k=0}^{\infty} \mid a_k \in E^{\otimes k}, a_k=0 \, \forall k \geq n\right\}.$$
+> $$T(E) \supseteq T^{(n)}(E):=\bigoplus_{i=0}^{n} E^{\otimes i}= \left\{\boldsymbol{a}=\left(a_k\right)_{k=0}^{\infty} \mid a_k \in E^{\otimes k}, a_k=0 \, \forall k>n\right\}.$$
 
-The product $$\otimes$$ given by ([tensor-product formula](#assoc_prod)) is also defined on $$T^{(n)}(E)$$ for $$0 \leq k \leq n$$. Moreover, note that the dimension of the truncated tensor algebra at order $$n$$ is given by
+The product on $$T^{(n)}(E)$$ is obtained by applying the tensor-product formula and discarding all levels above $$n$$. Moreover, the dimension of the truncated tensor algebra at order $$n$$ is
 
-$$\operatorname{dim}\left(T^{(n)}(E)\right)=\sum_{i=0}^n d^i=\frac{d^{n+1}-1}{d-1}.$$
+$$\operatorname{dim}\left(T^{(n)}(E)\right)=\sum_{i=0}^n d^i=
+\begin{cases}
+n+1,&d=1,\\[2pt]
+\dfrac{d^{n+1}-1}{d-1},&d\neq1.
+\end{cases}$$
 
 ## Intuitive understanding of $$E^{\otimes n}$$
 
-> **Remark.** Informally, we view the $$0$$-fold tensor product $$E^{\otimes 0}$$ as the set of all scalars $$a_0 \in \mathbb{R}$$ with dimension $$d^0 = 1$$. Similarly, $$E^{\otimes 1}$$ is the set of real vectors $$v \in E$$ with dimension $$d^1 = d$$ and $$E^{\otimes 2}$$ is the set of real matrices $$A \in \mathbb{R}^{d \times d}$$ with dimension $$d^2$$. Thus, a zero tensor at level $$2$$ can be understood as the zero matrix and more formally, let $$\{e_{i_1} \otimes e_{i_2} \otimes \cdots \otimes e_{i_n} \mid 0 \leq i_1 \leq m_1, \dots, 0 \leq i_n \leq m_n\}$$ be a basis of $$E^{\otimes n}$$, then the zero tensor is
+> **Remark.** Informally, the $$0$$-fold tensor product $$E^{\otimes 0}$$ is the scalar field $$\mathbb R$$ and has dimension $$d^0=1$$. Similarly, $$E^{\otimes 1}=E$$ has dimension $$d$$. After choosing a basis of $$E$$, elements of $$E^{\otimes2}$$ can be represented by $$d\times d$$ arrays and this space has dimension $$d^2$$. More generally, if $$\{e_1,\ldots,e_d\}$$ is a basis of $$E$$, then the zero tensor in $$E^{\otimes n}$$ is
 >
-> $$0=\sum_{0 \leq i_1 \leq m_1, \dots, 0 \leq i_n \leq m_n} 0 \cdot\left(e_{i_1} \otimes e_{i_2} \otimes \cdots \otimes e_{i_n}\right).$$
+> $$0=\sum_{1\leq i_1,\ldots,i_n\leq d}0\cdot(e_{i_1}\otimes\cdots\otimes e_{i_n}).$$
 
 ## Canonical homomorphism
 
@@ -214,9 +218,13 @@ Before formally defining path signatures, let us first introduce the concepts of
 
 ## Young integrals
 
-Since the paths in our discussion are all $$E$$-valued, we need a suitable framework for integration along paths in Banach spaces. This is provided by the Young integral. Given Banach spaces $$V$$ and $$W$$, the Young integral determines a way for a path $$[a, b] \rightarrow \mathcal{L}(V, W)$$ to be integrated along a path $$[a, b] \rightarrow V$$. The notation $$\mathcal{L}(V, W)$$ denotes the space of bounded linear operators $$V \rightarrow W$$. To be more precise, let $$X:[a, b] \rightarrow V$$ and $$Y:[a, b] \rightarrow \mathcal{L}(V, W)$$. Given a partition $$\mathcal{D}=\left(a=t_0, t_1, \ldots, t_r=b\right)$$ of $$[a, b]$$ we let $$|\mathcal{D}|:=\min \left\{t_{i+1}-t_i \mid i \in\{0, \ldots, r-1\}\right\}$$. We first define
+Since the paths in our discussion are $$E$$-valued, we need a framework for integration along paths in Banach spaces. The Young integral provides one. Given Banach spaces $$V$$ and $$W$$, let $$X:[a,b]\to V$$ and $$Y:[a,b]\to\mathcal L(V,W)$$, where $$\mathcal L(V,W)$$ is the space of bounded linear maps from $$V$$ to $$W$$. For a partition $$\mathcal D=(a=t_0<t_1<\cdots<t_r=b)$$, define its mesh by
 
-$$\int_{\mathcal{D}} Y d X:=\sum_{i=0}^{r-1} Y_{t_r}\left(X_{t_{r+1}}-X_{t_r}\right)$$
+$$|\mathcal D|:=\max_{0\leq i<r}(t_{i+1}-t_i)$$
+
+and the Riemann–Stieltjes sum by
+
+$$\int_{\mathcal D}Y\,dX:=\sum_{i=0}^{r-1}Y_{t_i}(X_{t_{i+1}}-X_{t_i}).$$
 
 Then, given $$t \in[a, b]$$, the Young integral of $$Y$$ along $$X$$ over the interval $$[a, t]$$ is defined as
 
@@ -228,7 +236,7 @@ where $$\left\{\mathcal{D}_j\right\}_{j=1}^{\infty}$$ is a sequence of partition
 
 > **Theorem (Young; (Lyons et al. 2007, Theorem 1.16)).** Let $$V$$ and $$W$$ be two Banach spaces. Let $$p, q \in \mathbb{R}_{\geq 1}$$ with $$\frac{1}{p}+\frac{1}{q}>1$$, $$X \in \mathcal{V}^p([a, b], V)$$, and $$Y \in \mathcal{V}^q([a, b], \mathcal{L}(V, W))$$. Then, for each $$t \in[a, b]$$, the limit
 >
-> $$\int_0^t Y_s d X_s=\lim _{|\mathcal{D}| \rightarrow 0, \, \mathcal{D} \subset[a, t]} \int_{\mathcal{D}} Y d X$$
+> $$\int_a^t Y_s\,dX_s=\lim _{|\mathcal{D}| \rightarrow 0, \, \mathcal{D} \subset[a, t]} \int_{\mathcal{D}} Y\,dX$$
 >
 > exists. Moreover, the mapping $$t \mapsto \int_a^t Y_s d X_s$$ belongs to $$\mathcal{V}^p([a, b], W)$$.
 
@@ -257,7 +265,7 @@ To make our notation compact, we use the signature coefficient.
 
 > **Definition (Signature coefficient).** <span id="sig-coefficient"></span> With the notation as above, define the *signature coefficient* $$S(X)_{s, t}^{i_1 \ldots i_k}$$ indexed by word $$i_1 \ldots i_k \in \mathcal{W}(\mathcal{A}_d)$$ as
 >
-> $$E \ni S(X)_{s, t}^{i_1 \ldots i_k}:= \int_{s<t_1<\cdots<t_k<t} d X_{t_1}^{i_1} \cdots d X_{t_k}^{i_k}= \int_s^t \int_s^{t_k} \cdots \int_s^{t_2} dX_{t_1}^{i_1} d X_{t_1}^{i_1} \ldots d X_{t_k}^{i_k}.$$
+> $$\mathbb R \ni S(X)_{s, t}^{i_1 \ldots i_k}:= \int_{s<t_1<\cdots<t_k<t} d X_{t_1}^{i_1} \cdots d X_{t_k}^{i_k}= \int_s^t \int_s^{t_k} \cdots \int_s^{t_2} dX_{t_1}^{i_1}\cdots dX_{t_{k-1}}^{i_{k-1}}dX_{t_k}^{i_k}.$$
 
 ## Signature of finite $$p$$-variation paths with $$p \in [1,2)$$
 
@@ -265,7 +273,7 @@ Now we are ready to give the definition of the signature of finite $$p$$-variati
 
 > **Definition (Signature I).** <span id="sig_1"></span> Let $$p \in [1,2)$$ and $$X \in \mathcal{V}^p\left([a, b], E\right)$$. The *signature* $$S(X)_{s, t}$$ of $$X$$ over domain $$[s, t] \subseteq[a, b]$$ is the infinite set of real numbers indexed by words $$\mathsf{I} \in \mathcal{W}(\mathcal{A}_d)$$
 >
-> $$\left\{ S(X)_{s, t}^\mathsf{I}\right\}_{I \in \mathcal{W}} =\{\underbrace{S_{s, t}^{\emptyset}}_1, \underbrace{S(X)_{s,t}^1}_{X_b^1-X_a^1}, \ldots, \underbrace{S(X)_{s,t}^d}_{X_b^d-X_a^d}, S(X)_{s,t}^{11}, S(X)_{s,t}^{12},\ldots, S(X)_{s,t}^{d d}, S(X)_{s,t}^{111}, \ldots \}.$$
+> $$\left\{ S(X)_{s, t}^\mathsf{I}\right\}_{\mathsf I \in \mathcal{W}(\mathcal A_d)} =\{\underbrace{S(X)_{s, t}^{\emptyset}}_1, \underbrace{S(X)_{s,t}^1}_{X_t^1-X_s^1}, \ldots, \underbrace{S(X)_{s,t}^d}_{X_t^d-X_s^d}, S(X)_{s,t}^{11}, S(X)_{s,t}^{12},\ldots, S(X)_{s,t}^{d d}, S(X)_{s,t}^{111}, \ldots \}.$$
 
 ## Signature of finite $$p$$-variation paths with $$p \in [1,2)$$
 
@@ -281,7 +289,7 @@ Thus, the signature can be elegantly encoded as an element in the extended tenso
 >
 > $$\begin{aligned}
 >     T_{1}((E)) \ni S(X)_{s, t} & := \left(1, S(X)_{s, t}^{[1]}, S(X)_{s, t}^{[2]}, \dots, S(X)_{s, t}^{[k]}, \dots \right)\\
->     &:= \left(1, \int_{s<t_1<t} d X_t, \ldots, \int_{s<t_1<\cdots<t_k<t} d X_{t_1} \otimes \cdots \otimes d X_{t_k}, \, \ldots\right),
+>     &:= \left(1, \int_s^t d X_u, \ldots, \int_{s<t_1<\cdots<t_k<t} d X_{t_1} \otimes \cdots \otimes d X_{t_k}, \, \ldots\right),
 >     \end{aligned}$$
 >
 > where the *$$k$$-fold iterated tensor integral of $$X_t$$* is a tensor in $${E}^{\otimes k}$$ defined as
@@ -296,7 +304,7 @@ Thus, the signature can be elegantly encoded as an element in the extended tenso
 >
 > $$S(X)_{0,1}^{i_1 \ldots i_k}=\frac{x^{i_1} \ldots x^{i_k}}{k!} .$$
 
-> **Example (One-dimensional path).** Consider $$X \in \mathcal{V}^1([a, b], E)$$. We have
+> **Example (One-dimensional path).** Consider $$X\in\mathcal V^1([a,b],\mathbb R)$$. We have
 >
 > $$S(X)_{a, b}^{1 \ldots 1}=\frac{\left(X_b-X_a\right)^k}{k!} .$$
 >
@@ -348,11 +356,15 @@ Thus, the signature can be elegantly encoded as an element in the extended tenso
 
 ## Concatenation of paths
 
-> **Definition (Concatenation of paths).** For $$X, Y \in \mathcal{V}^1\left([0,1], E\right)$$, define their concatenation $$X * Y \in \mathcal{V}^1\left([0,1], E\right)$$
+> **Definition (Concatenation of paths).** For $$X,Y\in\mathcal V^1([a,b],E)$$, let $$m=(a+b)/2$$ and define their concatenation $$X*Y\in\mathcal V^1([a,b],E)$$ by
 >
-> $$(X * Y)_t:= \begin{cases}X_{2 t} & \text { if } t \in[0,1 / 2], \\ X_1+\left(Y_{2 t-1}-Y_0\right) & \text { if } t \in[1 / 2,1].\end{cases}$$
+> $$(X*Y)_t:=
+> \begin{cases}
+> X_{a+2(t-a)},&t\in[a,m],\\
+> X_b+Y_{a+2(t-m)}-Y_a,&t\in[m,b].
+> \end{cases}$$
 
-> **Proposition (Chen’s identity for concatenation of paths).** We have $$S(X)_{0,1} \otimes S(Y)_{0,1}=S(X * Y)_{0,1}$$.
+> **Proposition (Chen’s identity for concatenation of paths).** We have $$S(X)_{a,b}\otimes S(Y)_{a,b}=S(X*Y)_{a,b}$$.
 
 ## Concatenation of paths
 
@@ -360,7 +372,7 @@ Thus, the signature can be elegantly encoded as an element in the extended tenso
 
 ## Time reversal of a path
 
-> **Definition (Time reversal).** For a path $$X:[a, b] \to E$$ in $$\mathcal{V}^1\left([0,1], E\right)$$, define its time-reversal $$\overleftarrow{X}:[a, b] \to E$$ by $$\overleftarrow{X}_t=X_{a+b-t}$$ for all $$t \in[a, b]$$.
+> **Definition (Time reversal).** For a path $$X\in\mathcal{V}^1([a,b],E)$$, define its time reversal $$\overleftarrow{X}:[a,b]\to E$$ by $$\overleftarrow{X}_t=X_{a+b-t}$$ for all $$t\in[a,b]$$.
 
 > **Proposition.** We have
 >
@@ -404,7 +416,7 @@ Thus, the signature can be elegantly encoded as an element in the extended tenso
 
 <span id="upper-estimates"></span>
 
-## Extended tensor algebra as a normed space
+## A normed subspace of the extended tensor algebra
 
 Recall that $$(E, \| \cdot \|_E)$$ is a Banach space. In order to equip the extended tensor algebra $$T((E))$$ with a norm, we define admissible tensor norms.
 
@@ -420,15 +432,20 @@ Recall that $$(E, \| \cdot \|_E)$$ is a Banach space. In order to equip the exte
 >
 >     <span id="admissible_2"></span>
 >
->     $$\forall n, m \in \mathbb{N}_{+} \, x, y \in E^{\otimes n},  \|x \otimes y\|_{E^{\otimes(n+m)}} \leq\|x\|_{E^{\otimes n}}\|y\|_{E^{\otimes m}}.$$
+>     $$\forall n,m\in\mathbb N_+\quad\forall x\in E^{\otimes n}\quad\forall y\in E^{\otimes m},\qquad
+>     \|x\otimes y\|_{E^{\otimes(n+m)}}\leq\|x\|_{E^{\otimes n}}\|y\|_{E^{\otimes m}}.$$
 
-## Extended tensor algebra as a normed space (continued)
+## A normed subspace of the extended tensor algebra (continued)
 
-Now we can define a norm on $$T((E))$$ by
+These tensor norms define an $\ell^1$-type norm on the subspace
 
-$$\|v\|_{T((E))}:=\sum_{n=0}^{\infty}\left\|\pi_n(v)\right\|_{E^{\otimes n}}.$$
+$$T^1((E)):=\left\{v\in T((E)):\sum_{n=0}^{\infty}\|v_n\|_{E^{\otimes n}}<\infty\right\}$$
 
-With the properties of the admissible tensor norm $$\|\cdot\|_{E^{\otimes n}}$$, one can check that $$\|\cdot\|_{T((E))}$$ is indeed a norm on $$T((E))$$.
+by
+
+$$\|v\|_{T^1((E))}:=\sum_{n=0}^{\infty}\left\|v_n\right\|_{E^{\otimes n}}.$$
+
+The admissibility properties imply that this is a norm on $$T^1((E))$$. It is not finite on every formal series in $$T((E))$$.
 
 ## Controls
 
@@ -457,7 +474,7 @@ Let $$\Delta_{[a, b]}:=\{(s, t) \in \mathbb{R}^2 \mid a \leq s \leq t \leq b\}$$
 
 > **Proposition.** Let $$p \in[1,2)$$ and $$X \in \mathcal{V}^p([a, b], E)$$. Then there exists a control $$\omega: \Delta_{[a, b]} \rightarrow [0, \infty)$$ such that for every $$n \in \mathbb{N}_{+}$$ and every $$(s, t) \in \Delta_{[a, b]}$$, we have
 >
-> $$\left\|S^{[n]}(X)_{s, t}\right\|_{E^{\otimes n}} \leq \frac{\omega(s, t)^n}{\Gamma\left(1+\frac{n}{p}\right)},$$
+> $$\left\|S^{[n]}(X)_{s, t}\right\|_{E^{\otimes n}} \leq \frac{\omega(s, t)^{n/p}}{\Gamma\left(1+\frac{n}{p}\right)},$$
 >
 > where $$\Gamma(\cdot)$$ is the Gamma function.
 
@@ -497,7 +514,7 @@ Informally, a path is called tree-like if it completely back-tracks itself.
 
 The following proposition is a useful sufficient condition for the uniqueness of the signature.
 
-> **Proposition.** Let $$X \in \mathcal{V}^1([a, b], E)$$ with a fixed starting point and at least one coordinate of $$X$$ is a monotone function. Then $$S(X)$$ determines $$X$$ uniquely.
+> **Proposition.** Let $$X\in\mathcal V^1([a,b],E)$$ have a fixed starting point and a strictly monotone coordinate. Then its signature determines its tree-reduced geometric path, up to an increasing reparametrisation.
 
 <span id="universal-nonlinearity"></span>
 
@@ -509,31 +526,25 @@ One of the most fundamental results in the study of the signature is its **unive
 
 ## Topology on $$\mathcal{P}^1([a,b], E)$$
 
-> **Definition ((Lyons and Qian 2002) (Equation (3.70))).** Given $$[X], [Y] \in \mathcal{P}^1([a,b], E)$$, define <span id="P1-topology"></span>
->
-> $$d_{\mathcal{P}^1}([X],[Y]):= \sup _{a \leq t_0 \leq \ldots \leq t_r \leq b}\left(\sum_{j=0}^{r-1}\left\|S(X)^1_{t_j, t_{j+1}}-S(Y)^1_{t_j, t_{j+1}}\right\|_{E }\right),$$
->
-> where $$S(X)^1_{t_j, t_{j+1}}$$ and $$S(Y)^1_{t_j, t_{j+1}}$$ are signature coefficients defined as in Definition [signature-coefficient definition](#sig-coefficient).
-
-> **Remark.** Theorem (Uniqueness of the signature) ensures that ([path-space metric](#P1-topology)) is well-defined.
+To state an approximation theorem, we equip a set of reduced bounded-variation paths with a topology for which every signature coordinate
+$$[X]\mapsto S(X)_{a,b}^{\mathsf I}$$
+is continuous. On compact subsets, the uniqueness theorem ensures that these coordinates separate distinct tree-like equivalence classes.
 
 ## Signature is a universal approximator of continuous functions
 
-> **Theorem (Universal Nonlinearity).** Let $$\mathcal{K} \subset \mathcal{P}^1([a, b], E)$$ be compact and $$f: \mathcal{K} \rightarrow \mathbb{R}$$ a continuous function with respect to the topology generated by ([path-space metric](#P1-topology)). Then for any $$\varepsilon>0$$ there exists a truncation level $$k \in \mathbb{N}$$ and $$\alpha_{i, \mathsf{I}} \in \mathbb{R}$$ such that for all $$X \in \mathcal{K}$$
+> **Theorem (Universal nonlinearity).** Let $$\mathcal{K} \subset \mathcal{P}^1([a, b], E)$$ be compact in such a topology, and let $$f: \mathcal{K} \rightarrow \mathbb{R}$$ be continuous. Then for every $$\varepsilon>0$$ there are a truncation level $$N\in\mathbb N$$ and coefficients $$\alpha_{\mathsf I}\in\mathbb R$$ such that, for all $$[X]\in\mathcal K$$,
 >
-> $$\left|f(x)-\sum_{i=0}^k \sum_{\mathsf{I} \in \mathcal{W}(\mathcal{A}_d)} \alpha_{i, \mathsf{I}} S(X)_{a, b}^\mathsf{I}\right| \leq \varepsilon.$$
+> $$\left|f([X])-\sum_{|\mathsf I|\leq N}\alpha_{\mathsf I}S(X)_{a,b}^{\mathsf I}\right|<\varepsilon.$$
 
 ## Neural networks are universal approximators
 
-> **Theorem ((Paluzo-Hidalgo et al. 2020, Theorem 1)).** $$\sigma$$ is not polynomial iff for every continuous function $$f: K \subset \mathbb{R}^d \rightarrow \mathbb{R}$$ defined on a compact set $$K$$ and $$\varepsilon>0$$, there exists a two-layer neural network with $$m$$ neurons and weights $$\mathbf{W}, \mathbf{b}, \mathbf{v}$$ s.t.
+> **Theorem (Universal approximation; (Paluzo-Hidalgo et al. 2020, Theorem 1)).** Let $$K\subset\mathbb R^d$$ be compact and let $$f:K\to\mathbb R$$ be continuous. For every $$\varepsilon>0$$, there exists a multilayer feed-forward neural network $$\mathcal N:\mathbb R^d\to\mathbb R$$ such that
 >
-> $$\max _{x \in K}\left|f(x)-\sum_{j \leq m} v_j \sigma\left(w_j^{\mathrm{T}} x+b_j\right)\right|<\varepsilon$$
+> $$\sup_{x\in K}|f(x)-\mathcal N(x)|<\varepsilon.$$
 
-- Fixed number of layers ("bounded depth")
+- This is an existence theorem; by itself, it does not give a construction or a bound on the required network size.
 
-- Does not tell how many neurons $$m$$ are needed ("arbitrary width")
-
-- There are stronger results, including bounded depth and width
+- The cited paper gives a constructive two-hidden-layer result for triangulable domains.
 
 ## Exponential function on extended tensor algebra
 
@@ -549,9 +560,9 @@ One of the most fundamental results in the study of the signature is its **unive
 
 > **Definition (Tensor logarithm).** <span id="log"></span> The *tensor logarithm* $$\log: T_{>0}((E)) \to T((E))$$ is defined as
 >
-> $$T((E)) \ni \log (\boldsymbol{a}):=\log \left(\pi_0(\boldsymbol{a})\right)+\sum_{n=1}^{\infty} \frac{(-1)^n}{n}\left(\boldsymbol{1}-\frac{\boldsymbol{a}}{\pi_0(\boldsymbol{a})}\right)^{\otimes n},$$
+> $$T((E)) \ni \log (\boldsymbol{a}):=\log \left(a_0\right)-\sum_{n=1}^{\infty} \frac{1}{n}\left(\boldsymbol{1}-\frac{\boldsymbol{a}}{a_0}\right)^{\otimes n},$$
 >
-> where $$\boldsymbol{1} = (1, 0, 0, \dots)$$ and $$\pi_0 : T((E)) \to \mathbb{R}$$ is the canonical homomorphism.
+> where $$\boldsymbol{1} = (1, 0, 0, \dots)$$ and $$a_0$$ is the zeroth tensor level of $$\boldsymbol a$$.
 
 > **Remark.** On the other hand, the tensor logarithm series is well-defined above as it only contains finitely many terms at each level. This can be seen by noting that
 >
@@ -581,7 +592,7 @@ To remove this redundancy, we introduce the Log signature.
 
 > **Definition (Log signature).** Let $$p \in [1,2)$$ and $$X \in \mathcal{V}^p\left([a, b], E\right)$$. The *log signature* $$\mathrm{log}S(X)_{s, t}$$ of $$X$$ over domain $$[s, t] \subseteq [a, b]$$ is
 >
-> $$T_0((E)) \ni \mathrm{log} S(X)_{s, t} := \sum_{n=1}^{\infty} \frac{(-1)^n}{n}\left(\boldsymbol{1}-S(X)_{s, t}\right)^{\otimes n}.$$
+> $$T_0((E)) \ni \mathrm{log} S(X)_{s, t} :=-\sum_{n=1}^{\infty} \frac{1}{n}\left(\boldsymbol{1}-S(X)_{s, t}\right)^{\otimes n}.$$
 
 > **Definition (Truncated log signature).** Let $$n \in \mathbb{N}_{+}$$. The level-$$n$$ *truncated log signature* is defined as
 >
@@ -635,7 +646,7 @@ For instance, for a Brownian motion, on the other hand, the integrals can be und
 
 - $$G \Omega_p(E) \subset W G \Omega_p(E) \subset \Omega_p(E)$$
 
-- We can define the signature of a *p-rough paths*
+- We can define the signature of a *$p$-rough path*.
 
 <span id="chapter2"></span>
 
@@ -659,35 +670,33 @@ For instance, for a Brownian motion, on the other hand, the integrals can be und
 
 > **Remark.** Evaluation functionals are always linear. For $$f, g \in \mathcal{H}$$ and $$\lambda \in \mathbb{R},$$ we have $$\delta_x(f+\lambda g)=( f+ \lambda g)(x)= f(x)+ \lambda g(x)= \delta_x(f)+ \lambda \delta_x(g)$$. However, evaluation functionals are not always continuous.
 
-## An example of discontinuous evaluation functional
+## Why point evaluation is not defined on $$L^2$$
 
-> **Example (Discontinuous evaluation functional).** <span id="non-RKHS"></span> Let $$\mu$$ be the Lebesgue measure on $$\mathbb{R}$$. Consider the Hilbert space $$(L^2([0,1];\mu), \|\cdot\|_{L^2})$$ of square integrable equivalence classes of functions where $$\forall f_1, f_2 \in L^2([0,1])$$,
+> **Example.** <span id="non-RKHS"></span> Let $$\mu$$ be Lebesgue measure and consider the Hilbert space $$L^2([0,1];\mu)$$ of equivalence classes of square-integrable functions. Its norm is
 >
 > $$\left\|f_1-f_2\right\|_{L^2}=\left(\int_0^1\left|f_1(x)-f_2(x)\right|^2 d \mu(x)\right)^{\frac{1}{2}}.$$
 >
-> Now, observe that the sequence of monomials $$\left(q_n\right)_{n=1}^{\infty}$$ with $$q_n=x^n$$ converges to the zero function in $$L^2$$ norm since
+> The monomials $$q_n(x)=x^n$$ converge to zero in $$L^2$$ because
 >
 > $$\lim _{n \rightarrow \infty}\left\|q_n-0\right\|_{L^2}= \lim _{n \rightarrow \infty}\left(\int_0^1 x^{2 n} d x\right)^{\frac{1}{2}} = \lim _{n \rightarrow \infty} \frac{1}{\sqrt{2 n+1}} =0$$
 >
-> but does not converge pointwise at $$x = 1$$ since
->
-> $$1=\lim _{n \rightarrow \infty} \delta_1\left(q_n\right) \neq \delta_1\left(\lim _{n \rightarrow \infty} q_n\right)=0.$$
+> while $$q_n(1)=1$$ for every $$n$$. This does **not** define a discontinuous evaluation functional on $$L^2$$: point evaluation is not well-defined on equivalence classes, because changing a representative at one point does not change its $$L^2$$ element.
 
 ## Reproducing kernel Hilbert spaces
 
 > **Definition (RKHS).** <span id="RKHS-I"></span> A Hilbert space of functions $$\mathcal{H} \subseteq \mathbb{R}^{\mathcal{X}}$$ is a *Reproducing Kernel Hilbert Space (RKHS)* if the evaluation functional $$\delta_x$$ is continuous for all $$x \in \mathcal{X}$$.
 
-> **Remark.** It may seem evident from Example (Discontinuous evaluation functional) that $$L^2([0,1];\mu)$$ is not an RKHS. However, it fails to be a valid counterexample since it consists of equivalence classes of functions rather than individual functions, and thus is not strictly a space of functions. Consequently, it does not even fall within the scope of the discussion. Only by invoking the *Axiom of Choice* can one provide a non-constructive proof of the existence of a Hilbert space of functions that is not an RKHS.
+> **Remark.** Thus $$L^2([0,1];\mu)$$ is not an RKHS on $$[0,1]$$ in the sense used here: its elements are equivalence classes rather than pointwise-defined functions.
 
 ## Functions are well-behaved in RKHSs
 
-A notable consequence is that RKHSs exhibit particularly well-behaved properties compared to general Hilbert spaces of functions. Specifically, we have the property that two functions close in RKHS norm implies that they are also close posintwise.
+A notable consequence is that functions in an RKHS are particularly well behaved: convergence in the RKHS norm implies pointwise convergence.
 
 > **Proposition ((Berlinet and Thomas-Agnan 2004, Corollary 1)).** Let $$\mathcal{H} \subseteq \mathbb{R}^{\mathcal{X}}$$ be an RKHS. If $$\lim _{n \rightarrow \infty}\left\|f_n-f\right\|_{\mathcal{H}}=0$$, then $$\lim _{n \rightarrow \infty} f_n(x)= f(x)$$ for all $$x \in \mathcal{X}$$.
 
 ## Reproducing kernels
 
-The definition of an RKHS in does not explicitly mention a kernel. We now introduce reproducing kernels, kernels, and positive semi-definite functions to illustrate how they relate to RKHSs.
+The definition of an RKHS does not explicitly mention a kernel. We now introduce reproducing kernels, kernels, and positive-semidefinite functions to explain how these concepts are related.
 
 > **Definition (Reproducing kernel; (Berlinet and Thomas-Agnan 2004, Definition 1)).** Let $$\mathcal{H} \subseteq \mathbb{R}^{\mathcal{X}}$$ be a Hilbert space of functions. A bivariate function $$k: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$$ is a *reproducing kernel* of $$\mathcal{H}$$ if
 >
@@ -705,7 +714,7 @@ The definition of an RKHS in does not explicitly mention a kernel. We now introd
 
 Let us now characterise reproducing kernels with positive semi-definite functions.
 
-> **Definition (Positive semi-definite function; (Berlinet and Thomas-Agnan 2004, Definition 2)).** A bivariate function $$k: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$$ is *positive semi-definite* if $$k$$ is symmetric and for any $$(x_i)_i^{n} \subseteq \mathcal{X}, (\alpha_i)_{i=1}^n \subseteq \mathbb{R}$$
+> **Definition (Positive-semidefinite function; (Berlinet and Thomas-Agnan 2004, Definition 2)).** A bivariate function $$k:\mathcal X\times\mathcal X\to\mathbb R$$ is *positive semidefinite* if $$k$$ is symmetric and, for every $$x_1,\ldots,x_n\in\mathcal X$$ and $$\alpha_1,\ldots,\alpha_n\in\mathbb R$$,
 >
 > $$\sum_{i=1}^n \sum_{j=1}^n \alpha_i \alpha_j k\left(x_i, x_j\right) \geq 0.$$
 
@@ -721,11 +730,11 @@ Let us now characterise reproducing kernels with positive semi-definite function
 >         \end{array}
 >         \right]$$
 >
-> is positive semi-definite for any $$(x_i)_i^{n} \subseteq \mathcal{X}$$.
+> is positive semidefinite for every finite choice $$x_1,\ldots,x_n\in\mathcal X$$.
 
 ## Inner products are positive semi-definite
 
-In fact, every inner product is a positive semi-definite function. More generally, we have this following useful proposition.
+In fact, every inner product induces a positive-semidefinite function. More generally, we have the following useful proposition.
 
 > **Proposition.** <span id="inner+"></span> Let $$\mathcal{H}$$ be a Hilbert space and $$\phi: \mathcal{X} \rightarrow \mathcal{H}$$. Then the bivariate function $$h: \mathcal{X} \times \mathcal{X} \to \mathbb{R}$$
 >
@@ -737,7 +746,7 @@ In fact, every inner product is a positive semi-definite function. More generall
 
 ## Kernels
 
-Kernel methods are a versatile algorithmic framework which allows construction of nonlinear machine learning algorithms by employing linear tools in a nonlinearly transformed feature space. Let us now introduce the definition of a kernel.
+Kernel methods provide a versatile framework for constructing nonlinear machine-learning algorithms with linear tools in a transformed feature space. We now introduce the definition of a kernel.
 
 > **Definition (Kernel; (Steinwart and Christmann 2008, Definition 4.1)).** A bivariate function $$k: \mathcal{X} \times \mathcal{X} \rightarrow \mathbb{R}$$ is a *kernel* if there exists a Hilbert space $$\mathcal{H}$$ called *feature space* and a *feature map* $$\varphi: \mathcal{X} \rightarrow \mathcal{H}$$ such that for any $$x, x^{\prime} \in \mathcal{X}$$
 >
@@ -745,7 +754,7 @@ Kernel methods are a versatile algorithmic framework which allows construction o
 
 > **Proposition.** <span id="kernelPSD"></span> Kernels are positive semi-definite functions.
 
-> **Proposition (Reproducing kerenls are kernels; (Steinwart and Christmann 2008, Lemma 4.19)).** Let $$\mathcal{H} \subseteq \mathbb{R}^{\mathcal{X}}$$ be an RKHS. The reproducing kernel of $$\mathcal{H}$$ is a kernel.
+> **Proposition (Reproducing kernels are kernels; (Steinwart and Christmann 2008, Lemma 4.19)).** Let $$\mathcal{H} \subseteq \mathbb{R}^{\mathcal{X}}$$ be an RKHS. The reproducing kernel of $$\mathcal{H}$$ is a kernel.
 
 ## Feature maps and linear separation
 
@@ -761,22 +770,18 @@ Kernel methods are a versatile algorithmic framework which allows construction o
 
 > **Example.** <span id="mul-feature"></span> Consider $$\mathcal{X}=\mathbb{R}^p$$ with $$p \in \mathbb{N}_{+}$$ and the kernel $$k : \mathcal{X} \times \mathcal{X} \to \mathbb{R}$$ given by
 >
-> $$k(x, y)=x y=\left[\begin{array}{ll}
->     \frac{x}{\sqrt{2}} & \frac{x}{\sqrt{2}} \dots \frac{x}{\sqrt{2}}
->     \end{array}\right]\left[\begin{array}{ll}
->     \frac{y}{\sqrt{2}} \\
->     \frac{y}{\sqrt{2}}\\
->     \phantom{1} \vdots \\
->     \frac{y}{\sqrt{2}}
->     \end{array}\right].$$
+> $$k(x,y)=x^\top y.$$
 >
 > We can define two feature maps
 >
-> $$\phi_1(x)=x, \quad \phi_2(x)=\left[\begin{array}{ll}\frac{x}{\sqrt{2}} & \frac{x}{\sqrt{2}} \dots \frac{x}{\sqrt{2}} \end{array}\right]$$
+> $$\phi_1(x)=x, \qquad \phi_2(x)=\left(\frac{x}{\sqrt2},\frac{x}{\sqrt2}\right)$$
 >
 > and their corresponding feature spaces
 >
-> $$\mathcal{H}_1=\mathbb{R}^p, \quad \mathcal{H}_2=\mathbb{R}^{2p}.$$
+> $$\mathcal{H}_1=\mathbb{R}^p, \qquad \mathcal{H}_2=\mathbb{R}^{2p}.$$
+>
+> Both maps reproduce the same kernel because
+> $$\langle\phi_2(x),\phi_2(y)\rangle=x^\top y.$$
 
 <span id="kernel-rkhs"></span>
 
@@ -808,7 +813,7 @@ In this section, we essentially aim to show that the converse of Proposition (ke
 
 > **Definition (Pre-RKHS).** Let $$\mathcal{H}_0 \subseteq \mathbb{R}^{\mathcal{X}}$$ be an inner product space of functions with the inner product $$\langle \cdot, \cdot\rangle_{\mathcal{H}_0}$$. $$\mathcal{H}_0$$ is a *pre-RKHS* if
 >
-> 1.  the evaluation functional $$\delta_x$$ is continuous for all $$f \in \mathcal{H}_0$$;
+> 1.  the evaluation functional $$\delta_x$$ is continuous for every $$x\in\mathcal X$$;
 >
 > 2.  any Cauchy sequence $$(f_n)_{n=1}^{\infty} \subseteq \mathcal{H}_0$$ converging pointwise to $$0$$ also converges in the induced $$\mathcal{H}_0$$-norm to $$0$$.
 
@@ -826,7 +831,7 @@ In this section, we essentially aim to show that the converse of Proposition (ke
 
 ## From $$\mathcal{H}_0$$ to $$\mathcal{H}$$
 
-> **Definition.** Let $$\mathcal{H} \subseteq \mathbb{R}^{\mathcal{X}}$$ be a Hilbert space of functions such that there exists a Cauchy sequence $$(f_n)_{n=1}^{\infty} \subseteq \mathcal{H}_0$$ converging pointwise to $$f$$ for all $$f \in \mathcal{H}$$, i.e. <span id="H"></span>
+> **Definition.** Define the following space of functions, which will become a Hilbert space under the inner product introduced below: <span id="H"></span>
 >
 > $$\mathcal{H} := \{f : \mathcal{X} \to \mathbb{R} \mid \exists \text{ Cauchy } (f_n)_{n=1}^{\infty} \subseteq \mathcal{H}_0 \text{ s.t. } f_n \to f \text{ pointwise } \}.$$
 
@@ -864,70 +869,75 @@ New kernels can be constructed by applying operations to existing ones. We now e
 
 > **Proposition (Sums of kernels; (Steinwart and Christmann 2008, Lemma 4.5)).** <span id="kernel-sum"></span> Let $$k_1: \mathcal{X} \times \mathcal{X} \to \mathbb{R}$$ and $$k_2: \mathcal{X} \times \mathcal{X} \to \mathbb{R}$$ be kernels. Then $$k_1 + k_2 : \mathcal{X} \times \mathcal{X} \to \mathbb{R}$$ is also a kernel.
 
-## Extended tensor algebra as an inner product space
+## A Hilbert subspace of the extended tensor algebra
 
-Before formally defining the signature kernel, we need to define an inner product on $$T((E))$$. Let $$\mathcal{B}=\left\{e_1, \ldots, e_d\right\}$$ be a basis for $$E$$. Let $$\mathcal{B}^{*}=\left\{e_1^{*}, \ldots, e_d^{*}\right\}$$ be the correspondingly induced dual basis on $$E^{*}$$. For each $$n \in \mathbb{Z}_{\geq 2}$$, $$\mathcal{B}$$ determines the basis
+Before defining the signature kernel, choose a basis $$\mathcal{B}=\{e_1,\ldots,e_d\}$$ of $$E$$ and declare it orthonormal. For each $$n\geq2$$, it determines the basis
 
 $$\mathcal{B}^{\otimes n}:=\left\{e_{\mathsf{K}}=e_{k_1} \otimes \ldots \otimes e_{k_n} \mid \mathsf{K}=k_1 \cdots k_n \in \mathcal{W}(\mathcal{A}_d)\right\}$$
 
-for $$E^{\otimes n}$$ and the corresponding dual basis
-
-$$\left(\mathcal{B}^*\right)^{\otimes n}:=\left\{e_{\mathsf{K}}^*=e_{k_1}^* \otimes \ldots \otimes e_{k_n}^* \mid \mathsf{K}=k_1 \cdots k_n \in \mathcal{W}(\mathcal{A}_d)\right\}$$
-
-for $$\left(E^*\right)^{\otimes n}$$. We first use the basis $$\mathcal{B}$$ to define an inner product on $$E$$. To do so we set
+for $$E^{\otimes n}$$. We first define an inner product on $$E$$ by
 
 $$\left\langle e_i, e_j\right\rangle_E:=\delta_{i j}=\left\{\begin{array}{lll}
 1 & \text { if } \quad i=j \\
 0 & \text { if } \quad i \neq j
 \end{array}\right.$$
 
-and extending bilinearly to the whole of $$E$$.
+and extend it bilinearly to all of $$E$$.
 
-## Extended tensor algebra as an inner product space (continued)
+## A Hilbert subspace of the extended tensor algebra (continued)
 
-Given any $$n \in \mathbb{Z}_{\geq 2}$$ we use the basis $$\mathcal{B}^{\otimes n}$$ to define an inner product on $$E^{\otimes n}$$. We set
+For $$n\geq2$$, use $$\mathcal{B}^{\otimes n}$$ to define an inner product on $$E^{\otimes n}$$ by
 
 $$\left\langle e_{i_1} \otimes \ldots \otimes e_{i_n}, e_{j_1} \otimes \ldots \otimes e_{j_n}\right\rangle_{E^{\otimes n}}:=\prod_{k=1}^n\left\langle e_{i_k}, e_{j_k}\right\rangle_E=\delta_{i_1 j_1} \ldots \delta_{i_n j_n}$$
 
-and again extending bilinearly to the whole of $$E^{\otimes n}$$. Finally, we define an inner product on the tensor algebra $$T((E))$$ by
+and extend bilinearly. Now define
 
-$$\langle \boldsymbol{a}, \boldsymbol{b}\rangle_{T((E))}=\sum_{n=0}^{\infty}\left\langle\pi_n(\boldsymbol{a}), \pi_n(\boldsymbol{b})\right\rangle_{E^{\otimes n}}$$
+$$T^2((E)):=\left\{\boldsymbol a\in T((E)):\sum_{n=0}^{\infty}\|a_n\|_{E^{\otimes n}}^2<\infty\right\}.$$
 
-for $$\boldsymbol{a}, \boldsymbol{b} \in T((E))$$ where we choose the inner product on $$E^{\otimes 0}=\mathbb{R}$$ to be given by usual multiplication. We assume now that the tensor algebra $$T((E))$$ has been equipped with an inner product in this manner.
+For $$\boldsymbol a,\boldsymbol b\in T^2((E))$$, set
+
+$$\langle \boldsymbol{a}, \boldsymbol{b}\rangle_{T^2((E))}=\sum_{n=0}^{\infty}\left\langle a_n,b_n\right\rangle_{E^{\otimes n}}.$$
+
+The inner product on $$E^{\otimes0}=\mathbb R$$ is ordinary multiplication. The factorial decay of bounded-variation signatures ensures that they belong to $$T^2((E))$$.
 
 ## Signature kernels
 
-> **Definition (Signature kernel).** Let $$X \in \mathcal{V}^1([a, b], E)$$ and $$Y \in \mathcal{V}^1([c, d], E)$$. The *signature kernel* $$k_{X, Y}:[a, b] \times[c, d] \rightarrow \mathbb{R}$$ is the bivariate function
+> **Definition (Signature kernel).** On a collection of bounded-variation, $$E$$-valued paths, define the *signature kernel* by
 >
-> $$k_{X, Y}(s, t)=\langle S(X)_{a, s}, S(Y)_{c, t} \rangle_{T((E))}$$
+> $$K(X,Y)=\langle S(X),S(Y)\rangle_{T^2((E))}.$$
 >
-> for $$s \in [a,b]$$ and $$t \in [c,d]$$.
+> For fixed paths $$X\in\mathcal V^1([a,b],E)$$ and $$Y\in\mathcal V^1([c,d],E)$$, we also use the prefix notation
+>
+> $$k_{X,Y}(s,t)=\langle S(X)_{a,s},S(Y)_{c,t}\rangle_{T^2((E))},
+> \qquad(s,t)\in[a,b]\times[c,d].$$
 
-> **Proposition.** Signature kernel is a kernel.
+> **Proposition.** $$K$$ is a positive-semidefinite kernel, with the signature as its feature map.
 
 ## Truncated signature kernel
 
-> **Definition (Truncated signature kernel).** Let $$X \in \mathcal{V}^1([a, b], E)$$ and $$Y \in \mathcal{V}^1([c, d], E)$$. The *truncated signature kernel* $$k_{X, Y}^{(n)}:[a, b] \times[c, d] \rightarrow \mathbb{R}$$ is the bivariate function
+> **Definition (Truncated signature kernel).** The level-$$n$$ *truncated signature kernel* is
 >
-> $$k_{X, Y}^{(n)}(s, t)=\sum_{k=0}^n \langle S^{(k)}(X)_{a, s}, S^{(k)}(Y)_{c, t} \rangle_{E^{\otimes k}}$$
+> $$K^{(n)}(X,Y)=\sum_{k=0}^n\langle S^{[k]}(X),S^{[k]}(Y)\rangle_{E^{\otimes k}}.$$
 >
-> for $$s \in [a,b]$$ and $$t \in [c,d]$$.
+> For path prefixes, write
+>
+> $$k_{X,Y}^{(n)}(s,t)=\sum_{k=0}^n\langle S^{[k]}(X)_{a,s},S^{[k]}(Y)_{c,t}\rangle_{E^{\otimes k}}.$$
 
-> **Proposition.** Truncated signature kernel is a kernel.
+> **Proposition.** $$K^{(n)}$$ is a positive-semidefinite kernel.
 
 ## Computing signature kernels
 
 The signature kernel is impractical without any computation method. Fortunately, as shown in (Salvi et al. 2021), it satisfies a hyperbolic partial differential equation (PDE) of the Goursat problem class.
 
-> **Theorem (Signature kernel solves Goursat PDE; (Salvi et al. 2021, Theorem 2.5)).** Let $$X \in \mathcal{V}^1([a, b], E)$$ and $$Y \in \mathcal{V}^1([c, d], E)$$. Then the signature kernel $$k_{X, Y}$$ is the solution of the Goursat PDE
+> **Theorem (Signature kernel solves a Goursat PDE; (Salvi et al. 2021, Theorem 2.5)).** Let $$X:[a,b]\to E$$ and $$Y:[c,d]\to E$$ be continuously differentiable paths. Then the signature kernel $$k_{X,Y}$$ is the unique solution of
 >
 > $$\frac{\partial^2 k_{X, Y}}{\partial s \partial t}=\langle\dot{X}_s, \dot{Y}_t \rangle_E k_{X, Y}, \quad k_{X, Y}(a, \cdot)=k_{X, Y}(\cdot, c)=1$$
 >
-> where $$\dot{X}_s=\left.\frac{d X_p}{d p}\right|_{p=s}, \dot{Y}_t=\left.\frac{d Y_q}{d q}\right|_{q=t}$$ are the derivatives of $$X$$ and $$Y$$ at time $$s$$ and $$t$$ respectively.
+> where $$\dot X_s$$ and $$\dot Y_t$$ denote the path derivatives.
 
 ## Computing signature kernels (continued)
 
-> **Remark.** Note that paths of bounded variations are almost everywhere differentiable (Stein and Shakarchi 2009, Theorem 3.4). The existence and uniqueness of the solution to the Goursat PDE follow from (Lees 1960, Theorem 2, 4).
+> **Remark.** Bounded-variation paths need not be continuously differentiable. The PDE above therefore applies directly under the stated smoothness assumptions; extensions to rougher paths require an appropriate integral formulation or approximation argument.
 
 <span id="chapter3"></span>
 
